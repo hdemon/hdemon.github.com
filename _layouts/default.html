@@ -34,15 +34,16 @@
 </head>
 
 <body>
-  <header>
-    <div id="title-border"></div>
-    <h1 id="header"><a href="{{ site.url_root }}/"></a> {{ page.title }}</h1>
-    <div id="title-logo" class="sprites index-titlelogo"></div>
-    <div id="title-icon"></div>
-  </header>
+  <div id="wrapper">
+    <header>
+      <div id="title-border"></div>
+      <h1 id="header"><a href="{{ site.url_root }}/"></a> {{ page.title }}</h1>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+    </header>
 
-  {{ content }}
-
+    {{ content }}
+  </div>
   <script type="text/javascript">
   var disqus_shortname = '___YOUR_ID_HERE___';
   (function () {
