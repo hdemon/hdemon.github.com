@@ -1,0 +1,33 @@
+@import "sprites.css";
+
+ *{
+  padding: 0;
+  margin: 0;
+}
+
+body > header {
+  height: 145px;
+  background: rgb(51,51,51); 
+  
+  #title-border {
+    height: 35px;
+    background: rgb(255,170,170);
+  }
+  #title-logo {  }
+  #title-icon {  }
+}
+
+@mixin caption {
+  background: rgb(51,51,51); 
+  border-radius: 10px;
+  height: 30px;
+}
+  
+#content {
+  background: #111;
+}
+#content > article > header > h1 {
+  @include caption
+}
+
+  

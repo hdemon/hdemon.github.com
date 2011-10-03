@@ -1,1 +1,70 @@
-hello
+---
+layout: default
+title: Hungry Daemonologue
+---
+
+<article>
+  <header>
+    <h1>
+      article
+    </h1>
+  </header>
+  {% for post in site.posts reverse %}
+  {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
+  {% unless year == this_year %}
+    {% assign year = this_year %}
+    {{ post.title }}
+  {% endunless %}
+  {% endfor %}
+</article>
+
+<article>
+  <header>
+    <h1>my creatures - lib</h1>
+  </header>
+  <section>
+    <h1>
+      explorizer.js 
+    </h1>
+    <div id="explorizer"></div>
+    <p>エクスプローラー風のGUIをブラウザ上に実現します。</p>
+    <p>生成されたフォームに対し、移動、拡大縮小、フォーム内要素の選択（ShiftやCtrlとクリックの組み合わせによる選択、ドラッグによる選択）、選択された要素の、他フォームへの移動やコピーなどが行えます。</p>
+  </section>
+
+  <section>
+    <h1>
+      nicoscraper
+    </h1>
+    <div id="nicoscraper"></div>
+    <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
+  </section>
+
+  <section>
+    <h1>
+      nicomanip.js
+    </h1>
+    <div id="nicomanip"></div>
+    <p>マイリスト管理ツールに使える、ブラウザアドオン用JavaScriptライブラリ。</p>
+    <p>自分のマイリストからマイリストと動画情報等を抽出し、検索やソート、その結果に基づく移動やコピーを簡単に行えます。</p>
+  </section>
+</article>
+
+<article>
+  <header>
+    <h1>my creatures - web service</h1>
+  </header>
+  <section>
+    <h1>
+      YNN
+    </h1>
+    <div id="ynn"></div>
+    <p>ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。</p>
+  </section>
+</article>
+
+<article>
+  <header>
+    <h1>about me</h1>
+  </header>
+
+</article>

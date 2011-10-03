@@ -1,0 +1,19 @@
+@import url(sprites.css);
+* {
+  padding: 0;
+  margin: 0; }
+
+body > header {
+  height: 145px;
+  background: #333333; }
+  body > header #title-border {
+    height: 35px;
+    background: #ffaaaa; }
+
+#content {
+  background: #111; }
+
+#content > article > header > h1 {
+  background: #333333;
+  border-radius: 10px;
+  height: 30px; }

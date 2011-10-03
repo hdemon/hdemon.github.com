@@ -1,0 +1,21 @@
+# defines the base configuration options (file paths, etc, default style, etc)
+
+config:
+  style: css
+  style_output_path: style/sprites
+  image_output_path: images/
+  image_source_path: images/
+  public_path: /
+  sprites_class: 'sprites'
+  class_separator: '-'
+  default_format: png
+
+images:
+
+  # creates a public/images/sprites/blue_stars.png image with 4 sprites in it
+  - name: index
+    format: png
+    align: vertical
+    spaced_by: 10
+    sources:
+      - index/*.png

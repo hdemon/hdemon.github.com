@@ -1,0 +1,166 @@
+---
+layout: post
+title: "Corss-domain"
+date: 2011-10-02 22:00
+comments: true
+categories: 
+---
+
+#クロスドメインにまつわるヘッダについて考える。
+
+ Chrome Extensionを開発中に、クロスドメイン通信を制約するヘッダにまつわるエラーに遭遇しました。、クロスドメイン通信に関して基本から学び直そうと調べる必要が出たので、せっかくなのでまとめました。
+
+　以下の文章は私が個人的に調べた事をまとめたものであり、正しさの保障はありません。むしろ間違いを見つけたら、指摘して頂けるとありがたいです。
+
+##なぜクロスドメイン通信が制約されるのか
+
+まずは基本から。
+ブラウザ上のスクリプトが行うクロスドメイン通信には、ご存知の通り制約があります。でも考えてみれば、あるサーバがドメインの異なる別のサーバ間へリクエストすることは一般的な事、というより、それ自体がインターネットの機能を成している根幹要素であり、基本的にはそれを許可しなければ成り立ちません。許可したくない場合にのみ、IPやパスワード認証等で拒絶するというスタンスです。
+ということは、「ブラウザ上スクリプトのクロスドメイン通信」と称してわざわざサーバ間通信と区別するのは、ブラウザを用いた通信に各種認証手続きやIPフィルタのみでは対応しきれない特殊なリスクがあるからだと言えます。そしてそれは、
+
++ サーバ間の通信は、クライアントとなる側が自らあるいは信頼した第三者のスクリプトによって、自発的にリクエストする。
++ しかし、ブラウジングはその性質上、閲覧した時点でほぼ自動的にページに埋め込まれたスクリプトも実行される。
++ つまり、「他人の作った悪意のあるスクリプトを」「事前の調査なく」「半自動的に」実行してしまう可能性がある。
+
+という点だと思われます。
+ただ、これらのリスクが存在するからといって、実行前にスクリプトの内容をいちいちユーザに確認させるようでは、利便性が大幅に損なわれブラウジングの意味が無くなります。そこで、半自動的に実行してしまうのはやむを得ないとしながら、それによって生まれるリスクをなるべく抑えるというアプローチを採っています（もちろん、ブラウザやその設定によっては、事前にユーザに確認をさせるでしょう）。それがクロスドメイン通信の制約…だと思います。
+
+##具体的に、どんなリスクが生まれるのか。
+この項はちょっと知識と理解に自信がありません。しかし、調べた限りでは「クロスサイトスクリプティング（以下XSS)のバリエーションを増やす」、「DoS攻撃の踏み台に利用される」という2つのリスクが重要なんじゃないかと思います。以下簡単な解説。
+
+###XSS
+不特定多数の人間が文字のメッセージを残せる掲示板やCMS等に、文章の代わりにタグを用いたJavaScript等のスクリプトを記述すると、そのサイトがスクリプトとして働く文字列を排除するロジックを持っていなければ、閲覧者のブラウザ上でそのスクリプトが動作し始めることになる。
+この事自体はクロスドメイン通信の可否とは無関係に発生するが、それを許可してしまうとXSSをより効果的にしてしまう。具体的には、XSSによってCookie・キーイベント・DOM等から窃取したアカウント情報等を、さらに特定のサーバへ直接送信することが可能になり、XSSの目的をより直接的・効果的に達成する手段を与えることになる。
+
+###DoS攻撃
+ページに特定／不特定のサーバへ短期間の連続アクセスをするスクリプトを記述することで、閲覧者にサーバ攻撃の肩代わりをさせることが可能になる。この場合、アクセス元はスクリプトを置いてあるサーバではなくクライアントのIPになるため、攻撃を意図した者には非常に都合がいい（ただ、後述するXHR Level2ではサーバがレスポンスを正常に返し得るため、サーバに負荷を掛けるだけなら何の障害もなくできてしまいますよね。）。
+
+というわけで、これらのリスクを減らすため、ブラウザ上で動作するスクリプトの機能を制限するルールとして「同一生成元ポリシー」"same origin policy" が設けられました。
+
+##同一生成元ポリシーとは？
+サイト上のスクリプトがあるサーバへデータをリクエストする命令を出した場合、そのサイトとリクエスト先とで、
+
++ ホスト
++ ポート
++ プロトコル
+
+の全てが一致しない限り、リクエストを有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
+
+　そして、HTML5の勧告では"Cross-Origin Resource Sharing"（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています（ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」とは関係ないはずです）。
+
+##クロスドメイン通信禁止の例外と、XMLHttpRequest
+　しかし、クロスドメイン通信を直接／間接的に可能にする方法がいくつか存在します。
+
+- XMLHttpRequest Level2 / XDomainRequest を使う。
+- JSONPを使う。
+- プロキシを使う。
+
+1は前者がW3Cが策定中の共通仕様であり、後者はIEの独自機能。どちらも、クロスドメイン通信を行う正規の手段です。リクエスト／レスポンスヘッダを主な基準としたCORSの条件（XDomainRequestはやはり独自基準）をパスした場合にのみ、最終的にユーザがデータへアクセスすることを可能にします。
+2は、$lt;scirpit&gt;タグで外部のスクリプトが読み込める事を利用した、クロスドメイン制限回避の例外的手法です。リクエスト先のサーバがJSONPの形でデータを返す機構を備えていることが条件です。
+3は、第三のサーバを中継し直接的にはサーバ間の通信とすることで、同一生成元ポリシーの対象から外れる手法。当然、中継する機能を持ったサーバが必要です。
+
+ここでXMLHttpRequestについてまとめておくと、
+
++ XMLHttpRequest Level1と同一生成元ポリシーは共通仕様ではなく、具体的な実装や細かい条件はブラウザによって異なる。
++ XMLHttpRequest Level2はW3Cの共通仕様である。したがって、必ず実装すべき仕様と、裁量に任される部分が分かれる。
++ XMLHttpRequest Level2は、CORSのルールに従う。これは同一生成元ポリシーと根本的な趣旨を同じくするが、クロスドメイン通信を許可するための条件がより具体的で複雑化している。
++ ブラウザにXMLHttpRequest Level1とLevel2の２つのメソッドが同居するのではなく、Level2に置き換わる。つまり、Level2に準拠する限り、XMLHttpRequestはCORSのルールに従う。
++ ただし、XMLHttpRequest Level2とCORSとHTML5は独立したセクションであり、かつ現時点（2011/5)では全てドラフトであり、また前二者は"non-normative"である。
+
+[http://www.w3.org/TR/cors/#cross-origin-request](仕様書)
+
+という感じです。つまり、クロスドメイン通信の制約についてはまだ多くがブラウザ側の裁量に任されており、各社のブラウザがどのように対応しているかは、個別に調べるか実験してみるかでしか判断できません。ちなみにW3Cにおける"non-normative"とか"SHOULD"などの言葉には厳密な定義があるので、是非読んでみてください。
+
+##CORSの中核、Access-Control-Allow-OriginヘッダとOriginヘッダ
+
+Level2では、クロスドメイン通信は条件付きで許可されます。そしてその条件に合致しているかどうかは、主にリクエストヘッダとレスポンスヘッダによって判断されるようです（また、クロスドメイン通信が可能かどうかをサーバ側に問い合わせる、"preflight request"という予備的な通信を行う場合も規定されている）。
+
+どういう事かというと、Level2の場合は「こちら側の身元をリクエストヘッダで明らかにした上で、とりあえずリクエストしてみる」ということを行います。それに対し、サーバ側はヘッダを見てデータを返さないということもできるが、「どのような場合にデータをユーザまで渡すことを許可するか」というヘッダをデータと一緒に返すこともできます。つまり、リクエスト自体は禁止せずに、正常に返ってきたレスポンスをブラウザが検閲して、それをユーザに渡すかどうかをヘッダによって決めるということです。
+
+そのヘッダにはいくつか種類がありますが、「Access-Control-Allow-Origin レスポンスヘッダ」と「Origin リクエストヘッダ」が主要な役割を担うと思われます。これらのヘッダについて、次のようなルールが設けられています。
+
+  Access-Control-Allow-Origin ヘッダに"*"が含まれるときは、クロスドメイン通信を許可する。
+  Access-Control-Allow-Origin ヘッダが１つもないか、あるいは複数存在するときは不許可。
+  Access-Control-Allow-Origin がOriginヘッダと一致しない場合も不許可。
+
+※credential flag等の条件があるが、ややこしくなるので省略。
+「許可する」というのは、繰り返しになるが「リクエストを送らない」ということではなく、ユーザにデータを受け渡さないということ。仕様書では、リクエストが返ってきたときの処理に関して、
+
+
+6.1.5. Cross-Origin Request with Preflight  
+This is the actual request. Apply the make a request steps and observe the request rules below while making the request. If the response has an HTTP status code of 301, 302, 303, or 307 Apply the cache and network error steps. ... Otherwise Perform a resource sharing check. If it returns fail, apply the cache and network error steps. Otherwise, if it returns pass, terminate this algorithm and set the cross-origin request status to success. Do not actually terminate the request.
+　Preflightを伴うクロスオリジンリクエスト
+　もし、レスポンスが301、302、303、307のいずれかのHTTPステータスコードならば、
+
+6.1.2. Cross-Origin Request Status 
+Each cross-origin request has an associated cross-origin request status that CORS API specifications that enable an API to make cross-origin requests can hook into. It can take at most two distinct values over the course of a cross-origin request. The values are: preflight complete The user agent is about to make the actual request. success The resource can be shared. abort error The user aborted the request.
+
+
+このように書いており、resourceをユーザにshareするかどうかは、レスポンスが返ってきてから判断するとされていることが分かります。
+
+###サーバは期待通りレスポンスするが、ブラウザが検閲して見せてくれないことの証拠
+以下については、Chrome 11 / Firefox 4 / Safari 5 で確認しました。Opera 11とIE9では再現できていません。
+本当にそうなのかをちょっと実験してみます。XMLHttpRequestを利用して、あえて不可能なクロスドメインリクエストをてみるのです。仕様書によればリクエスト自体は許可されますから、そのリクエストが正常ならばサーバも正常なレスポンスをし、OSのレベルではそれを受け取れるはずです。これをプロトコル監視ツールのFiddlerを使って確認します。
+
+例えば、次のようなTwitterのTLを取得するAPIへアクセスするスクリプトを実行したとする。
+
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){
+    if (xhr.readyState === 4) console.log(xhr.responseText);
+};
+xhr.open("GET", "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon", true);
+xhr.send();
+すると、コンソールにはこう表示される（Chromeの場合）。
+XMLHttpRequest cannot load http://search.twitter.com/search.json?q=h_demon&amp;amp;amp;callback=?. Origin http://hdemon.net is not allowed by Access-Control-Allow-Origin. 
+「あなたのドメインは、Access-Control-Allow-Originによって許可されていないよ」と出る。
+しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、
+GET http://search.twitter.com/search.json?q=h_demon&amp;callback=? HTTP/1.1
+Host: search.twitter.com
+Connection: keep-alive
+Referer: http://hdemon.net/
+Origin: http://hdemon.net
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.68 Safari/534.24
+Accept: */*
+HTTP/1.1 200 OK
+Server: hi
+Status: 200 OK
+Content-Type: application/json; charset=utf-8
+ Connection: close
+ {"results":[{"from_user_id_str":"12345678","profile_image_url":.... 
+
+
+…と、このようにちゃんと欲しいデータは返ってきている。ただし、リクエストヘッダにOriginヘッダが付いており、またAccess-Control-Allow-Originヘッダが無いため、ブラウザが検閲を行ってデータをユーザに渡さないのでしょう。ちなみに、JSONPを使ってTLを取得したときは、
+var url = "http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&amp;callback=?";
+$.getJSON(url, null, function(json) {
+  for(var i=0, l=json.results.length;
+
+
+GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
+Host: search.twitter.com
+Connection: keep-alive
+Referer: http://hdemon.net/
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.68 Safari/534.24
+Accept: */*
+Accept-Encoding: gzip,deflate,sdch
+Accept-Language: ja,en;q=0.8
+Accept-Charset: Shift_JIS,utf-8;q=0.7,*;q=0.3
+
+
+このようなリクエストヘッダになり、Originヘッダは付いていないことが分かります。
+
+##制限すべき通信かどうかを、ブラウザはいつどうやって判断してるの？
+
+しかし、どうしてJSONPはクロスドメイン可能で、XMLHttpRequestはダメなのでしょうか。ブラウザ内部でクロスドメインの許可不許可を決定するパラメータがあるんじゃないか。だって、そもそもJSONPは広義のクロスドメイン通信であるのにも関わらず、リクエストにはOriginヘッダが付いておらず、またレスポンスにもAccess-Control-Allow-Originヘッダは付いていない。そうでありながら、通信は問題なく行われているわけだから。
+そこでCORSの仕様書を読み進めると、このようにある。
+3.1. Origin and Base URL
+Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
+
+3.6.8. The send() method
+ If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
+ Otherwise These are the cross-origin request steps. 
+
+つまり、制約すべき「クロスドメイン通信」かどうかは、XMLHttpRequestのsendメソッドが呼ばれた時点で判断しているらしい。
+ そして、とりあえずリクエストを送ってから上述のヘッダで判断するのではなく、originパラメータによって、リクエストする前にここで言うところの"cross-origin"か否かを判断しているらしい。"cross-origin"と認定されると、Access-Control-Requestヘッダ群を生成するために必要ないくつかのパラメータをcross-originプロセスへ渡すようだ。
+そして、このルールが&lt;script&gt;
+タグについても課せられるという記述はない。ただ、&lt;script type="text/javascript"&gt;
+タグがJSONPに利用できると明記した箇所も今のところ見つかっていない。どちらも私が斜め読みした限りだが（参考：HTML5仕様書scriptタグ部分）。]]></conte
