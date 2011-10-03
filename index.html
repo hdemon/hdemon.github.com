@@ -3,11 +3,12 @@ layout: default
 title: Hungry Daemonologue
 ---
 
-<article>
+<article id="article">   
   <header>
-    <h1>
+    <h1 class="sprite index-article-label">
       article
     </h1>
+    <div class="index-article-icon"></div>
   </header>
   {% for post in site.posts reverse %}
   {% capture this_year %}{{ post.date | date: "%Y" }}{% endcapture %}
@@ -18,12 +19,15 @@ title: Hungry Daemonologue
   {% endfor %}
 </article>
 
-<article>
+<article id="mc-lib">
   <header>
-    <h1>my creatures - lib</h1>
+    <h1 class="sprite index-lib-label">
+      my creatures - lib
+    </h1>
+    <div class="index-lib-icon"></div>
   </header>
-  <section>
-    <h1>
+  <section id="explorizer">
+    <h1 class="sprite index-explorizer">
       explorizer.js 
     </h1>
     <div id="explorizer"></div>
@@ -31,16 +35,16 @@ title: Hungry Daemonologue
     <p>生成されたフォームに対し、移動、拡大縮小、フォーム内要素の選択（ShiftやCtrlとクリックの組み合わせによる選択、ドラッグによる選択）、選択された要素の、他フォームへの移動やコピーなどが行えます。</p>
   </section>
 
-  <section>
-    <h1>
+  <section id="nicoscraper">
+    <h1 class="sprite index-explorizer">
       nicoscraper
     </h1>
-    <div id="nicoscraper"></div>
+    <div id="ncs-wrapper"></div>
     <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
   </section>
 
-  <section>
-    <h1>
+  <section id="nicomanip">
+    <h1 class="sprite index-explorizer">
       nicomanip.js
     </h1>
     <div id="nicomanip"></div>
@@ -49,22 +53,24 @@ title: Hungry Daemonologue
   </section>
 </article>
 
-<article>
+<article id="mc-web">
   <header>
-    <h1>my creatures - web service</h1>
-  </header>
-  <section>
-    <h1>
-      YNN
+    <h1 class="sprite index-webs-label">
+      my creatures - web service
     </h1>
-    <div id="ynn"></div>
-    <p>ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。</p>
-  </section>
+    <div class="index-webs-icon"></div>
+  </header>
+  <h1>
+    YNN
+  </h1>
+  <div id="ynn"></div>
+  <p>ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。</p>
 </article>
 
-<article>
+<article id="aboutme">
   <header>
-    <h1>about me</h1>
+    <h1 class="sprite index-aboutme">
+      about me
+    </h1>
   </header>
-
 </article>
