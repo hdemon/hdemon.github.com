@@ -3,17 +3,17 @@
   padding: 0;
   margin: 0; }
 
-body > header {
+#wrappper > header {
   height: 145px;
   background: #333333; }
-  body > header #title-border {
+  #wrappper > header #title-border {
     height: 20px;
     background: #ffaaaa; }
-  body > header #title-logo {
+  #wrappper > header #title-logo {
     position: absolute;
     top: 100px;
     left: 20px; }
-  body > header #title-icon {
+  #wrappper > header #title-icon {
     position: absolute;
     top: 100px;
     left: 200px; }
