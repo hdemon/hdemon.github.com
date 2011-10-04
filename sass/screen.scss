@@ -53,7 +53,9 @@ body { @include light-gray; }
 #wrapper > article {
   width: 400px;
   margin-bottom: 50px;
-  
+  font-size: 12px;
+  line-height: 20px;
+
   header {
     position: relative;
     @include dark-gray;
@@ -87,6 +89,18 @@ body { @include light-gray; }
       top: -18px;
       right: 15px;
     }
+  }
+
+  section#explorizer {
+    @include explorizer;
+  }
+
+  section#nicoscraper {
+    @include nicoscraper;
+  }
+
+  section#nicomanip {
+    @include nicomanip;
   }
 }
 
