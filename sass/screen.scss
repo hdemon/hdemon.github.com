@@ -21,70 +21,77 @@
 
 body { @include light-gray; }
 
-#wrapper > header {
-  @include dark-gray;
-  position: relative;
-  height: 112px;
-  margin-bottom: 40px;
-  
-  #title-border {
-    height: 13px;
-    @include pink;
+body {
+  header {
+    @include dark-gray;
+    position: relative;
+    height: 112px;
+    margin-bottom: 40px;
+    
+    #title-border {
+      height: 13px;
+      @include pink;
+    }
+
+    #title-logo {
+      position: absolute;
+      top: 80px;
+      left: 20px;
+      @include title-logo;
+    }
+
+    #title-icon {
+      position: absolute;
+      top: 30px;
+      left: 520px;
+      @include title-icon;
+    }
+
+    #title-border-bottom {
+      width: 100%;
+      background: url("/images/wave.png") repeat-x;
+      top: 110px;
+      position: absolute;
+      height: 30px;
+    }
   }
 
-  #title-logo {
-    position: absolute;
-    top: 80px;
-    left: 20px;
-    @include title-logo;
+  article {
+    width: 400px;
+    margin-bottom: 50px;
+    font-size: 12px;
+    line-height: 20px;
+
+    header {
+      position: relative;
+      @include dark-gray;
+      @include border-radius(12px, 12px);
+      padding-top:6px;
+      padding-left:20px;
+      height: 20px;
+      width: 380px;    
+    }
+
+    section {
+      margin-left: 20px;
+      margin-top: 20px;
+      h1 {
+        margin-bottom: 10px;
+      }
+      p {
+        text-indent: 1em;
+      }
+    }
   }
 
-  #title-icon {
-    position: absolute;
-    top: 30px;
-    left: 520px;
-    @include title-icon;
-  }
-
-  #title-border-bottom {
-    width: 100%;
-    background: url("/images/wave.png") repeat-x;
-    top: 110px;
-    position: absolute;
-    height: 30px;
+  footer {
+    margin: 0px auto;
+    @include hashi;
   }
 }
   
 #content {
   background: #111;
-}
-
-#wrapper > article {
-  width: 400px;
-  margin-bottom: 50px;
-  font-size: 12px;
-  line-height: 20px;
-
-  header {
-    position: relative;
-    @include dark-gray;
-    @include border-radius(12px, 12px);
-    padding-top:6px;
-    padding-left:20px;
-    height: 20px;
-    width: 380px;    
-  }
-
-  section {
-    margin-left: 20px;
-    margin-top: 20px;
-    h1 {
-      margin-bottom: 10px;
-    }
-    p {
-      text-indent: 1em;
-    }
-  }
 }
 
 
