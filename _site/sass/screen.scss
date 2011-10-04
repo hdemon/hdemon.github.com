@@ -112,6 +112,10 @@ body {
         }
       }
     }
+
+    #clear {
+      @include clearfix;
+    }
   }
 
   footer {
