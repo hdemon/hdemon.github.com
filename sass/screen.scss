@@ -56,8 +56,15 @@ body {
     }
   }
 
-  article {
-    position: relative;
+  left-content {
+    float:  left;
+  }
+
+  right-content {
+    float:  right;    
+  }
+
+  article {  
     width: 400px;
     margin-bottom: 50px;
     margin-left: 20px;
@@ -100,8 +107,6 @@ body {
 
 
 #article {
-  float: right;
-
   header {
     h1 { @include article-label; }
     div {
@@ -114,8 +119,6 @@ body {
 }
 
 #mc-lib {
-  float: left;
-
   header {
     h1 { @include lib-label; }
     div {
@@ -146,8 +149,6 @@ body {
 }
 
 #mc-web {
-  float: left;
-
   header {
     h1 { @include webs-label; }
     div {
@@ -166,8 +167,6 @@ body {
 }
 
 #aboutme {
-  float: right;
-
   header {
     h1 { @include aboutme-label; }
     div {
