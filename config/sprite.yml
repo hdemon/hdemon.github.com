@@ -2,7 +2,7 @@
 
 config:
   style: css
-  style_output_path: style/sprites
+  style_output_path: sass/sprites
   image_output_path: images/
   image_source_path: images/
   public_path: /
