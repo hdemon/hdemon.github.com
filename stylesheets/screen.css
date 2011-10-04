@@ -81,7 +81,7 @@ body {
 /* line 24, ../sass/screen.scss */
 #wrapper > header {
   background: #333333;
-  height: 125px;
+  height: 120px;
   margin-bottom: 40px;
 }
 /* line 29, ../sass/screen.scss */
@@ -94,7 +94,7 @@ body {
   position: absolute;
   top: 80px;
   left: 20px;
-  background: url("/images/index.png?1317718266") no-repeat 0px -457px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -457px;
   width: 273px;
   height: 25px;
 }
@@ -103,7 +103,7 @@ body {
   position: absolute;
   top: 40px;
   left: 320px;
-  background: url("/images/index.png?1317718266") no-repeat 0px -374px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -374px;
   width: 82px;
   height: 73px;
 }
@@ -151,14 +151,14 @@ body {
 
 /* line 84, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -95px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
 /* line 85, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317718266") no-repeat 0px -42px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -25px;
@@ -167,14 +167,14 @@ body {
 
 /* line 96, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -241px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -241px;
   width: 187px;
   height: 15px;
 }
 /* line 97, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317718266") no-repeat 0px -192px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -192px;
   width: 83px;
   height: 39px;
   top: -18px;
@@ -182,33 +182,33 @@ body {
 }
 /* line 106, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -116px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -116px;
   width: 107px;
   height: 15px;
 }
 /* line 112, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -291px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -291px;
   width: 99px;
   height: 15px;
 }
 /* line 118, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -266px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -266px;
   width: 104px;
   height: 15px;
 }
 
 /* line 126, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -545px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -545px;
   width: 230px;
   height: 15px;
 }
 /* line 127, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317718266") no-repeat 0px -492px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -492px;
   width: 60px;
   height: 43px;
   top: -25px;
@@ -216,21 +216,21 @@ body {
 }
 /* line 136, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px -570px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -570px;
   width: 269px;
   height: 26px;
 }
 
 /* line 144, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317718266") no-repeat 0px 0px;
+  background: url("/images/index.png?1317718300") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
 /* line 145, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317718266") no-repeat 0px -192px;
+  background: url("/images/index.png?1317718300") no-repeat 0px -192px;
   width: 83px;
   height: 39px;
   top: -25px;
