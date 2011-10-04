@@ -6,44 +6,49 @@
 @import "compass/reset";
 @import "sprites.scss";
 
-@mixin dark-gray { background: rgb(51,51,51); }
-@mixin round { border-radius: 10px; }
-  
 * {
   padding: 0;
   margin: 0;
 }
 
-#wrapper {
-  &:header {
-    height: 145px;
-    background: rgb(51,51,51); 
-    
-    #title-border {
-      height: 20px;
-      background: rgb(255,170,170);
-    }
+@mixin dark-gray { background: rgb(51,51,51); }
+@mixin light-gray { background: rgb(236,236,236); }
+@mixin round { border-radius: 10px; }
+
+body { @include light-gray; }
+
+#wrapper > header {
+  background: rgb(51,51,51); 
+  height: 145px;
+  margin-bottom: 20px;
   
-    #title-logo {
-      position: absolute;
-      top: 100px;
-      left: 20px;
-      @include title-logo;
-    }
-  
-    #title-icon {
-      position: absolute;
-      top: 65px;
-      left: 300px;
-      @include title-icon;
-    }
+  #title-border {
+    height: 20px;
+    background: rgb(255,170,170);
+  }
+
+  #title-logo {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    @include title-logo;
+  }
+
+  #title-icon {
+    position: absolute;
+    top: 65px;
+    left: 320px;
+    @include title-icon;
   }
 }
 
 @mixin caption {
   @include dark-gray;
-  border-radius: 10px;
-  height: 30px;
+  border-radius: 12px;
+  padding-top:6px;
+  padding-left:20px;
+  height: 20px;
+  width: 380px;    
 }
   
 #content {
@@ -51,12 +56,18 @@
 }
 
 #wrapper > article {
+  width: 400px;
+  margin-bottom: 50px;
+  
   header { 
-    h1 {
-      @include dark-gray;
-      @include round;
-      height: 30px;
-      width: 400px;
-    }
+    @include caption;
+  }
+}
+
+
+#article {
+  header {
+    h1 { @include article-label; }
+    
   }
 }
