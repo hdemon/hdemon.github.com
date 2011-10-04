@@ -5,6 +5,7 @@
 
 @import "compass/reset";
 @import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
 
 @import "sprites.scss";
 
@@ -94,6 +95,7 @@ body {
   }
 
   footer {
+    @include clearfix;
     margin: 0 auto;
     margin-top: 100px;
     margin-bottom: 20px;
