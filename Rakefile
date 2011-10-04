@@ -7,7 +7,7 @@ GIT = "git"
 
 task :default => "make"
 
-task "make" => ["sprites", "compass", "release", "jekyll"]
+task "make" => ["sprites", "compass", "jekyll", "release"]
 
 task "jekyll" do
 	sh "#{JEKYLL}"
