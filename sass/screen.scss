@@ -78,6 +78,13 @@ body { @include light-gray; }
       right: 10px;
     }
   }
+
+  section {
+    margin-left: 20px;
+    p {
+      text-indent: 1em;
+    }
+  }
 }
 
 #mc-lib {
@@ -90,6 +97,8 @@ body { @include light-gray; }
       right: 15px;
     }
   }
+
+
 
   section#explorizer {
     h1 {
@@ -118,6 +127,12 @@ body { @include light-gray; }
       @include webs-icon; 
       top: -25px;
       right: 10px;
+    }
+  }
+
+  section#ynn {
+    h1 {
+      @include ynn;
     }
   }
 }
