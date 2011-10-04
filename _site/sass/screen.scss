@@ -25,7 +25,7 @@ body { @include light-gray; }
 body {
   header {
     @include dark-gray;
-    height: 112px;
+    height: 100px;
     margin-bottom: 40px;
     
     #title-border-top {
@@ -40,14 +40,14 @@ body {
       
       #title-logo {
         position: absolute;
-        top: 65px;
+        top: 53px;
         left: 20px;
         @include title-logo;
       }
 
       #title-icon {
         position: absolute;
-        top: 22px;
+        top: 10px;
         left: 520px;
         @include title-icon;
       }
@@ -55,7 +55,7 @@ body {
       ul {
         left: 636px;
         position: absolute;
-        top: 27px;
+        top: 15px;
         font-size: 12px;
         color: white;
         line-height: 20px;
