@@ -1,22 +1,12 @@
 /*
-Syntax error: Undefined mixin 'aboutme-label'.
-        on line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `aboutme-label'
-        from line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss
+Syntax error: Undefined mixin 'caption'.
+        on line 59 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `caption'
+        from line 59 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss
 
 Backtrace:
-/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:110:in `aboutme-label'
-/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:110
+/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:59:in `caption'
+/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:59
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:170:in `visit_mixin'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `map'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `block in visit'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:236:in `visit_rule'
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
@@ -78,4 +68,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Undefined mixin 'aboutme-label'.\A         on line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `aboutme-label'\A         from line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss"; }
+  content: "Syntax error: Undefined mixin 'caption'.\A         on line 59 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `caption'\A         from line 59 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss"; }

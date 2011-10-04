@@ -24,7 +24,7 @@ body { @include light-gray; }
 #wrapper > header {
   @include dark-gray;
   height: 145px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   
   #title-border {
     height: 20px;
@@ -45,15 +45,6 @@ body { @include light-gray; }
     @include title-icon;
   }
 }
-
-@mixin caption {
-  @include dark-gray;
-  @include border-radius(12px, 12px);
-  padding-top:6px;
-  padding-left:20px;
-  height: 20px;
-  width: 380px;    
-}
   
 #content {
   background: #111;
@@ -63,8 +54,14 @@ body { @include light-gray; }
   width: 400px;
   margin-bottom: 50px;
   
-  header { 
-    @include caption;
+  header {
+    position: relative;
+    @include dark-gray;
+    @include border-radius(12px, 12px);
+    padding-top:6px;
+    padding-left:20px;
+    height: 20px;
+    width: 380px;    
   }
 }
 
