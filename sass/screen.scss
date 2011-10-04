@@ -68,6 +68,10 @@ body { @include light-gray; }
 
   section {
     margin-left: 20px;
+    margin-top: 20px;
+    h1 {
+      margin-bottom: 10px;
+    }
     p {
       text-indent: 1em;
     }
@@ -82,7 +86,7 @@ body { @include light-gray; }
       position: absolute;
       @include article-icon; 
       top: -25px;
-      right: 10px;
+      right: 20px;
     }
   }
 }
@@ -124,7 +128,7 @@ body { @include light-gray; }
       position: absolute;
       @include webs-icon; 
       top: -25px;
-      right: 10px;
+      right: 20px;
     }
   }
 
