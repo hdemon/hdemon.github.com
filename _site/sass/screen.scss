@@ -65,6 +65,13 @@ body { @include light-gray; }
     height: 20px;
     width: 380px;    
   }
+
+  section {
+    margin-left: 20px;
+    p {
+      text-indent: 1em;
+    }
+  }
 }
 
 
@@ -76,13 +83,6 @@ body { @include light-gray; }
       @include article-icon; 
       top: -25px;
       right: 10px;
-    }
-  }
-
-  section {
-    margin-left: 20px;
-    p {
-      text-indent: 1em;
     }
   }
 }
@@ -97,8 +97,6 @@ body { @include light-gray; }
       right: 15px;
     }
   }
-
-
 
   section#explorizer {
     h1 {
