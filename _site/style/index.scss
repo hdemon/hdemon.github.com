@@ -1,20 +1,34 @@
-@import "sprites.css";
+@import "sprites.scss";
 
- *{
+* {
   padding: 0;
   margin: 0;
 }
 
-body > header {
+#wrapper {
+  
+}
+
+#wrapper > header {
   height: 145px;
   background: rgb(51,51,51); 
   
   #title-border {
-    height: 35px;
+    height: 20px;
     background: rgb(255,170,170);
   }
-  #title-logo {  }
-  #title-icon {  }
+
+  #title-logo {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+  }
+  
+  #title-icon {
+    position: absolute;
+    top: 100px;
+    left: 200px;
+  }
 }
 
 @mixin caption {
@@ -29,5 +43,3 @@ body > header {
 #content > article > header > h1 {
   @include caption
 }
-
-  

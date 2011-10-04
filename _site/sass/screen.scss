@@ -1,0 +1,73 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "sprites.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+@mixin dark-gray { background: rgb(51,51,51); }
+@mixin light-gray { background: rgb(236,236,236); }
+@mixin round { border-radius: 10px; }
+
+body { @include light-gray; }
+
+#wrapper > header {
+  background: rgb(51,51,51); 
+  height: 145px;
+  margin-bottom: 20px;
+  
+  #title-border {
+    height: 20px;
+    background: rgb(255,170,170);
+  }
+
+  #title-logo {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    @include title-logo;
+  }
+
+  #title-icon {
+    position: absolute;
+    top: 65px;
+    left: 320px;
+    @include title-icon;
+  }
+}
+
+@mixin caption {
+  @include dark-gray;
+  border-radius: 12px;
+  padding-top:6px;
+  padding-left:20px;
+  height: 20px;
+  width: 380px;    
+}
+  
+#content {
+  background: #111;
+}
+
+#wrapper > article {
+  width: 400px;
+  margin-bottom: 50px;
+  
+  header { 
+    @include caption;
+  }
+}
+
+
+#article {
+  header {
+    h1 { @include article-label; }
+    
+  }
+}
