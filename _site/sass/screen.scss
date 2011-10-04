@@ -4,6 +4,8 @@
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
 
 @import "compass/reset";
+@import "compass/css3/border-radius";
+
 @import "sprites.scss";
 
 * {
@@ -13,18 +15,20 @@
 
 @mixin dark-gray { background: rgb(51,51,51); }
 @mixin light-gray { background: rgb(236,236,236); }
+@mixin pink { background: rgb(255, 170, 170); }
+
 @mixin round { border-radius: 10px; }
 
 body { @include light-gray; }
 
 #wrapper > header {
-  background: rgb(51,51,51); 
+  @include dark-gray;
   height: 145px;
   margin-bottom: 20px;
   
   #title-border {
     height: 20px;
-    background: rgb(255,170,170);
+    @include pink;
   }
 
   #title-logo {
@@ -44,7 +48,7 @@ body { @include light-gray; }
 
 @mixin caption {
   @include dark-gray;
-  border-radius: 12px;
+  @include border-radius(12px, 12px);
   padding-top:6px;
   padding-left:20px;
   height: 20px;
@@ -68,6 +72,8 @@ body { @include light-gray; }
 #article {
   header {
     h1 { @include article-label; }
-    
+    div {
+      @include article-icon; 
+    }
   }
 }
