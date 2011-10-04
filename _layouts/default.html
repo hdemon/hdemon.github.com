@@ -10,6 +10,12 @@
   {% else %}
   <link rel="stylesheet" type="text/css" href="{{ site.url_root }}/style-others.css" media="screen" />
   {% endcase %}
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- masonry -->
+  <script type="text/javascript" src="{{ site.url_root }}/javascripts/jquery.masonry.min.js"></script>
 
   <!--- webputty -->
 <link rel="stylesheet" type="text/css" href="http://www.webputty.net/css/agtzfmNzc2ZpZGRsZXIMCxIEUGFnZRiuhx0M" />
@@ -51,7 +57,7 @@
     {{ content }}
 
   <footer></footer>
-  
+
   <script type="text/javascript">
   var disqus_shortname = '___YOUR_ID_HERE___';
   (function () {
