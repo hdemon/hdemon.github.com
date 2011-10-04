@@ -115,6 +115,10 @@ body {
   }
 
   footer {
+    position: relative;
+    margin: 0 auto;
+    width: 900px;
+      
     @include clearfix;
     margin: 0 auto;
     margin-top: 100px;
