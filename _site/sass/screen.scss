@@ -86,7 +86,9 @@ body {
   }
 
   footer {
-    margin: 20px auto;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 20px;
     @include hashi;
   }
 }
