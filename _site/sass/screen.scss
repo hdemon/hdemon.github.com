@@ -92,15 +92,21 @@ body { @include light-gray; }
   }
 
   section#explorizer {
-    @include explorizer;
+    h1 {
+      @include explorizer;
+    }
   }
 
   section#nicoscraper {
-    @include nicoscraper;
+    h1 {
+      @include nicoscraper;
+    }
   }
 
   section#nicomanip {
-    @include nicomanip;
+    h1 {
+      @include nicomanip;
+    }
   }
 }
 
