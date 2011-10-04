@@ -24,6 +24,7 @@ body { @include light-gray; }
 
 body > #wrapper {
   margin: 0 auto;
+  width:  900px;
   
   header {
     @include dark-gray;
