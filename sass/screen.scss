@@ -23,7 +23,7 @@ body { @include light-gray; }
 
 #wrapper > header {
   @include dark-gray;
-  height: 130px;
+  height: 125px;
   margin-bottom: 40px;
   
   #title-border {
@@ -40,7 +40,7 @@ body { @include light-gray; }
 
   #title-icon {
     position: absolute;
-    top: 45px;
+    top: 40px;
     left: 320px;
     @include title-icon;
   }
