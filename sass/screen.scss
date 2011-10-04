@@ -29,31 +29,37 @@ body {
     height: 112px;
     margin-bottom: 40px;
     
-    #title-border {
-      height: 13px;
-      @include pink;
-    }
+    hgroup {
+      position: relative;
+      margin: 0 auto;
+      width: 900px;
+      
+      #title-border {
+        height: 13px;
+        @include pink;
+      }
 
-    #title-logo {
-      position: absolute;
-      top: 80px;
-      left: 20px;
-      @include title-logo;
-    }
+      #title-logo {
+        position: absolute;
+        top: 80px;
+        left: 20px;
+        @include title-logo;
+      }
 
-    #title-icon {
-      position: absolute;
-      top: 30px;
-      left: 520px;
-      @include title-icon;
-    }
+      #title-icon {
+        position: absolute;
+        top: 30px;
+        left: 520px;
+        @include title-icon;
+      }
 
-    #title-border-bottom {
-      width: 100%;
-      background: url("/images/wave.png") repeat-x;
-      top: 110px;
-      position: absolute;
-      height: 30px;
+      #title-border-bottom {
+        width: 100%;
+        background: url("/images/wave.png") repeat-x;
+        top: 110px;
+        position: absolute;
+        height: 30px;
+      }
     }
   }
 
