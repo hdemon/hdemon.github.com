@@ -44,6 +44,11 @@ body { @include light-gray; }
     left: 520px;
     @include title-icon;
   }
+
+  #title-border-bottom {
+    width: 100%;
+    background: url("/images/wave.png") repeat-x;
+  }
 }
   
 #content {
