@@ -40,16 +40,25 @@ body {
       
       #title-logo {
         position: absolute;
-        top: 80px;
+        top: 65px;
         left: 20px;
         @include title-logo;
       }
 
       #title-icon {
         position: absolute;
-        top: 30px;
+        top: 22px;
         left: 520px;
         @include title-icon;
+      }
+
+      ul {
+        left: 636px;
+        position: absolute;
+        top: 27px;
+        font-size: 12px;
+        color: white;
+        line-height: 20px;
       }
     }
 
