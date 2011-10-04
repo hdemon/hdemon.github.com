@@ -73,7 +73,46 @@ body { @include light-gray; }
   header {
     h1 { @include article-label; }
     div {
+      position: absolute;
       @include article-icon; 
+      top: -25px;
+      right: 10px;
+    }
+  }
+}
+
+#mc-lib {
+  header {
+    h1 { @include lib-label; }
+    div {
+      position: absolute;
+      @include lib-icon; 
+      top: -18px;
+      right: 15px;
+    }
+  }
+}
+
+#mc-web {
+  header {
+    h1 { @include webs-label; }
+    div {
+      position: absolute;
+      @include webs-icon; 
+      top: -25px;
+      right: 10px;
+    }
+  }
+}
+
+#aboutme {
+  header {
+    h1 { @include aboutme-label; }
+    div {
+      position: absolute;
+      @include lib-icon; 
+      top: -25px;
+      right: 10px;
     }
   }
 }

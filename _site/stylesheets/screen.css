@@ -1,13 +1,56 @@
 /*
-Syntax error: Invalid CSS after ".../border-radius"": expected selector or at-rule, was "@import "sprite..."
-        on line 9 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss
+Syntax error: Undefined mixin 'aboutme-label'.
+        on line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `aboutme-label'
+        from line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss
 
 Backtrace:
-/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:9
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/scss/parser.rb:899:in `expected'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/scss/parser.rb:852:in `expected'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/scss/parser.rb:29:in `parse'
-/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/engine.rb:320:in `_to_tree'
+/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:110:in `aboutme-label'
+/mnt/hgfs/codes/hdemon.github.com/sass/screen.scss:110
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:170:in `visit_mixin'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `map'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:236:in `visit_rule'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `map'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:236:in `visit_rule'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `map'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:236:in `visit_rule'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `map'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:53:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:27:in `block in visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:39:in `with_environment'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:26:in `visit_children'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `block in visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:47:in `visit_root'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/base.rb:37:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:18:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/visitors/perform.rb:7:in `visit'
+/usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/tree/root_node.rb:20:in `render'
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/engine.rb:293:in `_render'
 /usr/local/lib/ruby/gems/1.9.1/gems/sass-3.1.8/lib/sass/engine.rb:240:in `render'
 /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/lib/compass/compiler.rb:136:in `block (2 levels) in compile'
@@ -35,4 +78,4 @@ Backtrace:
 body:before {
   white-space: pre;
   font-family: monospace;
-  content: "Syntax error: Invalid CSS after \".../border-radius\"\": expected selector or at-rule, was \"@import \"sprite...\"\A         on line 9 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss"; }
+  content: "Syntax error: Undefined mixin 'aboutme-label'.\A         on line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss, in `aboutme-label'\A         from line 110 of /mnt/hgfs/codes/hdemon.github.com/sass/screen.scss"; }
