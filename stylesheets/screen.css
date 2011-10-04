@@ -94,7 +94,7 @@ body {
   position: absolute;
   top: 100px;
   left: 20px;
-  background: url("/images/index.png?1317707876") no-repeat 0px -411px;
+  background: url("/images/index.png?1317708059") no-repeat 0px -411px;
   width: 273px;
   height: 25px;
 }
@@ -103,7 +103,7 @@ body {
   position: absolute;
   top: 65px;
   left: 320px;
-  background: url("/images/index.png?1317707876") no-repeat 0px -328px;
+  background: url("/images/index.png?1317708059") no-repeat 0px -328px;
   width: 82px;
   height: 73px;
 }
@@ -130,7 +130,7 @@ body {
 
 /* line 70, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317707876") no-repeat 0px -74px;
+  background: url("/images/index.png?1317708059") no-repeat 0px -74px;
   width: 56px;
   height: 11px;
 }
