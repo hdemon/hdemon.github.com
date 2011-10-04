@@ -23,6 +23,8 @@
 body { @include light-gray; }
 
 body > #wrapper {
+  margin: 0 auto;
+  
   header {
     @include dark-gray;
     position: relative;
