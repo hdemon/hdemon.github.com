@@ -22,7 +22,7 @@
 
 body { @include light-gray; }
 
-body {
+body > #wrapper {
   header {
     @include dark-gray;
     position: relative;
