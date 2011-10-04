@@ -23,7 +23,8 @@ body { @include light-gray; }
 
 #wrapper > header {
   @include dark-gray;
-  height: 120px;
+  position: relative;
+  height: 112px;
   margin-bottom: 40px;
   
   #title-border {
@@ -48,6 +49,9 @@ body { @include light-gray; }
   #title-border-bottom {
     width: 100%;
     background: url("/images/wave.png") repeat-x;
+    top: 110px;
+    position: absolute;
+    height: 30px;
   }
 }
   
