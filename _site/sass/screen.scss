@@ -23,9 +23,6 @@
 body { @include light-gray; }
 
 body {
-  margin: 0 auto;
-  width:  900px;
-
   header {
     @include dark-gray;
     position: relative;
@@ -61,6 +58,8 @@ body {
   }
 
   #wrapper {
+    margin: 0 auto;
+
     #left-content {
       float:  left;
     }
