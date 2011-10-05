@@ -1,0 +1,266 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+
+@import "sprites.scss";
+
+* {
+  padding: 0;
+  margin: 0;
+  color: #333;
+}
+
+body {
+  background: url("/images/back.png") repeat;
+
+  & > header {
+    margin-bottom: 40px;
+    background: url("/images/title-band.png") repeat-x;
+    height: 123px;
+
+    hgroup {
+      margin: 0 auto;
+      width: 900px;
+      position: relative;
+      top: 0;
+      
+      #title-logo {
+        position: absolute;
+        top: 72px;
+        left: 20px;
+        @include title-logo;
+      }
+
+      #title-icon {
+        position: absolute;
+        top: 26px;
+        left: 540px;
+        @include title-icon;
+      }
+
+      ul {
+        position: absolute;
+        left: 660px;
+        top: 31px;
+
+        li {
+          font-family: 'Maven Pro', sans-serif;
+          font-size: 13px;
+          color: white;
+          line-height: 20px;
+
+          a {
+            color: white;
+            text-decoration: none;        
+            &:hover {
+              text-decoration: underline;            
+            }
+          }
+        }
+      }
+    }
+
+    #title-border-bottom {
+      position: absolute;
+      width: 100%;
+      background: url("/images/wave.png") repeat-x;
+      top: 98px;
+      height: 30px;
+    }
+  }
+
+  #wrapper {
+    margin: 0 auto;
+    width: 900px;
+
+    #left-content {
+      float:  left;
+    }
+
+    #right-content {
+      float:  right;    
+    }
+
+    article {  
+      width: 400px;
+      margin-bottom: 50px;
+      font-size: 12px;
+      line-height: 20px;
+
+      header {
+        position: relative;
+        padding-top:6px;
+        padding-left:20px;
+        margin-bottom: 20px;
+        height: 26px;
+        width: 380px;    
+        @include caption-label
+      }
+
+      section {
+        margin-left: 20px;
+        margin-top: 20px;
+        h1 {
+          margin-bottom: 10px;
+        }
+        p {
+          text-indent: 1em;
+        }
+      }
+    }
+
+    #clear {
+      @include clearfix;
+      width: 900px;
+    }
+  }
+
+  footer {
+    position: relative;
+    margin: 0 auto;
+    width: 900px;      
+    margin-top: 100px;
+    margin-bottom: 20px;
+    @include hashi;
+  }
+}
+
+#article {
+  header {
+    h1 { 
+      @include article-label; 
+    }
+    div {
+      position: absolute;
+      @include article-icon; 
+      top: -23px;
+      right: 38px;
+    }
+  }
+  ul {
+    margin-left: 37px;
+    li {
+      font-weight: bold;
+      list-style-type: circle;
+      a {
+        text-decoration: none;              
+        &:hover {
+          text-decoration: underline;              
+        }        
+      }
+      span {
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+#mc-lib {
+  header {
+    h1 { 
+      @include lib-label; 
+    }
+    div {
+      position: absolute;
+      @include lib-icon; 
+      top: -18px;
+      right: 26px;
+    }
+  }
+
+  section#explorizer {
+    h1 {
+      @include explorizer;
+    }
+  }
+
+  section#nicoscraper {
+    h1 {
+      @include nicoscraper;
+    }
+  }
+
+  section#nicomanip {
+    h1 {
+      @include nicomanip;
+    }
+  }
+}
+
+#mc-web {
+  header {
+    h1 { 
+      @include webs-label; 
+    }
+    div {
+      position: absolute;
+      @include webs-icon; 
+      top: -25px;
+      right: 42px;
+    }
+  }
+
+  section#ynn {
+    h1 {
+      @include ynn;
+    }
+  }
+}
+
+#aboutme {
+  header {
+    h1 { 
+      @include aboutme-label; 
+    }
+    div {
+      position: absolute;
+      @include lib-icon; 
+      top: -25px;
+      right: 10px;
+    }
+  }
+}
+
+
+#each-article {
+  width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-size: 16px;
+  line-height: 28px;
+  background: url("/images/article-back.png") repeat;
+  @include border-radius(15px, 15px);
+
+  header {
+    h1 {
+      font-size: 26px;
+    }
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+
+  h2 {
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  p {
+    text-indent: 1em;
+    margin: 10px 0; 
+  }
+
+  ul {
+    list-style-type: circle;  
+    margin: 10px 24px;    
+  }
+}
