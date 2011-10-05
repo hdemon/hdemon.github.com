@@ -96,7 +96,7 @@ body header hgroup #title-logo {
   position: absolute;
   top: 72px;
   left: 20px;
-  background: url("/images/index.png?1317790184") no-repeat 0px -512px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -512px;
   width: 273px;
   height: 25px;
 }
@@ -104,31 +104,34 @@ body header hgroup #title-logo {
 body header hgroup #title-icon {
   position: absolute;
   top: 26px;
-  left: 550px;
-  background: url("/images/index.png?1317790184") no-repeat 0px -429px;
+  left: 540px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -429px;
   width: 82px;
   height: 73px;
 }
 /* line 46, ../sass/screen.scss */
 body header hgroup ul {
   position: absolute;
-  left: 670px;
+  left: 660px;
   top: 31px;
+}
+/* line 51, ../sass/screen.scss */
+body header hgroup ul li {
   font-family: 'Maven Pro', sans-serif;
   font-size: 13px;
   color: white;
   line-height: 20px;
 }
-/* line 55, ../sass/screen.scss */
-body header hgroup ul a {
+/* line 57, ../sass/screen.scss */
+body header hgroup ul li a {
   color: white;
   text-decoration: none;
 }
-/* line 58, ../sass/screen.scss */
-body header hgroup ul a:hover {
+/* line 60, ../sass/screen.scss */
+body header hgroup ul li a:hover {
   text-decoration: underline;
 }
-/* line 65, ../sass/screen.scss */
+/* line 68, ../sass/screen.scss */
 body header #title-border-bottom {
   position: absolute;
   width: 100%;
@@ -136,27 +139,27 @@ body header #title-border-bottom {
   top: 98px;
   height: 30px;
 }
-/* line 74, ../sass/screen.scss */
+/* line 77, ../sass/screen.scss */
 body #wrapper {
   margin: 0 auto;
   width: 900px;
 }
-/* line 78, ../sass/screen.scss */
+/* line 81, ../sass/screen.scss */
 body #wrapper #left-content {
   float: left;
 }
-/* line 82, ../sass/screen.scss */
+/* line 85, ../sass/screen.scss */
 body #wrapper #right-content {
   float: right;
 }
-/* line 86, ../sass/screen.scss */
+/* line 89, ../sass/screen.scss */
 body #wrapper article {
   width: 400px;
   margin-bottom: 50px;
   font-size: 12px;
   line-height: 20px;
 }
-/* line 92, ../sass/screen.scss */
+/* line 95, ../sass/screen.scss */
 body #wrapper article header {
   position: relative;
   padding-top: 6px;
@@ -164,127 +167,127 @@ body #wrapper article header {
   margin-bottom: 20px;
   height: 26px;
   width: 380px;
-  background: url("/images/index.png?1317790184") no-repeat 0px -116px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -116px;
   width: 399px;
   height: 26px;
 }
-/* line 102, ../sass/screen.scss */
+/* line 105, ../sass/screen.scss */
 body #wrapper article section {
   margin-left: 20px;
   margin-top: 20px;
 }
-/* line 105, ../sass/screen.scss */
+/* line 108, ../sass/screen.scss */
 body #wrapper article section h1 {
   margin-bottom: 10px;
 }
-/* line 108, ../sass/screen.scss */
+/* line 111, ../sass/screen.scss */
 body #wrapper article section p {
   text-indent: 1em;
 }
-/* line 114, ../sass/screen.scss */
+/* line 117, ../sass/screen.scss */
 body #wrapper #clear {
   overflow: hidden;
   *zoom: 1;
   width: 900px;
 }
-/* line 120, ../sass/screen.scss */
+/* line 123, ../sass/screen.scss */
 body footer {
   position: relative;
   margin: 0 auto;
   width: 900px;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317790184") no-repeat 0px -195px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -195px;
   width: 174px;
   height: 42px;
 }
 
-/* line 132, ../sass/screen.scss */
+/* line 135, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -95px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
-/* line 135, ../sass/screen.scss */
+/* line 138, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317790184") no-repeat 0px -42px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -23px;
   right: 38px;
 }
-/* line 141, ../sass/screen.scss */
-#article header ul {
+/* line 145, ../sass/screen.scss */
+#article ul {
   margin-left: 20px;
 }
 
-/* line 149, ../sass/screen.scss */
+/* line 152, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -296px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -296px;
   width: 187px;
   height: 15px;
 }
-/* line 152, ../sass/screen.scss */
+/* line 155, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317790184") no-repeat 0px -247px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -18px;
   right: 26px;
 }
-/* line 161, ../sass/screen.scss */
+/* line 164, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -152px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -152px;
   width: 107px;
   height: 15px;
 }
-/* line 167, ../sass/screen.scss */
+/* line 170, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -346px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -346px;
   width: 99px;
   height: 15px;
 }
-/* line 173, ../sass/screen.scss */
+/* line 176, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -321px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -321px;
   width: 104px;
   height: 15px;
 }
 
-/* line 181, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -600px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -600px;
   width: 230px;
   height: 15px;
 }
-/* line 184, ../sass/screen.scss */
+/* line 187, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317790184") no-repeat 0px -547px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -547px;
   width: 65px;
   height: 43px;
   top: -25px;
   right: 42px;
 }
-/* line 193, ../sass/screen.scss */
+/* line 196, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px -625px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -625px;
   width: 269px;
   height: 26px;
 }
 
-/* line 201, ../sass/screen.scss */
+/* line 204, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317790184") no-repeat 0px 0px;
+  background: url("/images/index.png?1317790317") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
-/* line 204, ../sass/screen.scss */
+/* line 207, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317790184") no-repeat 0px -247px;
+  background: url("/images/index.png?1317790317") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -25px;

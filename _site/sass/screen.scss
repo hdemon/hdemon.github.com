@@ -39,24 +39,27 @@ body {
       #title-icon {
         position: absolute;
         top: 26px;
-        left: 550px;
+        left: 540px;
         @include title-icon;
       }
 
       ul {
         position: absolute;
-        left: 670px;
+        left: 660px;
         top: 31px;
-        font-family: 'Maven Pro', sans-serif;
-        font-size: 13px;
-        color: white;
-        line-height: 20px;
 
-        a {
+        li {
+          font-family: 'Maven Pro', sans-serif;
+          font-size: 13px;
           color: white;
-          text-decoration: none;        
-          &:hover {
-            text-decoration: underline;            
+          line-height: 20px;
+
+          a {
+            color: white;
+            text-decoration: none;        
+            &:hover {
+              text-decoration: underline;            
+            }
           }
         }
       }
@@ -138,9 +141,9 @@ body {
       top: -23px;
       right: 38px;
     }
-    ul {
-      margin-left: 20px;
-    }
+  }
+  ul {
+    margin-left: 20px;
   }
 }
 
