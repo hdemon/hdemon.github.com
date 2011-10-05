@@ -70,3 +70,30 @@ title: Hungry Daemonologue
 
   <div id="clear"></div>
 </div>
+
+<!--  -->
+<script type="text/javascript" src="/javascripts/explorizer.js/explorizer.js"></script>  
+<link href="/javascripts/explorizer.js/explorizer.css"
+        rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+"use strict";
+
+var id = 0,
+    $wrapper = $("#ex-wrapper"),
+    $form = [];
+
+for (id = 0; id < 2; id++){
+  $form[ id ] =
+    hdemon.explorizer
+      .set({  // parameters setting. Only "$wrapper" is required.
+        "$wrapper" : $wrapper })
+      .add() // new window-form creation.
+      .$content;
+          
+  createBox($form[ id ], 10, 5, 100, 240);
+  // When you manipulate DOM object in explorizer-form,
+  // you must call "initialize" method explicitly for resetting events trigger. 
+  hdemon.explorizer.initialize();
+}
+
+</script>
