@@ -49,7 +49,7 @@ categories:
 
 の全てが一致しない限り、処理を有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
 
-　そして、W3Cの勧告では[http://www.w3.org/TR/cors/]("Cross-Origin Resource Sharing")（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
+そして、W3Cの勧告では[http://www.w3.org/TR/cors/]("Cross-Origin Resource Sharing")（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
 
 #クロスドメイン通信禁止の例外と、XMLHttpRequest
 　先の同一生成元ポリシーが、「クロスドメイン」性を判断する抽象的な基準でした。しかし、同一生成元ポリシーに形式的に該当しつつも、クロスドメイン通信を直接／間接的に可能にする方法がいくつか存在します。それが次の手段です。
@@ -108,12 +108,14 @@ Each cross-origin request has an associated cross-origin request status that COR
 
 例えば、次のようなTwitterのTLから文字列を検索するAPIへアクセスするスクリプトを実行したとします。
 
-  var xhr = new XMLHttpRequest();
-  xhr.onreadystatechange = function(){
-      if (xhr.readyState === 4) alert(xhr.responseText);
-  };
-  xhr.open("GET", "http://search.twitter.com/search.json?q=h_demon", true);
-  xhr.send();
+{% highlight javascript %}
+var xhr = new XMLHttpRequest();
+xhr.onreadystatechange = function(){
+    if (xhr.readyState === 4) alert(xhr.responseText);
+};
+xhr.open("GET", "http://search.twitter.com/search.json?q=h_demon", true);
+xhr.send();
+{% endhighlight %}
 
 本来、この指定したAPIにリクエストすると、'h_demon'の文字列が含まれるつぶやきがJSONの形で返ってきます。このAPIへのリクエストをブラウザ上で試みるのが上のコードですが、これを例えばChrome開発ツールのコンソールで実行すると、
 
@@ -184,7 +186,7 @@ scriptタグに本当に制約がないのかは、あまり自信がありま�
 
 #同一生成元ポリシーとは一体なんだったのか。
 
-scriptタグについては少々消化不良ですが、今回はここで終えます。ところで、ここまでをまとめると、CORSのルールに従うブラウザであれば、クロスドメインなリクエスト自体は原則的に行なってしまうし、ヘッダさえ合致すればクロスドメイン通信も可能ということになります。つまり、CORSのような具体的なルールがあるのならば、同一生成元ポリシーとは何だったのか、という疑問が生まれます。
+scriptタグについては少々消化不良ですが、今回はここで終えます。ところでここまでをまとめると、CORSのルールに従うブラウザであればクロスドメインなリクエスト自体は原則的に行われてしまうし、ヘッダさえ合致すればレスポンスを受ける事も可能ということになります。つまりCORSの内で全て完結するわけですが、ならば同一生成元ポリシーとは何だったのか、という疑問が生まれます。
 
 この点を僕は今まで勘違いしていましたが、同一生成元ポリシーとは、「クロスドメイン通信を制約する」ルールではなく、もっと抽象的で広範囲なドメインに関するルールのようです。信頼できる[https://developer.mozilla.org/Ja/Same_origin_policy_for_JavaScript](MDNの記述)にはこうあります。
 
@@ -196,7 +198,6 @@ scriptタグについては少々消化不良ですが、今回はここで終�
 
 + 同一生成元ポリシーは、クロスドメイン通信を禁止するためのルールではなく、もっと広くドメイン関連の操作を制限するルールである。
 + クロスドメイン通信に関しては、CORSという標準化策定中の具体的なルールがある。
-+ CORSのもとでは、Access-Control-Allow-Originヘッダによってクロスドメイン通信は許可されうる。
-+ ブラウザは基本的にリクエストを禁止せず、レスポンスヘッダに従って、データをユーザに渡すかを決める。
++ CORSのもとでは、Access-Control-Allow-Originレスポンスヘッダによってクロスドメイン通信は許可されうる。
++ ブラウザは基本的にクロスドメインなリクエストを禁止せず、レスポンスヘッダに従って、データをユーザに渡すかを決める。
 + JSONPについてはCORSでは触れられておらず、事実上ブラウザまかせ？
-+
