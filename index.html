@@ -12,7 +12,7 @@ title: Hungry Daemonologue
       </header>
       <ul>
         {% for post in site.posts reverse %}
-        <li>{{ post.title }} <span>{{ post.date }}</span></li>
+        <li>{{ post.title }} <span>{{ page.date| date: "%B-%D-%Y" }}</span></li>
         {% endfor %}
       </ul>
     </article>
