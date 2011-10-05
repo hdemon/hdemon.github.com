@@ -95,7 +95,7 @@ body > header hgroup #title-logo {
   position: absolute;
   top: 72px;
   left: 20px;
-  background: url("/images/index.png?1317822829") no-repeat 0px -512px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -512px;
   width: 273px;
   height: 25px;
 }
@@ -104,7 +104,7 @@ body > header hgroup #title-icon {
   position: absolute;
   top: 26px;
   left: 540px;
-  background: url("/images/index.png?1317822829") no-repeat 0px -429px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -429px;
   width: 82px;
   height: 73px;
 }
@@ -130,35 +130,27 @@ body > header hgroup ul li a {
 body > header hgroup ul li a:hover {
   text-decoration: underline;
 }
-/* line 67, ../sass/screen.scss */
-body > header #title-border-bottom {
-  position: absolute;
-  width: 100%;
-  background: url("/images/wave.png") repeat-x;
-  top: 98px;
-  height: 30px;
-}
-/* line 76, ../sass/screen.scss */
+/* line 68, ../sass/screen.scss */
 body #wrapper {
   margin: 0 auto;
   width: 900px;
 }
-/* line 80, ../sass/screen.scss */
+/* line 72, ../sass/screen.scss */
 body #wrapper #left-content {
   float: left;
 }
-/* line 84, ../sass/screen.scss */
+/* line 76, ../sass/screen.scss */
 body #wrapper #right-content {
   float: right;
 }
-/* line 88, ../sass/screen.scss */
+/* line 80, ../sass/screen.scss */
 body #wrapper article {
   width: 400px;
   margin-bottom: 50px;
   font-size: 12px;
   line-height: 20px;
 }
-/* line 94, ../sass/screen.scss */
+/* line 86, ../sass/screen.scss */
 body #wrapper article header {
   position: relative;
   padding-top: 6px;
@@ -166,151 +158,151 @@ body #wrapper article header {
   margin-bottom: 20px;
   height: 26px;
   width: 380px;
-  background: url("/images/index.png?1317822829") no-repeat 0px -116px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -116px;
   width: 399px;
   height: 26px;
 }
-/* line 104, ../sass/screen.scss */
+/* line 96, ../sass/screen.scss */
 body #wrapper article section {
   margin-left: 20px;
   margin-top: 20px;
 }
-/* line 107, ../sass/screen.scss */
+/* line 99, ../sass/screen.scss */
 body #wrapper article section h1 {
   margin-bottom: 10px;
 }
-/* line 110, ../sass/screen.scss */
+/* line 102, ../sass/screen.scss */
 body #wrapper article section p {
   text-indent: 1em;
 }
-/* line 116, ../sass/screen.scss */
+/* line 108, ../sass/screen.scss */
 body #wrapper #clear {
   overflow: hidden;
   *zoom: 1;
   width: 900px;
 }
-/* line 122, ../sass/screen.scss */
+/* line 114, ../sass/screen.scss */
 body footer {
   position: relative;
   margin: 0 auto;
   width: 900px;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317822829") no-repeat 0px -195px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -195px;
   width: 174px;
   height: 42px;
 }
 
-/* line 134, ../sass/screen.scss */
+/* line 126, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -95px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
-/* line 137, ../sass/screen.scss */
+/* line 129, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317822829") no-repeat 0px -42px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -23px;
   right: 38px;
 }
-/* line 144, ../sass/screen.scss */
+/* line 136, ../sass/screen.scss */
 #article ul {
   margin-left: 37px;
 }
-/* line 146, ../sass/screen.scss */
+/* line 138, ../sass/screen.scss */
 #article ul li {
   font-weight: bold;
   list-style-type: circle;
 }
-/* line 149, ../sass/screen.scss */
+/* line 141, ../sass/screen.scss */
 #article ul li a {
   text-decoration: none;
 }
-/* line 151, ../sass/screen.scss */
+/* line 143, ../sass/screen.scss */
 #article ul li a:hover {
   text-decoration: underline;
 }
-/* line 155, ../sass/screen.scss */
+/* line 147, ../sass/screen.scss */
 #article ul li span {
   font-weight: normal;
 }
 
-/* line 164, ../sass/screen.scss */
+/* line 156, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -296px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -296px;
   width: 187px;
   height: 15px;
 }
-/* line 167, ../sass/screen.scss */
+/* line 159, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317822829") no-repeat 0px -247px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -18px;
   right: 26px;
 }
-/* line 176, ../sass/screen.scss */
+/* line 168, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -152px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -152px;
   width: 107px;
   height: 15px;
 }
-/* line 182, ../sass/screen.scss */
+/* line 174, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -346px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -346px;
   width: 99px;
   height: 15px;
 }
-/* line 188, ../sass/screen.scss */
+/* line 180, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -321px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -321px;
   width: 104px;
   height: 15px;
 }
 
-/* line 196, ../sass/screen.scss */
+/* line 188, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -600px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -600px;
   width: 230px;
   height: 15px;
 }
-/* line 199, ../sass/screen.scss */
+/* line 191, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317822829") no-repeat 0px -547px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -547px;
   width: 65px;
   height: 43px;
   top: -25px;
   right: 42px;
 }
-/* line 208, ../sass/screen.scss */
+/* line 200, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px -625px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -625px;
   width: 269px;
   height: 26px;
 }
 
-/* line 216, ../sass/screen.scss */
+/* line 208, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317822829") no-repeat 0px 0px;
+  background: url("/images/index.png?1317822908") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
-/* line 219, ../sass/screen.scss */
+/* line 211, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317822829") no-repeat 0px -247px;
+  background: url("/images/index.png?1317822908") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -25px;
   right: 10px;
 }
 
-/* line 229, ../sass/screen.scss */
+/* line 221, ../sass/screen.scss */
 #each-article {
   width: 900px;
   margin: 0 auto;
@@ -325,34 +317,34 @@ body footer {
   -khtml-border-radius: 15px / 15px;
   border-radius: 15px / 15px;
 }
-/* line 239, ../sass/screen.scss */
+/* line 231, ../sass/screen.scss */
 #each-article header h1 {
   font-size: 26px;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-/* line 246, ../sass/screen.scss */
+/* line 238, ../sass/screen.scss */
 #each-article h1 {
   font-size: 22px;
   font-weight: bold;
   margin-top: 32px;
   margin-bottom: 20px;
 }
-/* line 253, ../sass/screen.scss */
+/* line 245, ../sass/screen.scss */
 #each-article h2 {
   font-size: 16px;
   font-weight: bold;
 }
-/* line 258, ../sass/screen.scss */
+/* line 250, ../sass/screen.scss */
 #each-article p {
   text-indent: 1em;
   margin: 10px 0;
 }
-/* line 263, ../sass/screen.scss */
+/* line 255, ../sass/screen.scss */
 #each-article blockquote {
   quotes: none;
   font-size: 14px;
-  background: #DDD;
+  background: url("/images/back.png") repeat;
   margin: 0 20px;
   padding: 10px;
   -webkit-border-radius: 7px 7px;
@@ -362,7 +354,7 @@ body footer {
   -khtml-border-radius: 7px / 7px;
   border-radius: 7px / 7px;
 }
-/* line 273, ../sass/screen.scss */
+/* line 265, ../sass/screen.scss */
 #each-article .highlight pre {
   margin: 0 20px;
   padding: 10px;
@@ -373,7 +365,7 @@ body footer {
   -khtml-border-radius: 7px / 7px;
   border-radius: 7px / 7px;
 }
-/* line 280, ../sass/screen.scss */
+/* line 272, ../sass/screen.scss */
 #each-article ul {
   list-style-type: circle;
   margin: 10px 24px;

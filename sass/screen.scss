@@ -63,14 +63,6 @@ body {
         }
       }
     }
-
-    #title-border-bottom {
-      position: absolute;
-      width: 100%;
-      background: url("/images/wave.png") repeat-x;
-      top: 98px;
-      height: 30px;
-    }
   }
 
   #wrapper {
@@ -263,7 +255,7 @@ body {
   blockquote {
     quotes: none;
     font-size: 14px;
-    background: #DDD;
+    background: url("/images/back.png") repeat;
     margin: 0 20px;
     padding: 10px;
     @include border-radius(7px, 7px);
