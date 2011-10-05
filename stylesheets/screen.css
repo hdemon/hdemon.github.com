@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 17, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 20, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 20, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 body {
   line-height: 1;
 }
 
-/* line 22, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 24, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 26, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 28, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 101, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 101, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 30, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 114, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 114, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -91,29 +91,28 @@ body header #title-band {
 }
 /* line 36, ../sass/screen.scss */
 body header hgroup {
-  position: relative;
   margin: 0 auto;
   width: 900px;
 }
-/* line 41, ../sass/screen.scss */
+/* line 40, ../sass/screen.scss */
 body header hgroup #title-logo {
   position: absolute;
   top: 53px;
   left: 20px;
-  background: url("/images/index.png?1317780224") no-repeat 0px -609px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -609px;
   width: 273px;
   height: 25px;
 }
-/* line 48, ../sass/screen.scss */
+/* line 47, ../sass/screen.scss */
 body header hgroup #title-icon {
   position: absolute;
   top: 10px;
   left: 520px;
-  background: url("/images/index.png?1317780224") no-repeat 0px -526px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -526px;
   width: 82px;
   height: 73px;
 }
-/* line 55, ../sass/screen.scss */
+/* line 54, ../sass/screen.scss */
 body header hgroup ul {
   left: 636px;
   position: absolute;
@@ -122,7 +121,7 @@ body header hgroup ul {
   color: white;
   line-height: 20px;
 }
-/* line 65, ../sass/screen.scss */
+/* line 64, ../sass/screen.scss */
 body header #title-border-bottom {
   width: 100%;
   background: url("/images/wave.png") repeat-x;
@@ -130,20 +129,20 @@ body header #title-border-bottom {
   position: absolute;
   height: 30px;
 }
-/* line 74, ../sass/screen.scss */
+/* line 73, ../sass/screen.scss */
 body #wrapper {
   margin: 0 auto;
   width: 900px;
 }
-/* line 78, ../sass/screen.scss */
+/* line 77, ../sass/screen.scss */
 body #wrapper #left-content {
   float: left;
 }
-/* line 82, ../sass/screen.scss */
+/* line 81, ../sass/screen.scss */
 body #wrapper #right-content {
   float: right;
 }
-/* line 86, ../sass/screen.scss */
+/* line 85, ../sass/screen.scss */
 body #wrapper article {
   width: 400px;
   margin-bottom: 50px;
@@ -151,7 +150,7 @@ body #wrapper article {
   font-size: 12px;
   line-height: 20px;
 }
-/* line 93, ../sass/screen.scss */
+/* line 92, ../sass/screen.scss */
 body #wrapper article header {
   position: relative;
   background: #333333;
@@ -167,26 +166,26 @@ body #wrapper article header {
   height: 20px;
   width: 380px;
 }
-/* line 104, ../sass/screen.scss */
+/* line 103, ../sass/screen.scss */
 body #wrapper article section {
   margin-left: 20px;
   margin-top: 20px;
 }
-/* line 107, ../sass/screen.scss */
+/* line 106, ../sass/screen.scss */
 body #wrapper article section h1 {
   margin-bottom: 10px;
 }
-/* line 110, ../sass/screen.scss */
+/* line 109, ../sass/screen.scss */
 body #wrapper article section p {
   text-indent: 1em;
 }
-/* line 116, ../sass/screen.scss */
+/* line 115, ../sass/screen.scss */
 body #wrapper #clear {
   overflow: hidden;
   *zoom: 1;
   width: 900px;
 }
-/* line 122, ../sass/screen.scss */
+/* line 121, ../sass/screen.scss */
 body footer {
   position: relative;
   margin: 0 auto;
@@ -196,98 +195,98 @@ body footer {
   margin: 0 auto;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317780224") no-repeat 0px -159px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -159px;
   width: 174px;
   height: 42px;
 }
 
-/* line 135, ../sass/screen.scss */
+/* line 134, ../sass/screen.scss */
 #content {
   background: #111;
 }
 
-/* line 142, ../sass/screen.scss */
+/* line 141, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -95px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
-/* line 143, ../sass/screen.scss */
+/* line 142, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317780224") no-repeat 0px -42px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -25px;
   right: 20px;
 }
 
-/* line 154, ../sass/screen.scss */
+/* line 153, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -260px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -260px;
   width: 187px;
   height: 15px;
 }
-/* line 155, ../sass/screen.scss */
+/* line 154, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317780224") no-repeat 0px -211px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -211px;
   width: 83px;
   height: 39px;
   top: -18px;
   right: 15px;
 }
-/* line 164, ../sass/screen.scss */
+/* line 163, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -116px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -116px;
   width: 107px;
   height: 15px;
 }
-/* line 170, ../sass/screen.scss */
+/* line 169, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -310px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -310px;
   width: 99px;
   height: 15px;
 }
-/* line 176, ../sass/screen.scss */
+/* line 175, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -285px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -285px;
   width: 104px;
   height: 15px;
 }
 
-/* line 184, ../sass/screen.scss */
+/* line 183, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -697px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -697px;
   width: 230px;
   height: 15px;
 }
-/* line 185, ../sass/screen.scss */
+/* line 184, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317780224") no-repeat 0px -644px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -644px;
   width: 60px;
   height: 43px;
   top: -25px;
   right: 20px;
 }
-/* line 194, ../sass/screen.scss */
+/* line 193, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px -722px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -722px;
   width: 269px;
   height: 26px;
 }
 
-/* line 202, ../sass/screen.scss */
+/* line 201, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317780224") no-repeat 0px 0px;
+  background: url("/images/index.png?1317781715") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
-/* line 203, ../sass/screen.scss */
+/* line 202, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317780224") no-repeat 0px -211px;
+  background: url("/images/index.png?1317781715") no-repeat 0px -211px;
   width: 83px;
   height: 39px;
   top: -25px;
