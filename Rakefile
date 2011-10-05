@@ -10,7 +10,7 @@ task :default => "make"
 task "make" => ["sprites", "compass", "jekyll", "release"]
 
 task "jekyll" do
-	sh "#{JEKYLL}"
+	sh "#{JEKYLL} --pygments"
 end
 
 task "sprites" => "sass/sprites.css" do

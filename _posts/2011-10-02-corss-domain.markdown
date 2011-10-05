@@ -108,7 +108,7 @@ Each cross-origin request has an associated cross-origin request status that COR
 
 例えば、次のようなTwitterのTLから文字列を検索するAPIへアクセスするスクリプトを実行したとします。
 
-{% highlight ruby %}
+{% highlight javascript %}
 var xhr = new XMLHttpRequest();
 xhr.onreadystatechange = function(){
     if (xhr.readyState === 4) alert(xhr.responseText);
