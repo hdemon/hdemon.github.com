@@ -146,6 +146,10 @@ body {
     margin-left: 20px;
     li {
       font-weight: bold;
+      list-style-type: circle;
+      span {
+        font-weight: normal;
+      }
     }
   }
 }
