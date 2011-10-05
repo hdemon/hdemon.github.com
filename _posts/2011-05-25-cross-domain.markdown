@@ -148,15 +148,15 @@ xhr.send();
 まずは実験。さっきと同じAPIへ、scriptタグによってリクエストします。コードはこんな感じでしょうか。
 
 {% highlight javascript %}
+<script type="text/javascript">
+function getTl(json) {
+  alert(json);
+}
+</script>
 <script type="application/javascript" 
-src="http://search.twitter.com/search.json?q=h_demon&callback=getTl">
+  src="http://search.twitter.com/search.json?q=h_demon&callback=getTl">
 </script>
 
-<script type="text/javascript">
-  function getTl(json) {
-    alert(json);
-  }
-</script>
 {% endhighlight %}
 
 これを実行すると、
