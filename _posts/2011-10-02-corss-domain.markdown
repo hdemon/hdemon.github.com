@@ -11,9 +11,9 @@ categories:
 
 #経緯
 
-僕は今まで、クロスドメイン通信とその制約とは、ホスト等が異なるサーバへのアクセスをブラウザが禁止する事だと思っていました。しかし、Chrome Extensionを開発中にどうもそれでは説明が付かない事があり、クロスドメイン通信に関して基本から学び直す機会があったので、せっかくなのでまとめました。この記事の結論を先に言うと、CORSという規格化されたクロスドメイン通信制約のもとでは、ブラウザはリクエストとレスポンスのどちらかあるいはどちらをも検閲する場合がある、という事です。
+僕は今まで、ブラウザのクロスドメイン通信の制約とは、ホスト等が異なるサーバへのアクセスをブラウザが禁止する事だと思っていました。しかし、Chrome Extensionを開発中にどうもそれでは説明が付かない事があり、クロスドメイン通信に関して基本から学び直す機会があったので、せっかくなのでまとめました。この記事の結論を先に言うと、CORSという標準化されたクロスドメイン通信制約のもとでは、ブラウザは主にレスポンスを検閲する、という事です。
 
-　ただし、以下の文章は私が個人的に調べた事をまとめたものであり、正しさの保障はありません。むしろ間違いを見つけたら、指摘して頂けるとありがたいです。
+ただし、以下の文章は私が個人的に調べた事をまとめたものであり、正しさの保障はありません。むしろ間違いを見つけたら、指摘して頂けるとありがたいです。
 
 #なぜクロスドメイン通信が制約されるのか
 
@@ -31,7 +31,7 @@ categories:
 #具体的に、どんなリスクが生まれるのか。
 この項はちょっと知識と理解に自信がありません。しかし、調べた限りでは「クロスサイトスクリプティング（以下XSS)のバリエーションを増やす」、「DoS攻撃の踏み台に利用される」という2つのリスクが重要なんじゃないかと思います。以下簡単な解説。
 
-#XSS
+##XSS
 不特定多数の人間が文字のメッセージを残せる掲示板やCMS等に、文章の代わりにタグを用いたJavaScript等のスクリプトを記述すると、そのサイトがスクリプトとして働く文字列を排除するロジックを持っていなければ、閲覧者のブラウザ上でそのスクリプトが動作し始めることになる。
 この事自体はクロスドメイン通信の可否とは無関係に発生するが、それを許可してしまうとXSSをより効果的にしてしまう。具体的には、XSSによってCookie・キーイベント・DOM等から窃取したアカウント情報等を、さらに特定のサーバへ直接送信することが可能になり、XSSの目的をより直接的・効果的に達成する手段を与えることになる。
 
@@ -41,13 +41,13 @@ categories:
 というわけで、これらのリスクを減らすため、ブラウザ上で動作するスクリプトの機能を制限するルールとして「同一生成元ポリシー」"same origin policy" が設けられました。
 
 #同一生成元ポリシーとは？
-サイト上のスクリプトがあるサーバへデータをリクエストする命令を出した場合、そのサイトとリクエスト先とで、
+サイト上のスクリプトが、ドメインに関するリクエスト、プロパティの設定・参照などを行う場合、自分とその対象とで
 
 + ホスト
 + ポート
 + プロトコル
 
-の全てが一致しない限り、リクエストを有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
+の全てが一致しない限り、処理を有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
 
 　そして、W3Cの勧告では[http://www.w3.org/TR/cors/]("Cross-Origin Resource Sharing")（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
 
@@ -141,13 +141,13 @@ Each cross-origin request has an associated cross-origin request status that COR
 
 まずは実験してみます。先の例と同じAPIに対し、scriptタグによってリクエストします。
 
-<script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
+  <script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
 
-<script type="text/javascript">
-  function getTl(json) {
-    alert(json);
-  }
-</script>
+  <script type="text/javascript">
+    function getTl(json) {
+      alert(json);
+    }
+  </script>
 
 GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
 Host: search.twitter.com
@@ -165,12 +165,12 @@ Access-Control-Allow-Originヘッダは・・・付いていませんね。付�
 
 CORSではなく、XMLHttpRequest leel2の仕様に以下のような記述があります。
 
-4.1. Origin and Base URL
-Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
+  4.1. Origin and Base URL
+  　Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
 
-3.6.8. The send() method
- If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
- Otherwise These are the cross-origin request steps. 
+  3.6.8. The send() method
+   If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
+   Otherwise These are the cross-origin request steps. 
 
 ブラウザはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスを持っています。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request](CORSに規定されるCross-Origin Requestのプロセス)に進みます。
 
@@ -181,3 +181,22 @@ Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHtt
 + scriptタグを利用したリクエストは、XMLHttpRequestのクロスドメイン性判定のプロセスには準ぜず、仕様上は特別な制約を設けられていない。
 
 scriptタグに本当に制約がないのかは、あまり自信がありません。調べてみたら見つかるかも知れませんが、CORSは独立したセクションで議論されており、JavaScriptのXMLHttpRequestに限定されない制約の話だと思います。XMLHttpRequestが例として挙げられる事はありますが、XMLHttpRequestのルールについての記述はありません。したがって、scriptタグの制約についてもここには書いていないはずですから。
+
+#同一生成元ポリシーとは一体なんだったのか。
+
+scriptタグについては少々消化不良ですが、今回はここで終えます。ところで、ここまでをまとめると、CORSのルールに従うブラウザであれば、クロスドメインなリクエスト自体は原則的に行なってしまうし、ヘッダさえ合致すればクロスドメイン通信も可能ということになります。つまり、CORSのような具体的なルールがあるのならば、同一生成元ポリシーとは何だったのか、という疑問が生まれます。
+
+この点を僕は今まで勘違いしていましたが、同一生成元ポリシーとは、「クロスドメイン通信を制約する」ルールではなく、もっと抽象的で広範囲なドメインに関するルールのようです。信頼できる[https://developer.mozilla.org/Ja/Same_origin_policy_for_JavaScript](MDNの記述)にはこうあります。
+
+  同一生成元ポリシーによって、ある生成元から読み込まれた文書やスクリプトが、異なる生成元からの文書のプロパティを取得したり設定したりするのを防ぎます。このポリシーは Netscape Navigator 2.0 までさかのぼります。
+
+リクエストを禁止します、とは書いていない。また、document.domainに関するその例を見ても、あくまで生成元の齟齬を禁止する抽象的ルールであるように思われます。
+
+#まとめ
+
++ 同一生成元ポリシーは、クロスドメイン通信を禁止するためのルールではなく、もっと広くドメイン関連の操作を制限するルールである。
++ クロスドメイン通信に関しては、CORSという標準化策定中の具体的なルールがある。
++ CORSのもとでは、Access-Control-Allow-Originヘッダによってクロスドメイン通信は許可されうる。
++ ブラウザは基本的にリクエストを禁止せず、レスポンスヘッダに従って、データをユーザに渡すかを決める。
++ JSONPについてはCORSでは触れられておらず、事実上ブラウザまかせ？
++
