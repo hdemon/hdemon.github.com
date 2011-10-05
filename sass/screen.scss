@@ -226,8 +226,8 @@ body {
   margin-left: 40px;
   font-size: 16px;
   line-height: 28px;
-  background: url("/images/back.png") repeat;
-  opacity: 0.6;
+  background: url("/images/article-back.png") repeat;
+  @include border-radius(15px, 15px);
 
   h1 {
     font-size: 22px;
