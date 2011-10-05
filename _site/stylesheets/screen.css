@@ -95,7 +95,7 @@ body > header hgroup #title-logo {
   position: absolute;
   top: 72px;
   left: 20px;
-  background: url("/images/index.png?1317822908") no-repeat 0px -512px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -512px;
   width: 273px;
   height: 25px;
 }
@@ -104,7 +104,7 @@ body > header hgroup #title-icon {
   position: absolute;
   top: 26px;
   left: 540px;
-  background: url("/images/index.png?1317822908") no-repeat 0px -429px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -429px;
   width: 82px;
   height: 73px;
 }
@@ -158,7 +158,7 @@ body #wrapper article header {
   margin-bottom: 20px;
   height: 26px;
   width: 380px;
-  background: url("/images/index.png?1317822908") no-repeat 0px -116px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -116px;
   width: 399px;
   height: 26px;
 }
@@ -188,21 +188,21 @@ body footer {
   width: 900px;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317822908") no-repeat 0px -195px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -195px;
   width: 174px;
   height: 42px;
 }
 
 /* line 126, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -95px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
 /* line 129, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317822908") no-repeat 0px -42px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -23px;
@@ -232,14 +232,14 @@ body footer {
 
 /* line 156, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -296px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -296px;
   width: 187px;
   height: 15px;
 }
 /* line 159, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317822908") no-repeat 0px -247px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -18px;
@@ -247,33 +247,33 @@ body footer {
 }
 /* line 168, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -152px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -152px;
   width: 107px;
   height: 15px;
 }
 /* line 174, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -346px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -346px;
   width: 99px;
   height: 15px;
 }
 /* line 180, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -321px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -321px;
   width: 104px;
   height: 15px;
 }
 
 /* line 188, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -600px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -600px;
   width: 230px;
   height: 15px;
 }
 /* line 191, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317822908") no-repeat 0px -547px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -547px;
   width: 65px;
   height: 43px;
   top: -25px;
@@ -281,21 +281,21 @@ body footer {
 }
 /* line 200, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px -625px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -625px;
   width: 269px;
   height: 26px;
 }
 
 /* line 208, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317822908") no-repeat 0px 0px;
+  background: url("/images/index.png?1317823111") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
 /* line 211, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317822908") no-repeat 0px -247px;
+  background: url("/images/index.png?1317823111") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -25px;
@@ -346,7 +346,7 @@ body footer {
   font-size: 14px;
   background: url("/images/back.png") repeat;
   margin: 0 20px;
-  padding: 10px;
+  padding: 10px 25px;
   -webkit-border-radius: 7px 7px;
   -moz-border-radius: 7px / 7px;
   -o-border-radius: 7px / 7px;
