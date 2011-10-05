@@ -145,14 +145,13 @@ xhr.send();
 まずは実験してみます。先の例と同じAPIに対し、scriptタグによってリクエストします。
 
 {% highlight javascript %}
+<script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
 
-  <script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
-
-  <script type="text/javascript">
-    function getTl(json) {
-      alert(json);
-    }
-  </script>
+<script type="text/javascript">
+  function getTl(json) {
+    alert(json);
+  }
+</script>
 {% endhighlight %}
 
 GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
