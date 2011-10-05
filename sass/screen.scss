@@ -222,9 +222,10 @@ body {
 
 
 #each-article {
+  width: 900px;
   margin-left: 40px;
   font-size: 14px;
-  line-height:  20px;   
+  line-height:  24px;   
 
   h1 {
     font-size: 22px;
@@ -241,9 +242,7 @@ body {
     font-weight: bold;
   }
 
-  p {
-    font-size: 14px;
-    line-height:  20px;    
+  p {   
   }
 
 }
