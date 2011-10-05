@@ -258,6 +258,14 @@ body {
     margin: 10px 0; 
   }
 
+  blockquote {
+    quotes: none;
+    font-size: 14px;
+    background: #DDD;
+    margin: 0 20px;
+    padding: 10px;
+    @include border-radius(7px, 7px);
+  }
   ul {
     list-style-type: circle;  
     margin: 10px 24px;    
