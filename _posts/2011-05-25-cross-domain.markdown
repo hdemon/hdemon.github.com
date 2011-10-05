@@ -47,7 +47,7 @@ title: "クロスドメインにまつわるヘッダについて考える"
 
 の全てが一致しない限り、処理を有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
 
-そして、W3Cの勧告では[http://www.w3.org/TR/cors/]("Cross-Origin Resource Sharing")（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
+そして、W3Cの勧告では["Cross-Origin Resource Sharing")(http://www.w3.org/TR/cors/)（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
 
 #クロスドメイン通信禁止の例外と、XMLHttpRequest
 　先の同一生成元ポリシーが、「クロスドメイン」性を判断する抽象的な基準でした。しかし、同一生成元ポリシーに形式的に該当しつつも、クロスドメイン通信を直接／間接的に可能にする方法がいくつか存在します。それが次の手段です。
@@ -68,7 +68,7 @@ title: "クロスドメインにまつわるヘッダについて考える"
 + ブラウザにXMLHttpRequest Level1とLevel2の２つのメソッドが同居するのではなく、Level2に置き換わる。つまり、Level2に準拠する限り、XMLHttpRequestはCORSのルールに従う。
 + ただし、XMLHttpRequest Level2とCORSとHTML5は独立したセクションであり、かつ現時点（2011/5)では全てドラフトであり、また前二者は"non-normative"である。
 
-[http://www.w3.org/TR/cors/#cross-origin-request](仕様書)
+[仕様書](http://www.w3.org/TR/cors/#cross-origin-request)
 
 という感じです。つまり、クロスドメイン通信の制約についてはまだ多くがブラウザ側の裁量に任されており、各社のブラウザがどのように対応しているかは、個別に調べるか実験してみるかでしか判断できません。ちなみにW3Cにおける"non-normative"とか[http://tools.ietf.org/html/rfc2119]("SHOULD")などの言葉には厳密な定義があるので、是非読んでみてください。
 
@@ -151,6 +151,9 @@ xhr.send();
 </script>
 {% endhighlight %}
 
+これを実行すると、
+
+![jsonp-response](/images/jsonp-response.png)
 
 Access-Control-Allow-Originヘッダは・・・付いていませんね。付いていないけれど、当然ながら期待した正常なレスポンスがあり、かつ我々はそれを受け取れています。これはどういうことなのか。
 
