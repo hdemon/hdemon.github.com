@@ -222,20 +222,28 @@ body {
 
 
 #each-article {
+  margin-left: 40px;
   font-size: 14px;
-  line-height:  20px;
-  margin-left: 20px;
+  line-height:  20px;   
 
   h1 {
     font-size: 22px;
+    font-weight: bold;
   }
 
   h2 {
     font-size: 18px;
+    font-weight: bold;
   }
 
   h3 {
     font-size: 14px;
+    font-weight: bold;
+  }
+
+  p {
+    font-size: 14px;
+    line-height:  20px;    
   }
 
 }
