@@ -47,7 +47,7 @@ title: "クロスドメインにまつわるヘッダについて考える"
 
 の全てが一致しない限り、処理を有効にしないというブラウザ上の制約です。このルールはNetscape2.0が独自に実装したことに始まり、その効果が認知され他の主要ブラウザでも採用されるようになりました。W3C等により共通仕様とされているわけではないですが、現在ブラウザとして認知される一般的なものは当然にこのポリシーを採用しています。
 
-そして、W3Cの勧告では["Cross-Origin Resource Sharing")(http://www.w3.org/TR/cors/)（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
+そして、W3Cの勧告では["Cross-Origin Resource Sharing"](http://www.w3.org/TR/cors/)（以下CORS)というセクションで、同一生成元ポリシーがより具体的な仕様として定められています(ただし、CORSは"non-normative"とされているので、この仕様を実装するかどうかは「W3C準拠」であることとは関係はないはずです)。
 
 #クロスドメイン通信禁止の例外と、XMLHttpRequest
 　先の同一生成元ポリシーが、「クロスドメイン」性を判断する抽象的な基準でした。しかし、同一生成元ポリシーに形式的に該当しつつも、クロスドメイン通信を直接／間接的に可能にする方法がいくつか存在します。それが次の手段です。
@@ -70,7 +70,7 @@ title: "クロスドメインにまつわるヘッダについて考える"
 
 [仕様書](http://www.w3.org/TR/cors/#cross-origin-request)
 
-という感じです。つまり、クロスドメイン通信の制約についてはまだ多くがブラウザ側の裁量に任されており、各社のブラウザがどのように対応しているかは、個別に調べるか実験してみるかでしか判断できません。ちなみにW3Cにおける"non-normative"とか[http://tools.ietf.org/html/rfc2119]("SHOULD")などの言葉には厳密な定義があるので、是非読んでみてください。
+という感じです。つまり、クロスドメイン通信の制約についてはまだ多くがブラウザ側の裁量に任されており、各社のブラウザがどのように対応しているかは、個別に調べるか実験してみるかでしか判断できません。ちなみにW3Cにおける"non-normative"とか["SHOULD"](http://tools.ietf.org/html/rfc2119)などの言葉には厳密な定義があるので、是非読んでみてください。
 
 #CORSの中核、Access-Control-Allow-OriginヘッダとOriginヘッダ
 
@@ -84,7 +84,8 @@ Level2では、クロスドメイン通信は条件付きで許可されます�
 + Access-Control-Allow-Origin ヘッダに"*"が含まれるときは、クロスドメイン通信を許可する。
 + Access-Control-Allow-Origin ヘッダが１つもないか、あるいは複数存在するときは不許可。
 + Access-Control-Allow-Origin がOriginヘッダと一致しない場合も不許可。
-(※credential flag等の条件があるが、ややこしくなるし問題ないと思われるので省略。)
+
+※credential flag等の条件があるが、ややこしくなるし問題ないと思われるので省略。
 
 「許可する」というのは、繰り返しになりますが「リクエストを送らない」ということではなく、ユーザにデータを受け渡さないということです。仕様書では、リクエストが返ってきたときの処理に関して、
 
@@ -168,7 +169,7 @@ CORSではなく、XMLHttpRequest leel2の仕様に以下のような記述が�
 > If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
 Otherwise These are the cross-origin request steps. 
 
-ブラウザにはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスがあります。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request](CORSに規定されるCross-Origin Requestのプロセス)に進みます。
+ブラウザにはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスがあります。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[(]CORSに規定されるCross-Origin Requestのプロセス]([http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request)に進みます。
 
 一方、JSONPの要であるscriptタグの部分も読んだのですが、特にクロスドメイン通信に関する制約等は見つけられませんでした。したがって、確証はありませんが次のような事ではないかと思います。
 
@@ -182,7 +183,7 @@ scriptタグに本当に制約がないのかは、あまり自信がありま�
 
 scriptタグについては少々消化不良ですが、今回はここで終えます。ところでここまでをまとめると、CORSのルールに従うブラウザであればクロスドメインなリクエスト自体は原則的に行われてしまうし、ヘッダさえ合致すればレスポンスを受ける事も可能ということになります。つまりCORSの内で全て完結するわけですが、ならば同一生成元ポリシーとは何だったのか、という疑問が生まれます。
 
-この点を僕は今まで勘違いしていましたが、同一生成元ポリシーとは、「クロスドメイン通信を制約する」ルールではなく、もっと抽象的で広範囲なドメインに関するルールのようです。信頼できる[https://developer.mozilla.org/Ja/Same_origin_policy_for_JavaScript](MDNの記述)にはこうあります。
+この点を僕は今まで勘違いしていましたが、同一生成元ポリシーとは、「クロスドメイン通信を制約する」ルールではなく、もっと抽象的で広範囲なドメインに関するルールのようです。信頼できる[MDNの記述](https://developer.mozilla.org/Ja/Same_origin_policy_for_JavaScript)にはこうあります。
 
 > 同一生成元ポリシーによって、ある生成元から読み込まれた文書やスクリプトが、異なる生成元からの文書のプロパティを取得したり設定したりするのを防ぎます。このポリシーは Netscape Navigator 2.0 までさかのぼります。
 
