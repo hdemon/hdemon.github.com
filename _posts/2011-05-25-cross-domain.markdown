@@ -138,10 +138,11 @@ xhr.send();
 
 しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、JSONPはクロスドメイン通信制約の例外であるような規定がないと、つじつまが合いません。
 
-まずは実験してみます。先の例と同じAPIに対し、scriptタグによってリクエストします。
+まずは実験。さっきと同じAPIへ、scriptタグによってリクエストします。コードはこんな感じでしょうか。
 
 {% highlight javascript %}
-<script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
+<script type="application/javascript" src="http://search.twitter.com/search.json?q=h_demon&callback=getTl">
+</script>
 
 <script type="text/javascript">
   function getTl(json) {
@@ -150,15 +151,6 @@ xhr.send();
 </script>
 {% endhighlight %}
 
-GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
-Host: search.twitter.com
-Connection: keep-alive
-Referer: http://hdemon.net/
-User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/534.24 (KHTML, like Gecko) Chrome/11.0.696.68 Safari/534.24
-Accept: */*
-Accept-Encoding: gzip,deflate,sdch
-Accept-Language: ja,en;q=0.8
-Accept-Charset: Shift_JIS,utf-8;q=0.7,*;q=0.3
 
 Access-Control-Allow-Originヘッダは・・・付いていませんね。付いていないけれど、当然ながら期待した正常なレスポンスがあり、かつ我々はそれを受け取れています。これはどういうことなのか。
 
@@ -173,7 +165,7 @@ CORSではなく、XMLHttpRequest leel2の仕様に以下のような記述が�
 > If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
 Otherwise These are the cross-origin request steps. 
 
-ブラウザはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスを持っています。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request](CORSに規定されるCross-Origin Requestのプロセス)に進みます。
+ブラウザにはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスがあります。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request](CORSに規定されるCross-Origin Requestのプロセス)に進みます。
 
 一方、JSONPの要であるscriptタグの部分も読んだのですが、特にクロスドメイン通信に関する制約等は見つけられませんでした。したがって、確証はありませんが次のような事ではないかと思います。
 
@@ -183,7 +175,7 @@ Otherwise These are the cross-origin request steps.
 
 scriptタグに本当に制約がないのかは、あまり自信がありません。調べてみたら見つかるかも知れませんが、CORSは独立したセクションで議論されており、JavaScriptのXMLHttpRequestに限定されない制約の話だと思います。XMLHttpRequestが例として挙げられる事はありますが、XMLHttpRequestのルールについての記述はありません。したがって、scriptタグの制約についてもここには書いていないはずですから。
 
-#同一生成元ポリシーとは一体なんだったのか。
+#ならば、同一生成元ポリシーとは一体なんだったのか。
 
 scriptタグについては少々消化不良ですが、今回はここで終えます。ところでここまでをまとめると、CORSのルールに従うブラウザであればクロスドメインなリクエスト自体は原則的に行われてしまうし、ヘッダさえ合致すればレスポンスを受ける事も可能ということになります。つまりCORSの内で全て完結するわけですが、ならば同一生成元ポリシーとは何だったのか、という疑問が生まれます。
 
