@@ -23,6 +23,8 @@
 body { @include light-gray; }
 
 body {
+  background: url("/images/back.png") repeat;
+
   header {
     @include dark-gray;
     height: 100px;
@@ -142,8 +144,8 @@ body {
     div {
       position: absolute;
       @include article-icon; 
-      top: -25px;
-      right: 20px;
+      top: -23px;
+      right: 38px;
     }
   }
 }
@@ -155,7 +157,7 @@ body {
       position: absolute;
       @include lib-icon; 
       top: -18px;
-      right: 15px;
+      right: 26px;
     }
   }
 
@@ -185,7 +187,7 @@ body {
       position: absolute;
       @include webs-icon; 
       top: -25px;
-      right: 20px;
+      right: 42px;
     }
   }
 
