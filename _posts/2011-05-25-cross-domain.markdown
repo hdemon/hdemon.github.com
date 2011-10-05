@@ -88,13 +88,13 @@ Level2では、クロスドメイン通信は条件付きで許可されます�
 
 「許可する」というのは、繰り返しになりますが「リクエストを送らない」ということではなく、ユーザにデータを受け渡さないということです。仕様書では、リクエストが返ってきたときの処理に関して、
 
-  6.1.5. Cross-Origin Request with Preflight  
-  This is the actual request. Apply the make a request steps and observe the request rules below while making the request. If the response has an HTTP status code of 301, 302, 303, or 307 Apply the cache and network error steps. ... Otherwise Perform a resource sharing check. If it returns fail, apply the cache and network error steps. Otherwise, if it returns pass, terminate this algorithm and set the cross-origin request status to success. Do not actually terminate the request.
+> 6.1.5. Cross-Origin Request with Preflight  
+> This is the actual request. Apply the make a request steps and observe the request rules below while making the request. If the response has an HTTP status code of 301, 302, 303, or 307 Apply the cache and network error steps. ... Otherwise Perform a resource sharing check. If it returns fail, apply the cache and network error steps. Otherwise, if it returns pass, terminate this algorithm and set the cross-origin request status to success. Do not actually terminate the request.
   　Preflightを伴うクロスオリジンリクエスト
   　もし、レスポンスが301、302、303、307のいずれかのHTTPステータスコードならば、
 
-  6.1.2. Cross-Origin Request Status 
-  Each cross-origin request has an associated cross-origin request status that CORS API specifications that enable an API to make cross-origin requests can hook into. It can take at most two distinct values over the course of a cross-origin request. The values are: preflight complete The user agent is about to make the actual request. success The resource can be shared. abort error The user aborted the request.
+> 6.1.2. Cross-Origin Request Status 
+> Each cross-origin request has an associated cross-origin request status that CORS API specifications that enable an API to make cross-origin requests can hook into. It can take at most two distinct values over the course of a cross-origin request. The values are: preflight complete The user agent is about to make the actual request. success The resource can be shared. abort error The user aborted the request.
 
 このように書かれており、resourceをユーザにshareするかどうかは、レスポンスが返ってきてから判断するとされていることが分かります。
 
@@ -166,12 +166,12 @@ Access-Control-Allow-Originヘッダは・・・付いていませんね。付�
 
 CORSではなく、XMLHttpRequest leel2の仕様に以下のような記述があります。
 
-    4.1. Origin and Base URL
-    　Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
+> 4.1. Origin and Base URL
+>　Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
 
-    3.6.8. The send() method
-     If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
-     Otherwise These are the cross-origin request steps. 
+> 3.6.8. The send() method
+> If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
+Otherwise These are the cross-origin request steps. 
 
 ブラウザはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスを持っています。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request](CORSに規定されるCross-Origin Requestのプロセス)に進みます。
 
@@ -189,7 +189,7 @@ scriptタグについては少々消化不良ですが、今回はここで終�
 
 この点を僕は今まで勘違いしていましたが、同一生成元ポリシーとは、「クロスドメイン通信を制約する」ルールではなく、もっと抽象的で広範囲なドメインに関するルールのようです。信頼できる[https://developer.mozilla.org/Ja/Same_origin_policy_for_JavaScript](MDNの記述)にはこうあります。
 
-  同一生成元ポリシーによって、ある生成元から読み込まれた文書やスクリプトが、異なる生成元からの文書のプロパティを取得したり設定したりするのを防ぎます。このポリシーは Netscape Navigator 2.0 までさかのぼります。
+> 同一生成元ポリシーによって、ある生成元から読み込まれた文書やスクリプトが、異なる生成元からの文書のプロパティを取得したり設定したりするのを防ぎます。このポリシーは Netscape Navigator 2.0 までさかのぼります。
 
 リクエストを禁止します、とは書いていない。また、document.domainに関するその例を見ても、あくまで生成元の齟齬を禁止する抽象的ルールであるように思われます。
 
