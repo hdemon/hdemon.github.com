@@ -122,7 +122,7 @@ xhr.send();
 ご覧のように、「Origin http://hdemon.github.comは、Access-Control-Allow-Originによって許可されていないよ」と出ます。しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、
 ![crossdomain-response](/images/crossdomain-response.png)
 
-このように、リクエストもレスポンスも、ちゃんと期待通りに行われています。ただし、上の画像では省略していますが、レスポンスヘッダにはAccess-Control-Allow-Originヘッダがありません。
+このように、リクエストもレスポンスも、ちゃんと期待通りに行われています。ただし、上の画像では省略していますが、レスポンスにはAccess-Control-Allow-Originヘッダがありません。
 ということは、仕様に沿って解釈するならば、
 
 - ブラウザはクロスドメインリクエストを制限しなかった。
