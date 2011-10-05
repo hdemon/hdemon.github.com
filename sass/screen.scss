@@ -28,9 +28,9 @@ body {
     height: 100px;
     margin-bottom: 40px;
     
-    #title-border-top {
-      height: 13px;
-      @include pink;
+    #title-band {
+      background: url("/images/title-band.png") repeat-x;
+      height: 123px;
     }
 
     hgroup {
