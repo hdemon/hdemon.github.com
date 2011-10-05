@@ -12,7 +12,13 @@
   <!-- web font -->
   <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
 
+  <!-- highlighter -->
+  <script src="{{ site.url_root }}/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="{{ site.url_root }}/vendor/highlight/styles/sunburst.css" media="screen" />
 
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
@@ -52,7 +58,6 @@
     {{ content }}
     </article>
     
-  <!--{% if page.uuid %}-->
     {% if page.id %}
     <div id="disqus_thread"></div>
     <script type="text/javascript">

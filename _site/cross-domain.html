@@ -1,4 +1,61 @@
-<p>2011-10-5 仕様が変わっていたため細部を書きなおす。</p>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>クロスドメインにまつわるヘッダについて考える </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen" />
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- web font -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
+
+  <!-- highlighter -->
+  <script src="/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <div id="title-band"></div>
+    <hgroup>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+      <ul>
+        <li>twitter: <a href="https://twitter.com/#!/h_demon">@h_demon</a></li>
+        <li>mail: hdemon7@gmail.com</li>
+        <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
+      </ul>
+    </hgroup>
+  </header>
+
+  <div id="each-article">
+    <article>
+      <header>
+        <h1>
+          クロスドメインにまつわるヘッダについて考える
+        </h1>
+      </header>
+    <p>2011-10-5 仕様が変わっていたため細部を書きなおす。</p>
 
 <h1>経緯</h1>
 
@@ -203,3 +260,34 @@ Accept-Charset: Shift_JIS,utf-8;q=0.7,*;q=0.3</p>
 <li>JSONPについてはCORSでは触れられておらず、事実上ブラウザまかせ？</li>
 </ul>
 
+
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = disqus_identifier && 'badid' || '';
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://hd-mon.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=hd-mon">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+    <em>Updated at  </em>
+  </div>
+
+  <footer></footer>
+
+  <script type="text/javascript">
+  var disqus_shortname = 'hd-mon';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/hd-mon/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+</body>
+</html>
