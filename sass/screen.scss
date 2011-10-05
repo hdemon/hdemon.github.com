@@ -147,7 +147,9 @@ body {
     li {
       font-weight: bold;
       list-style-type: circle;
-      text-decoration: none;       
+      a {
+        text-decoration: none;              
+      }
       span {
         font-weight: normal;
       }
