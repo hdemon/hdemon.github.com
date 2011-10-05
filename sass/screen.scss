@@ -268,9 +268,11 @@ body {
   }
 
   .highlight {
-    margin: 0 20px;
-    padding: 10px;
-    @include border-radius(7px, 7px);    
+    pre {
+      margin: 0 20px;
+      padding: 10px;
+      @include border-radius(7px, 7px);    
+    }
   }
 
   ul {
