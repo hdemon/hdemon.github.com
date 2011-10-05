@@ -1,4 +1,4 @@
-#destination: ./_site
+destination: ./_site
 pygments: true
 markdown: rdiscount
 exclude: mkdocument

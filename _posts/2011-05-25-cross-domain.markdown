@@ -1,5 +1,5 @@
 ---
-layout: article
+layout: post
 style: text
 title: "クロスドメインにまつわるヘッダについて考える"
 ---
