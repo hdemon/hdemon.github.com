@@ -149,6 +149,9 @@ body {
       list-style-type: circle;
       a {
         text-decoration: none;              
+        &:hover {
+          text-decoration: underline;              
+        }        
       }
       span {
         font-weight: normal;
