@@ -228,57 +228,60 @@ body {
 #each-article {
   width: 900px;
   margin: 0 auto;
-  margin-bottom: 50px;
   padding: 20px;
   font-size: 16px;
   line-height: 28px;
   background: url("/images/article-back.png") repeat;
   @include border-radius(15px, 15px);
 
-  header {
+  article {
+    margin-bottom: 50px;
+    
+    header {
+      h1 {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+      }
+    }
+
     h1 {
-      font-size: 26px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 32px;
+      margin-bottom: 20px
     }
-  }
 
-  h1 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-top: 32px;
-    margin-bottom: 20px
-  }
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+    }
 
-  h2 {
-    font-size: 16px;
-    font-weight: bold;
-  }
+    p {
+      text-indent: 1em;
+      margin: 10px 0; 
+    }
 
-  p {
-    text-indent: 1em;
-    margin: 10px 0; 
-  }
-
-  blockquote {
-    quotes: none;
-    font-size: 14px;
-    background: url("/images/back.png") repeat;
-    margin: 0 20px;
-    padding: 10px 25px;
-    @include border-radius(7px, 7px);
-  }
-
-  .highlight {
-    pre {
+    blockquote {
+      quotes: none;
+      font-size: 14px;
+      background: url("/images/back.png") repeat;
       margin: 0 20px;
-      padding: 10px;
-      @include border-radius(7px, 7px);    
+      padding: 10px 25px;
+      @include border-radius(7px, 7px);
     }
-  }
 
-  ul {
-    list-style-type: circle;  
-    margin: 10px 24px;    
+    .highlight {
+      pre {
+        margin: 0 20px;
+        padding: 10px;
+        @include border-radius(7px, 7px);    
+      }
+    }
+
+    ul {
+      list-style-type: circle;  
+      margin: 10px 24px;    
+    }
   }
 }
