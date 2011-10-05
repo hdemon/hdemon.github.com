@@ -3,7 +3,7 @@ pygments: true
 markdown: rdiscount
 exclude: mkdocument
 lsi: true
-permalink: /articles/:title.html
+permalink: /:title.html
 # leave blank for /
 url_root: 
 # Options used in Jekyll-base
