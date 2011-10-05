@@ -51,7 +51,7 @@
           クロスドメインにまつわるヘッダについて考える
         </h1>
       </header>
-    <p>2011-10-5 仕様が変わっていたため】細部を書きなおす。</p>
+    <p>2011-10-5 仕様が変わっていたため細部を書きなおす。</p>
 
 <h1>経緯</h1>
 
@@ -200,17 +200,6 @@ Each cross-origin request has an associated cross-origin request status that COR
 <p>しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、JSONPはクロスドメイン通信制約の例外であるような規定がないと、つじつまが合いません。</p>
 
 <p>まずは実験してみます。先の例と同じAPIに対し、scriptタグによってリクエストします。</p>
-
-<p>  <script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script></p>
-
-<p>  <script type="text/javascript"></p>
-
-<pre><code>function getTl(json) {
-  alert(json);
-}
-</code></pre>
-
-<p>  </script></p>
 
 <p>GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
 Host: search.twitter.com

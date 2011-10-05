@@ -4,9 +4,10 @@ title: "クロスドメインにまつわるヘッダについて考える"
 date: 2011-5-24 22:00
 comments: true
 categories: 
+pygments: true
 ---
 
-2011-10-5 仕様が変わっていたため】細部を書きなおす。
+2011-10-5 仕様が変わっていたため細部を書きなおす。
 
 
 #経緯
@@ -143,6 +144,8 @@ xhr.send();
 
 まずは実験してみます。先の例と同じAPIに対し、scriptタグによってリクエストします。
 
+{% highlight javascript %}
+
   <script type="application/javascript" src="http://api.twitter.com/1/statuses/user_timeline.json?screen_name=h_demon&count=3&callback=getTl"></script>
 
   <script type="text/javascript">
@@ -150,6 +153,7 @@ xhr.send();
       alert(json);
     }
   </script>
+{% endhighlight %}
 
 GET http://search.twitter.com/search.json?callback=jQuery....&amp;q=jquery&amp;_=1306207289145 HTTP/1.1
 Host: search.twitter.com
