@@ -18,7 +18,7 @@
 body {
   background: url("/images/back.png") repeat;
 
-  header {
+  & > header {
     margin-bottom: 40px;
     background: url("/images/title-band.png") repeat-x;
     height: 123px;
