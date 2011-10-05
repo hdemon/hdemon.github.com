@@ -1,6 +1,5 @@
 ---
-layout: post
-category: tool 
+layout: article
 title: "クロスドメインにまつわるヘッダについて考える"
 date: 2011-5-24 22:00
 ---
