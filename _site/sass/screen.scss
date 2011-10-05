@@ -12,6 +12,7 @@
 * {
   padding: 0;
   margin: 0;
+  color: #333;
 }
 
 body {
@@ -47,7 +48,7 @@ body {
         left: 670px;
         top: 31px;
         font-family: 'Maven Pro', sans-serif;
-        font-size: 12px;
+        font-size: 13px;
         color: white;
         line-height: 20px;
 
@@ -85,7 +86,6 @@ body {
     article {  
       width: 400px;
       margin-bottom: 50px;
-      margin-left: 20px;
       font-size: 12px;
       line-height: 20px;
 
@@ -137,6 +137,9 @@ body {
       @include article-icon; 
       top: -23px;
       right: 38px;
+    }
+    ul {
+      margin-left: 20px;
     }
   }
 }

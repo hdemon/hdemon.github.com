@@ -10,9 +10,11 @@ title: Hungry Daemonologue
         <h1></h1>
         <div></div>
       </header>
-      {% for post in site.posts reverse %}
-        {{ post.title }}
-      {% endfor %}
+      <ul>
+        {% for post in site.posts reverse %}
+        <li>{{ post.title }}</li>
+        {% endfor %}
+      </ul>
     </article>
 
     <article id="aboutme">
