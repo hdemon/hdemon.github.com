@@ -41,22 +41,22 @@ body {
       
       #title-logo {
         position: absolute;
-        top: 53px;
+        top: 72px;
         left: 20px;
         @include title-logo;
       }
 
       #title-icon {
         position: absolute;
-        top: 10px;
-        left: 520px;
+        top: 26px;
+        left: 550px;
         @include title-icon;
       }
 
       ul {
-        left: 636px;
+        left: 670px;
         position: absolute;
-        top: 15px;
+        top: 31px;
         font-size: 12px;
         color: white;
         line-height: 20px;
