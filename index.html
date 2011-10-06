@@ -101,22 +101,59 @@ title: Hungry Daemonologue
 <script type="text/javascript">
 "use strict";
 
-var id = 0,
-    $wrapper = $("#ex-wrapper"),
-    $form = [];
+function init() {
+    var form    = [],
+        i;
 
-for (id = 0; id < 2; id++){
-  $form[ id ] =
     hdemon.explorizer
-      .set({  // parameters setting. Only "$wrapper" is required.
-        "$wrapper" : $wrapper })
-      .add() // new window-form creation.
-      .$content;
-          
-  createBox($form[ id ], 10, 5, 100, 240);
-  // When you manipulate DOM object in explorizer-form,
-  // you must call "initialize" method explicitly for resetting events trigger. 
-  hdemon.explorizer.initialize();
+        .set({
+            "$wrapper"  : $("#ex-wrapper"),
+            "width"     : 130,
+            "height"    : 100 });
+
+    for (i = 0; i<=2; i++) {
+        form[i] = {};
+        f = hdemon.explorizer.add();
+        form[i].$ow = f.$form;
+        form[i].$content = f.$content;
+    }
+
+    form[0].$ow
+        .css({
+            "top"   : 40,
+            "left"  : 20 });
+
+    createBox({
+        "$wrapper"  : form[0].$content,
+        "num"       : 10,
+        "hsb"       : [2, 100, 240],
+        "size"      : { x: 15, y: 15} });
+
+    form[1].$ow
+        .css({
+            "top"   : 75,
+            "left"  : 150 });
+
+    createBox({
+        "$wrapper"  : form[1].$content,
+        "num"       : 20,
+        "hsb"       : [5, 100, 240],
+        "size"      : { x: 15, y: 15} });
+        
+    form[2].$ow
+        .css({
+            "top"   : 120,
+            "left"  : 90 });
+
+    createBox({
+        "$wrapper"  : form[2].$content,
+        "num"       : 5,
+        "hsb"       : [3, 100, 240],
+        "size"      : { x: 15, y: 15} });
+        
+    hdemon.explorizer.initialize();
 }
+
+init();
 
 </script>
