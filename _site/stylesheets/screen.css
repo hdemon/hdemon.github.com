@@ -2,7 +2,7 @@
  * In this file you should write your main styles. (or centralize your imports)
  * Import this file using the following HTML or equivalent:
  * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
-/* line 17, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 17, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -24,45 +24,45 @@ time, mark, audio, video {
   vertical-align: baseline;
 }
 
-/* line 20, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 20, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 body {
   line-height: 1;
 }
 
-/* line 22, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 22, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 ol, ul {
   list-style: none;
 }
 
-/* line 24, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 24, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 table {
   border-collapse: collapse;
   border-spacing: 0;
 }
 
-/* line 26, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 26, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 caption, th, td {
   text-align: left;
   font-weight: normal;
   vertical-align: middle;
 }
 
-/* line 28, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 28, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q, blockquote {
   quotes: none;
 }
-/* line 101, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 101, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 q:before, q:after, blockquote:before, blockquote:after {
   content: "";
   content: none;
 }
 
-/* line 30, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 30, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 a img {
   border: none;
 }
 
-/* line 114, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 114, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
@@ -108,7 +108,7 @@ body > header hgroup #title-logo {
   position: absolute;
   top: 72px;
   left: 20px;
-  background: url("/images/index.png?1317899922") no-repeat 0px -634px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -634px;
   width: 273px;
   height: 25px;
 }
@@ -117,7 +117,7 @@ body > header hgroup #title-icon {
   position: absolute;
   top: 26px;
   left: 540px;
-  background: url("/images/index.png?1317899922") no-repeat 0px -551px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -551px;
   width: 82px;
   height: 73px;
 }
@@ -166,7 +166,7 @@ body #wrapper article header {
   margin-bottom: 20px;
   height: 26px;
   width: 380px;
-  background: url("/images/index.png?1317899922") no-repeat 0px -42px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -42px;
   width: 399px;
   height: 26px;
 }
@@ -194,21 +194,21 @@ body footer {
   width: 900px;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317899922") no-repeat 0px -121px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -121px;
   width: 174px;
   height: 42px;
 }
 
 /* line 145, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317899922") no-repeat 0px -21px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -21px;
   width: 56px;
   height: 11px;
 }
 /* line 148, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317899922") no-repeat 0px -380px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -380px;
   width: 54px;
   height: 48px;
   top: -29px;
@@ -244,14 +244,14 @@ body footer {
 
 /* line 180, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317899922") no-repeat 0px -173px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -173px;
   width: 187px;
   height: 15px;
 }
 /* line 183, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317899922") no-repeat 0px -281px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -281px;
   width: 83px;
   height: 39px;
   top: -18px;
@@ -264,7 +264,7 @@ body footer {
 /* line 194, ../sass/screen.scss */
 #mc-lib section h1 .deco {
   display: inline-block;
-  background: url("/images/index.png?1317899922") no-repeat 0px -198px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -198px;
   width: 17px;
   height: 16px;
 }
@@ -279,7 +279,7 @@ body footer {
 }
 /* line 209, ../sass/screen.scss */
 #mc-lib section#explorizer .caption {
-  background: url("/images/index.png?1317899922") no-repeat 0px -78px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -78px;
   width: 107px;
   height: 15px;
 }
@@ -316,27 +316,27 @@ body footer {
 }
 /* line 234, ../sass/screen.scss */
 #mc-lib section#nicoscraper .caption {
-  background: url("/images/index.png?1317899922") no-repeat 0px -355px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -355px;
   width: 99px;
   height: 15px;
 }
 /* line 240, ../sass/screen.scss */
 #mc-lib section#nicomanip .caption {
-  background: url("/images/index.png?1317899922") no-repeat 0px -330px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -330px;
   width: 104px;
   height: 15px;
 }
 
 /* line 248, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317899922") no-repeat 0px -669px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -669px;
   width: 230px;
   height: 15px;
 }
 /* line 251, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317899922") no-repeat 0px -224px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -224px;
   width: 69px;
   height: 47px;
   top: -25px;
@@ -344,7 +344,7 @@ body footer {
 }
 /* line 260, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317899922") no-repeat 0px -694px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -694px;
   width: 269px;
   height: 26px;
   margin-bottom: 15px;
@@ -352,14 +352,14 @@ body footer {
 
 /* line 269, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317899922") no-repeat 0px 0px;
+  background: url("/images/index.png?1317900489") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
 /* line 272, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317899922") no-repeat 0px -438px;
+  background: url("/images/index.png?1317900489") no-repeat 0px -438px;
   width: 70px;
   height: 45px;
   top: -25px;
@@ -466,37 +466,37 @@ body footer {
   -khtml-border-radius: 7px / 7px;
   border-radius: 7px / 7px;
 }
-/* line 2, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
+/* line 2, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
 #each-article article table th {
   text-align: center;
   font-weight: bold;
 }
-/* line 6, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
+/* line 6, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
 #each-article article table td,
 #each-article article table th {
   padding: 2px;
 }
-/* line 8, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
+/* line 8, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_scaffolding.scss */
 #each-article article table td.numeric,
 #each-article article table th.numeric {
   text-align: right;
 }
-/* line 14, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
+/* line 14, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
 #each-article article table th, #each-article article table td {
   border-right: 1px solid #7a98c6;
   border-bottom: 1px solid #7a98c6;
   border-left-width: 0px;
   border-top-width: 0px;
 }
-/* line 21, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
+/* line 21, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
 #each-article article table th:last-child, #each-article article table th.last, #each-article article table td:last-child, #each-article article table td.last {
   border-right-width: 0px;
 }
-/* line 29, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
+/* line 29, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
 #each-article article table tbody tr:last-child th, #each-article article table tbody tr:last-child td, #each-article article table tfoot tr:last-child th, #each-article article table tfoot tr:last-child td {
   border-bottom-width: 0px;
 }
-/* line 32, ../../../../../usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
+/* line 32, /usr/local/lib/ruby/gems/1.9.1/gems/compass-0.11.5/frameworks/compass/stylesheets/compass/utilities/tables/_borders.scss */
 #each-article article table tbody tr.last th, #each-article article table tbody tr.last td, #each-article article table tfoot tr.last th, #each-article article table tfoot tr.last td {
   border-bottom-width: 0px;
 }

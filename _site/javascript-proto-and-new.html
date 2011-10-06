@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>prototypeはプロトタイプではないし、newを付けなくてもコンストラクタは動く。 </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen" />
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- web font -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
+
+  <!-- highlighter -->
+  <script src="/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <div id="title-band"></div>
+    <hgroup>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+      <ul>
+        <li>twitter: <a href="https://twitter.com/#!/h_demon">@h_demon</a></li>
+        <li>mail: hdemon7@gmail.com</li>
+        <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
+      </ul>
+    </hgroup>
+  </header>
+
+  <div id="each-article">
+    <article>
+      <header>
+        <h1>
+          prototypeはプロトタイプではないし、newを付けなくてもコンストラクタは動く。
+        </h1>
+        <span id="date">
+          12 July 2011
+        </span>
+      </header>
+    <p> オライリーの「JavaScriptパターン」を読んで考えたことの記録。断定口調ですが、正しさの保障はありません。</p>
+
+<h1>prototypeはただのオブジェクトで、コンストラクタはただの関数。</h1>
+
+<p>こういうやり方をすれば、プロトタイプベースのJavaScriptにおいてもクラス／インスタンス的な機能を実現できると本には書いてある。しかし、prototypeもnewを付ける対象となるコンストラクタ関数も、内部的に特別な機能を与えられたものではない。確かに特別な働きをすることには違いないが、それは全てnewの働きである。コンストラクタとしてのfunctionは普通の関数宣言／式であり、</p>
+
+<p>またprototypeはプロトタイプオブジェクトではない。</p>
+
+<h1>prototypeはオブジェクトの原型ではなく、プロトタイプオブジェクトの原型のようなもの。</h1>
+
+<p>Objがnewを付けて呼ばれるときに、コンストラクタはObj.prototypeを探す。そして、Obj.prototypeが参照するオブジェクトをObjのプロトタイプとしてコピーする。プロトタイプオブジェクトそのものを示すのは <strong>proto</strong> であり、ECMAScriptの仕様上は内部プロパティである。ただ、ブラウザ側の独自実装として大抵は<strong>proto</strong>としてアクセスできる。だから、</p>
+
+<p>である。</p>
+
+<h1>「newを付けることで、関数がコンストラクタ化する」わけではない。</h1>
+
+<p>正確には、「newを付けなくても、コンストラクタとしての機能の一部は果たせる」</p>
+
+<p>これは動かない。しかし、</p>
+
+<p>これは動く。このコードの「プロパティを複製する」という機能に限れば、コンストラクタ内の5行がnewの役割を代替している事になる。やっていることは、</p>
+
+<ul>
+<li>thatオブジェクトを作成し、</li>
+<li>Obj.prototypeの内容をthatへコピーし、 ((ここでvar that = Obj.prototypeとすると、参照を入れるだけなのでプロパティを共有してしまう。そこでいわゆるディープコピーをしなければならないが、今回は一階層しかないので簡易的なロジックにしている。 ))</li>
+<li>thatを戻り値として返す。</li>
+</ul>
+
+
+<p>だけである。inst = Obj() = Obj.prototypeのコピーなのだから、inst.propに1が代入されているのは当然。また、</p>
+
+<p>インスタンス同士も独立する。プロトタイプオブジェクトは定義できないが、オブジェクトの原型作成装置としての最低限の機能は果たしている。</p>
+
+<h1>newはどんな仕事をしているのか。</h1>
+
+<p>newは、元から特別なthisにもう少し特別な意味を与えるだけ。</p>
+
+<p>inst.method()として呼び出されたとき、thisはinstを指す。このthisは、先のthatの時のように、prototypeの参照を明示的に代入されていないし、returnで返されているわけでもない。しかし、実際にmethod内のthisは、Obj.prototype + コンストラクタ内で定義されるプロパティを指している。これは、少なくとも</p>
+
+<p>という処理が行われている事を意味する。つまり、newを付けることで、</p>
+
+<ul>
+<li>prototypeプロパティを探し、見つかれば、thisのプロトタイプオブジェクトとしてコピーする。</li>
+<li>return文で他の何かが返されていなければ、thisを暗黙に返す。</li>
+</ul>
+
+
+<p>という作業が行われる。thisは再定義できず、またexecution contextという特別な内部プロパティ (( execution contextには、さらにThisBindingというオブジェクトへの参照を保持するプロパティがある。ThisBindingの他には、スコープ情報を持つLexicalEnvironmentと変数情報を持つVariableEnviromentが存在する。つまり、スコープチェーンとthisの参照先は別々に管理されており、だからこそプロトタイプ定義関数内で使うthisとコンストラクタ内で使うthisが同じオブジェクトを指す、ということが可能になる。)) を示すので、一般的な「スコープチェーン」の範疇には収まらない。従って、</p>
+
+<ul>
+<li>コンストラクタ内で定義したthisのプロパティを、別の所で共有できる。</li>
+<li>そのthisに対して、プロトタイプを設定する。</li>
+</ul>
+
+
+<p>という点で、newを使うことは、先に挙げたthatで代用する方法では実現できない機能を持つ。</p>
+
+<h1>まとめ</h1>
+
+<ul>
+<li>prototypeはプロトタイプオブジェクトそのものではなく、コンストラクタがプロトタイプオブジェクトを作るときに参照する原型である。</li>
+<li>プロトタイプオブジェクトの参照を持つのは、一般的には<strong>proto</strong>である。</li>
+<li>prototypeは、newを付けて呼ばれたコンストラクタが暗黙にプロトタイプオブジェクトの原型として参照するという一点において、ただのオブジェクトと区別される。</li>
+<li>コンストラクタは、newを付けて呼ぶことでthisとプロトタイプに関する暗黙の処理を行う。</li>
+<li>thisはユーザ側で再定義できないし、newを付けなければプロトタイプオブジェクトは作成されないが、それ以外の点ではnewをつけようが付けまいがコンストラクタはただの関数。</li>
+</ul>
+
+
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = disqus_identifier && 'badid' || '';
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://hd-mon.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=hd-mon">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+    <em>Updated at  </em>
+  </div>
+
+  <footer></footer>
+
+  <script type="text/javascript">
+  var disqus_shortname = 'hd-mon';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/hd-mon/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+</body>
+</html>
