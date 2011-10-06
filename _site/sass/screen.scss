@@ -206,6 +206,11 @@ body {
     p {
       line-height: 24px;
     }
+    a {
+      &:visited {          
+        @include darkgray;             
+      }    
+    }
   }
 
   section#explorizer {
