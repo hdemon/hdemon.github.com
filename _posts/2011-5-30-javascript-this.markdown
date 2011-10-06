@@ -16,15 +16,13 @@ JavaScriptの"this"の難しさは、「thisが書かれているオブジェク
 
 結論を言えば、「ある関数が、obj.method();という形で特定のオブジェクトのプロパティとして呼び出されたとき、関数内部のthisはその親オブジェクトを指す」事が分かれば実用上問題ないと思うのですが、個人的にすっきりしないので、その原理を徹底的に解析しよう！仕様書を読もう！　というのが今回の記事の主旨です。
 
-なお、記事中の仕様書は全てECMAScript 5thのものです。また、文中の引用文章は読みやすさを考慮して適宜改行、強調を行っています。
+#thisは何と定義されているか。
+
+まずは定義から。以降は断りのない限り、全て5thの仕様です。また、文中の引用文章は読みやすさを考慮して適宜改行、強調を行っています。
 
 参考：　[ECMAScript 5th 仕様書](http://www.ecma-international.org/publications/standards/Ecma-262.htm)
 
-#thisは何と定義されているか。
-
-まずは定義から。以降は断りのない限り、全て5thの仕様です。
-
-> ECMA-262 5th
+> ECMA-262 5th　
 > 11.1.1 The this Keyword
 > The this keyword evaluates to the value of the ThisBinding of the current execution context.
 
@@ -38,16 +36,16 @@ JavaScriptの"this"の難しさは、「thisが書かれているオブジェク
 
 #execution contextを理解しないと始まらない
 
-> 10.3 Execution Contexts
-> When control is transferred to ECMAScript executable code, control is entering an execution context.
->  コントロールがexecutable codeに移るとき、コントロールはexecution contextに入る。
-> Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context.
->  アクティブなexecution contextsは、論理的なスタックである。この論理的スタックの一番上にあるexecution contextsが、実行中のexecution contextsである。
-> A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context.
->  現在実行中のexecution contextに結び付けられたexecutable codeから、（実行中の）execution contextに結び付けられていないexecution codeにコントロールが移るときに、新しいexecution contextが作られる。
-> The newly created execution context is pushed onto the stack and becomes the running execution context.
->  新しく作られたexecution contextはスタックにpushされ、それが実行中のexecution contextとなる。
-
+> 10.3 Execution Contexts 
+> When control is transferred to ECMAScript executable code, control is entering an execution context. 
+>  コントロールがexecutable codeに移るとき、コントロールはexecution contextに入る。 
+> Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context. 
+>  アクティブなexecution contextsは、論理的なスタックである。この論理的スタックの一番上にあるexecution contextsが、実行中のexecution contextsである。 
+> A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context. 
+>  現在実行中のexecution contextに結び付けられたexecutable codeから、（実行中の）execution contextに結び付けられていないexecution codeにコントロールが移るときに、新しいexecution contextが作られる。 
+> The newly created execution context is pushed onto the stack and becomes the running execution context. 
+>  新しく作られたexecution contextはスタックにpushされ、それが実行中のexecution contextとなる。 
+ 
 なるほど。少し強引に解釈すると、
 
 + JavaScriptエンジンがコードを実行し始めたときに、同時にexecutable contextが作成される。
@@ -75,10 +73,9 @@ execution contextが内部的にthisの値を定めるパラメータを持っ�
 + コード中でthisが呼ばれたとき、コードは自分のexecution contextに書かれたthisの指定先を調べる。
 + このパラメータはexecution contextが作られたとき＝コードの実行順序が自分に回ってきたときに決定されるが、その決定方法はコードの種類によって異なるらしい。
 
-なお、execution contextに関しては[こちらの優れた記事と邦訳](http://d.hatena.ne.jp/oogatta/20101003/1286099289)が大変参考になります。
-
-
+なお、execution contextに関しては[こちらの優れた記事と邦訳](http://d.hatena.ne.jp/oogatta/20101003/1286099289)が大変参考になります。そちらを見て頂いた方が、execution contextの理解は早いかと思います。
 では次に、具体的なコードの種類と、それぞれのthisの決め方を調べていきます。
+
 #executable codeは３種類ある。
 > 10.1 Types of Executable Code
 > There are three types of ECMAScript executable code:
@@ -236,27 +233,31 @@ a.Let thisValue be undefined.
 
 refがどのような値を持っているかは、MemberExpressionの形態によって決定されますから、それぞれの場合の仕様書の表記を見てみないといけません。次の項目では、この三類型が、我々がいつも行っている関数呼び出しのどの類型にあたるのかを検討します。
 我々はいつも、どんなやり方で関数を呼び出しているか。
+
+{% highlight javascript %}
 var obj = {};
 
 (function(){
-	obj.method = function(){
-		console.log(this); // obj
-		function closure (){
-			console.log(this); // global
-		}
-		closure();
-	};
-	obj.method();
-	console.log(this); // global
+  obj.method = function(){
+    console.log(this); // obj
+    function closure (){
+      console.log(this); // global
+    }
+    closure();
+  };
+  obj.method();
+  console.log(this); // global
 }());
 
 console.log(this); // global
+{% endhighlight %}
+
 //全て non-strict modeの場合。
 たぶん、次の３つが主なパターンではないでしょうか。
 
-	スコープチェーン上にある関数名を指定して呼び出す。
-	あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。
-	即時関数として呼び出す。
+  スコープチェーン上にある関数名を指定して呼び出す。
+  あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。
+  即時関数として呼び出す。
 
 上の例の場合、method直下で呼び出した=2.のパターン以外のthisは、全てglobal(strict modeならundefined)を指します。closure下は新しいexecution contextに移っていますから、そのthisの内容を決定しているのは"closure();"の評価結果です。即時関数の場合も、「内部にFunction codeを含まないcode」として、"(function(){}());"の部分の評価結果のみに、thisの値は依存していると考えられます。
 
@@ -330,7 +331,7 @@ FunctionExpression</td>
 
 これらを整理すると、
 
-+ スコープチェーン上にある関数名を指定して呼び出すパターン ->	Identifier
++ スコープチェーン上にある関数名を指定して呼び出すパターン -> Identifier
 + あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。 -> MemberExpression .IdentifierName
 + 即時関数として呼び出すパターン -> FunctionExpression
 
@@ -364,71 +365,71 @@ Identifier is always a value of type Reference.
 >  GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。
 
 このとき、GetIdentifierReferenceは特定オブジェクトへの参照ではなく、 Environment Recordsをbase valueに入れて返します。
-> 10.2.2.1 GetIdentifierReference (lex, name, strict)
-> The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String
-> name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed:
-> 1. If lex is the value null, then
-> a. Return a value of type Reference whose base value is undefined, whose referenced name is name,
-> and whose strict mode flag is strict.
-> 2. Let envRec be lex‘s environment record.
-> 3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the
-> argument N.
-> 4. If exists is true, then
-> a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and
-> whose strict mode flag is strict.
-> 5. Else
-> a. Let outer be the value of lex’s outer environment reference.
-> b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments
+> 10.2.2.1 GetIdentifierReference (lex, name, strict) 
+> The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String 
+> name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed: 
+> 1. If lex is the value null, then 
+> a. Return a value of type Reference whose base value is undefined, whose referenced name is name, 
+> and whose strict mode flag is strict. 
+> 2. Let envRec be lex‘s environment record. 
+> 3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the 
+> argument N. 
+> 4. If exists is true, then 
+> a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and 
+> whose strict mode flag is strict. 
+> 5. Else 
+> a. Let outer be the value of lex’s outer environment reference. 
+> b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments 
 
 全てを追っていくと頭が痛くなるので、要点だけ見ると、GetIdentifierReferenceは、
 
-	undefinedを返すパターン(1-a)、
-	base valueがenvironment recordであるReference型を返すパターン(4-a)、
-	再帰的に自分を呼び出すパターン(5-b)
+  undefinedを返すパターン(1-a)、
+  base valueがenvironment recordであるReference型を返すパターン(4-a)、
+  再帰的に自分を呼び出すパターン(5-b)
 
 があると分かります。つまり、Identiferを評価した時点で、undefinedかReference型のどちらかが返ってくることが確定し、結果として少なくともFunction Callの分岐6-aには該当しない事が確定します。
 
 そして、6-aに該当しないということは、ThisBindingの値はundefinedかImplicitThisValueのどちらかであることも確定します。ImplicitThisValueは
-> 10.2.1.2.6 ImplicitThisValue()
-> Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true.
-> Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。
-> 1. Let envRec be the object environment record for which the method was invoked.
-> envRecに、そのメソッドを呼び出したenvironment recordを入れる。
-> 2. If the provideThis flag of envRec is true, return the binding object for envRec.
-> envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。
-> 3. Otherwise, return undefined
-> そうでなければ、undefinedを返す。
-> 
+> 10.2.1.2.6 ImplicitThisValue() 
+> Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true. 
+> Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。 
+> 1. Let envRec be the object environment record for which the method was invoked. 
+> envRecに、そのメソッドを呼び出したenvironment recordを入れる。 
+> 2. If the provideThis flag of envRec is true, return the binding object for envRec. 
+> envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。 
+> 3. Otherwise, return undefined 
+> そうでなければ、undefinedを返す。 
+ 
 というルールがあり、説明は省きますが、provideThisがtrueとなるのはWithを指定されたとき (( あと、ECMAScript 5thのbindメソッドもこれを使うのかも？ )) ぐらいらしいので、実用上の殆どの場合はundefinedが返ってくることになります。
 
 まとめてみましょう。
 
-	関数は関数宣言か、関数式を変数に代入する形で定義されるが、どちらも識別子を使って呼び出される。
-	識別子を使って呼び出された場合、識別子を評価した結果はReference型である。 ((加えて、Identifierは常にGetIdenrifierReferenceを通して返されるということは、IdentifierのReference-&gt;base valueの値は常にenvironment record型という事になるはずです。))
-	Reference型の場合、Thisの暗黙値はundefinedに設定される。 ((strict modeならundefined、そうでなければglobal objectを返すことになりますが、暗黙値にはそもそもundefiendが設定されていることから、「ECMAScript 5thのstrict modeでは、関数の識別子のみで関数を呼び出した場合にはundefinedを返す」というのは特別な処理ではなく、むしろ特別な例外処理を省いた結果だったということが分かります。（もっとも、strict modeが完全に実装されているブラウザは2011/7/12現在ではまだ少ないようで、Firefox 5ぐらいでしか確認できません）。))
-	With文等の特殊な場合を除いて、暗黙値は変更されない。
-	だから、この場合のthisはglobalもしくはundefinedになる。
+  関数は関数宣言か、関数式を変数に代入する形で定義されるが、どちらも識別子を使って呼び出される。
+  識別子を使って呼び出された場合、識別子を評価した結果はReference型である。 ((加えて、Identifierは常にGetIdenrifierReferenceを通して返されるということは、IdentifierのReference-&gt;base valueの値は常にenvironment record型という事になるはずです。))
+  Reference型の場合、Thisの暗黙値はundefinedに設定される。 ((strict modeならundefined、そうでなければglobal objectを返すことになりますが、暗黙値にはそもそもundefiendが設定されていることから、「ECMAScript 5thのstrict modeでは、関数の識別子のみで関数を呼び出した場合にはundefinedを返す」というのは特別な処理ではなく、むしろ特別な例外処理を省いた結果だったということが分かります。（もっとも、strict modeが完全に実装されているブラウザは2011/7/12現在ではまだ少ないようで、Firefox 5ぐらいでしか確認できません）。))
+  With文等の特殊な場合を除いて、暗黙値は変更されない。
+  だから、この場合のthisはglobalもしくはundefinedになる。
 
 やっと一つ答えが出ました。続いて2.のパターンを見てみます。
 MemberExpression .IdentifierNameを評価すると何が返ってくるのか。
 MemberExpression .IdentifierNameの類型は、直接仕様に記載されていません。しかし、
-Th> e dot notation is explained by the following syntactic conversion:
-> MemberExpression . IdentifierName
-> is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ]
-> ...
-> ドット表記は、次のようば構文的変換によって説明される。
-> "MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。
-
-という事から、次のルールが適用されます。
-The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows:
-> 1. Let baseReference be the result of evaluating MemberExpression.
-> baseReferenceに、MemberExpressionを評価した値を入れる。
-> 2. Let baseValue be GetValue(baseReference).
-> baseValueに、GetValue(baseReference)の戻り値を入れる。
-> ...
-> 8. Return a value of type Reference whose base value is baseValue and whose referenced name is
-> propertyNameString, and whose strict mode flag is strict.
-> base valueにbaseValueを入れたReference型の値を返す。 
+> The dot notation is explained by the following syntactic conversion: 
+> MemberExpression . IdentifierName 
+> is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ] 
+> ... 
+> ドット表記は、次のようば構文的変換によって説明される。 
+> "MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。 
+ 
+という事から、次のルールが適用されます。 
+The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows: 
+> 1. Let baseReference be the result of evaluating MemberExpression. 
+> baseReferenceに、MemberExpressionを評価した値を入れる。 
+> 2. Let baseValue be GetValue(baseReference). 
+> baseValueに、GetValue(baseReference)の戻り値を入れる。 
+> ... 
+> 8. Return a value of type Reference whose base value is baseValue and whose referenced name is 
+> propertyNameString, and whose strict mode flag is strict. 
+> base valueにbaseValueを入れたReference型の値を返す。  
 
 GetValue自体も大変ややこしいロジックなのですが、結局ははいくつかの例外処理を除き、参照先の値を返すだけだと思われます。そうすると、関数呼び出しという前提を置くなら、MemberExpression [ Expression ]を評価した場合はbase valueにある関数オブジェクトへの参照を持つReference型が返ってくることになります。
 
@@ -436,9 +437,9 @@ GetValue自体も大変ややこしいロジックなのですが、結局はは
 
 まとめます。
 
-	obj.method();という関数の呼び出し方は、obj["method"]()とする場合と、構文解釈上は全く同じに扱われる。
-	この場合、objへの参照がそのままThisBindingに代入され、thisはobjを指すことになる。
-	"obj"自体はIdentifierであるが、Identifierを評価した値そのものがThisBindingに代入されない点が、前項の場合と異なる。
+  obj.method();という関数の呼び出し方は、obj["method"]()とする場合と、構文解釈上は全く同じに扱われる。
+  この場合、objへの参照がそのままThisBindingに代入され、thisはobjを指すことになる。
+  "obj"自体はIdentifierであるが、Identifierを評価した値そのものがThisBindingに代入されない点が、前項の場合と異なる。
 
 即時関数を評価すると何が返ってくるのか。
 即時関数、つまり
@@ -483,10 +484,10 @@ FunctionExpressionを評価すると、以上のルールに従い、Object型�
 
 まとめます。
 
-	即時関数の外側の括弧は、関数呼び出しについて言えば、中身の評価に影響を及ぼさない。
-	FunctionExpressionを評価すると、直接Object型の値が返ってくる。
-	Object型の値が返ってきた場合、Function Callの過程はThisBindingにundefinedを代入する。
-	だから、即時関数の直下ではthisはundefinedもしくはglobalになる。
+  即時関数の外側の括弧は、関数呼び出しについて言えば、中身の評価に影響を及ぼさない。
+  FunctionExpressionを評価すると、直接Object型の値が返ってくる。
+  Object型の値が返ってきた場合、Function Callの過程はThisBindingにundefinedを代入する。
+  だから、即時関数の直下ではthisはundefinedもしくはglobalになる。
 
 簡単な総括
 以下のルールで、大体の説明ができると思います。
@@ -513,6 +514,6 @@ a.Let thisValue be undefined.
 thisValueにundefinedを設定する。
 ...
 
-	Identifierを評価すると、base valueにEnvironment Recordsが入ったReference型が返ってくる。
-	 MemberExpression : MemberExpression [ Expression ] を評価すると、base valueにMemberExpressionへの参照が入ったReference型が返ってくる。
-	FunctionExpressionを評価すると、Object型（そのFunctionへの参照）が返ってくる。
+  Identifierを評価すると、base valueにEnvironment Recordsが入ったReference型が返ってくる。
+   MemberExpression : MemberExpression [ Expression ] を評価すると、base valueにMemberExpressionへの参照が入ったReference型が返ってくる。
+  FunctionExpressionを評価すると、Object型（そのFunctionへの参照）が返ってくる。
