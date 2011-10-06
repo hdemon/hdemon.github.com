@@ -13,8 +13,17 @@
 * {
   padding: 0;
   margin: 0;
+  color: #333;
 
-  em {
+  a {
+    color: white;
+    text-decoration: none;        
+    &:hover {
+      text-decoration: underline;            
+    }
+  }
+
+  em, strong {
     font-weight: bold;
   }
 }
@@ -73,6 +82,14 @@ body {
   #wrapper {
     margin: 0 auto;
     width: 900px;
+
+    a {
+      color: white;
+      text-decoration: none;        
+      &:hover {
+        text-decoration: underline;            
+      }
+    }
 
     #left-content {
       float:  left;
@@ -195,7 +212,7 @@ body {
     #ex-wrapper {
       width: 300px;
       height: 300px;
-      margin: 20px;
+      margin: 12px 30px 20px 30px;
       background: #CCC;
     }
   }
@@ -302,9 +319,6 @@ body {
       p {
         text-indent: 0;
         margin: 0;
-        strong {
-          font-weight: bold;;
-        }
       }
 
       blockquote {
