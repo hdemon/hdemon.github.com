@@ -171,17 +171,17 @@ body {
   }
 
   section {        
-    #deco {
+    .deco {
       display: inline-block;
       @include list-decorate; 
     }
-    h1 {  
+    .caption {  
       display: inline-block;  
     }
   }
 
   section#explorizer {
-    h1 {
+    .caption {
       @include explorizer;
     }
     #ex-wrapper {
@@ -193,13 +193,13 @@ body {
   }
 
   section#nicoscraper {
-    h1 {
+    .caption {
       @include nicoscraper;
     }
   }
 
   section#nicomanip {
-    h1 {
+    .caption {
       @include nicomanip;
     }
   }
