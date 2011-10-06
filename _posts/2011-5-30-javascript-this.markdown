@@ -591,7 +591,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
  
 という事から、次のルールが適用されます。 
 
-The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows: 
+> *The production MemberExpression : MemberExpression [ Expression ] is evaluated as follows:*
 
 > 1\. Let baseReference be the result of evaluating MemberExpression. 
 
