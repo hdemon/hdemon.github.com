@@ -641,7 +641,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <p>...</p>
 
-<p>ドット表記は、次のようば構文的変換によって説明される。</p>
+<blockquote><p>ドット表記は、次のようば構文的変換によって説明される。</p></blockquote>
 
 <p>"MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。</p></blockquote>
 
@@ -651,11 +651,11 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <blockquote><p>1. Let baseReference be the result of evaluating MemberExpression.</p>
 
-<p>baseReferenceに、MemberExpressionを評価した値を入れる。</p>
+<blockquote><p>baseReferenceに、MemberExpressionを評価した値を入れる。</p></blockquote>
 
 <p>2. Let baseValue be GetValue(baseReference).</p>
 
-<p>baseValueに、GetValue(baseReference)の戻り値を入れる。</p>
+<blockquote><p>baseValueに、GetValue(baseReference)の戻り値を入れる。</p></blockquote>
 
 <p>...</p>
 
@@ -663,7 +663,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <p>propertyNameString, and whose strict mode flag is strict.</p>
 
-<p>base valueにbaseValueを入れたReference型の値を返す。 </p></blockquote>
+<blockquote><p>base valueにbaseValueを入れたReference型の値を返す。 </p></blockquote></blockquote>
 
 <p>GetValue自体も大変ややこしいロジックなのですが、結局ははいくつかの例外処理を除き、参照先の値を返すだけだと思われます。そうすると、関数呼び出しという前提を置くなら、MemberExpression [ Expression ]を評価した場合はbase valueにある関数オブジェクトへの参照を持つReference型が返ってくることになります。</p>
 
