@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>CentOS 6 64bitで、Ruby 1.9.2 + eclipse 3.7 + MySQL 5.5の開発環境を整える。 </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen" />
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- web font -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
+
+  <!-- highlighter -->
+  <script src="/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <div id="title-band"></div>
+    <hgroup>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+      <ul>
+        <li>twitter: <a href="https://twitter.com/#!/h_demon">@h_demon</a></li>
+        <li>mail: hdemon7@gmail.com</li>
+        <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
+      </ul>
+    </hgroup>
+  </header>
+
+  <div id="each-article">
+    <article>
+      <header>
+        <h1>
+          CentOS 6 64bitで、Ruby 1.9.2 + eclipse 3.7 + MySQL 5.5の開発環境を整える。
+        </h1>
+        <span id="date">
+          19 August 2011
+        </span>
+      </header>
+    <pre><code>CentOS 6 64bitで、Ruby 1.9.2 + eclipse 3.7 + MySQL 5.5の開発環境を整える。
+http://dev/wordpress/?p=934
+Fri, 19 Aug 2011 08:39:49 +0000
+hdemon
+http://hdemon.net/?p=934
+
+処方だけを知りたい方は、一番最後のトピックを見て下さい。
+</code></pre>
+
+<p>想定するのは、CentOS 6.0 64bitを"Minimal Desktop"でインストールした環境。ただ32bitでも、インストールにおいては恐らくディレクトリ名が変わるだけだし、我々がそれに干渉することはないので、以下を同様に実行してもたぶん問題ないでしょう。各ライブラリのバージョン等は執筆時点のものなので、適宜変更して下さい。</p>
+
+<h1>Rubyを入れる。</h1>
+
+<p>CentOSを入れ終わり、ネットに接続し、rootでログインしている事を前提とする。</p>
+
+<p>まずRubyを入れるが、yumで入れるとバージョンが1.8.7なので、1.9.2のソースを入手して自分でコンパイルする。ただし、その前にやることがある。</p>
+
+<p>Rubyにはirbという使い勝手のいいインタプリタツールが付属しているが、readlineというライブラリを先に入れてからmakeしないとirbの入力履歴機能などが使えず大変不便。そこで、先にそれを入れる。また、Minimal Desktopではgcc等が入っていないので、それも入れる。</p>
+
+<p>yum -y install readline-devel gcc</p>
+
+<p>それが終わったら、</p>
+
+<p>  wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
+  tar xvzf ruby-1.9.2-p290.tar.gz
+  cd ruby-1.9.2-p290
+  ./configure
+  make
+  make install</p>
+
+<p>このようにすればいい。</p>
+
+<p>なお、Rubyのソース内にはこの後で使うスクリプトがあるので、インストールが終わっても消さずにとっておく。</p>
+
+<h1>RubyGemsを入れる</h1>
+
+<p>yumだとバージョンがやっぱり古いので、これもソースから入れる。</p>
+
+<p>  wget http://rubyforge.org/frs/download.php/75255/rubygems-1.8.8.tgz
+  tar xvzf rubygems-1.8.8.tgz
+  cd rubygems-1.8.8
+  ruby setup.rb</p>
+
+<p>これで終わり。ただし、このままではgem実行時に</p>
+
+<p>  # gem install mysql
+  ERROR:  Loading command: install (LoadError)</p>
+
+<pre><code>  no such file to load -- zlib
+</code></pre>
+
+<p>  ERROR:  While executing gem ... (NameError)</p>
+
+<pre><code>  uninitialized constant Gem::Commands::InstallCommand
+</code></pre>
+
+<p>という「zlibが足りない」エラーが出るはず。それを回避するため、zlib-develをyumで入れた後、先ほど解凍したRubyソースディレクトリ内の、/ext/zlib/extconf.rbを実行する。</p>
+
+<p>  yum install -y zlib-devel
+  cd Rubyソースのディレクトリ/ext/zlib
+  ruby extconf.rb
+  make
+  make install</p>
+
+<p>ちなみに、zlib-develをインストールせずにruby extconf.rbとした場合には、次のようなエラーが出るはず。</p>
+
+<p>  # ruby extconf.rb
+  checking for deflateReset() in -lz... no
+  checking for deflateReset() in -llibz... no
+  checking for deflateReset() in -lzlib1... no
+  checking for deflateReset() in -lzlib... no
+  checking for deflateReset() in -lzdll... no</p>
+
+<p>なお、Rubyのソースはこの後さらに使う機会があるので、まだ消してはいけない。</p>
+
+<h1>MySQLを入れる</h1>
+
+<p>こちらを参考にした。</p>
+
+<p>rpmでもソースコンパイルでも構わないが、"Minimal Desktop"構成だとすでにMySQL 5.1が入っており、へたに後入れして関連ライブラリごとのバージョン相違などを起こしたくないので、できるだけyumでやりたい。</p>
+
+<p>ただ当然ながら、保守派のCentOSさんのデフォルトレポジトリには5.5が入っていない。そこで、5.5が存在するremiレポジトリを使えるようにする ((CentOS "6"かつ64bit用のレポジトリをダウンロードしている事に注意。)) 。</p>
+
+<h1>remiレポジトリを有効にする。epelはremiが依存するパッケージなので、これも必要。</h1>
+
+<p>  rpm -ivh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
+  rpm -ivh http://remi-mirror.dedipower.com/enterprise/remi-release-6.rpm</p>
+
+<p>その後、</p>
+
+<p>  yum --enablerepo=remi -y install mysql mysql-devel mysql-server</p>
+
+<p>とする。</p>
+
+<h1>MySQL/Rubyを入れる</h1>
+
+<p>MySQL/Rubyとは、とみたまさひろ氏の作ったRuby用MySQL API。実はRuby/MySQLというRubyのみで書かれたライブラリもあり、作者はそちらの使用を薦めているのだが、今回はMySQL/Rubyを入れる。それには、単に</p>
+
+<p>  gem install mysql</p>
+
+<p>とすればよい。ただし、私と全く同じ環境でやればエラーは出ないと思うが、場合によっては次のようなエラーが出るかもしれない（以前経験したが、どういう環境だったかは忘れた。ソースからMySQLを入れた後、適切な設定をしないままだとこうなるんじゃなかったか）。</p>
+
+<p>  # gem install mysql
+  Building native extensions.  This could take a while...
+  ERROR:  Error installing mysql:</p>
+
+<pre><code>ERROR: Failed to build gem native extension.
+</code></pre>
+
+<p>  /usr/local/bin/ruby extconf.rb install mysql
+  checking for mysql_query() in -lmysqlclient... no
+  checking for main() in -lm... yes
+  checking for mysql_query() in -lmysqlclient... no
+  checking for main() in -lz... yes
+  checking for mysql_query() in -lmysqlclient... no
+  checking for main() in -lsocket... no
+  checking for mysql_query() in -lmysqlclient... no
+  checking for main() in -lnsl... yes
+  checking for mysql_query() in -lmysqlclient... no
+  <strong><em> extconf.rb failed </em></strong>
+  Could not create Makefile due to some reason, probably lack of
+  necessary libraries and/or headers.  Check the mkmf.log file for more
+  details.  You may need configuration options.</p>
+
+<p>どうやら、mysqlのメソッドの存在を認識できていない様子。ならばmysqlの設定の存在を教えてあげればいい。具体的には、</p>
+
+<p>  gem install mysql -- --with-mysql-config
+  # もしくは
+  gem install mysql -- --with-mysql-config=(パス)/mysql_config</p>
+
+<p>とする。mysql_configのパスは、</p>
+
+<p>find / -name mysql_config</p>
+
+<p>とでもして探せばいいんじゃないかと思う。たぶん/usr/binと/usr/lib64にある（32bitなら/usr/libだろう） 。</p>
+
+<h1>Eclipseを入れる</h1>
+
+<p>ブラウザからダウンロードしてもいいし、適当なミラーを探した上で、
+wget http://www.ring.gr.jp/pub/misc/eclipse/downloads/drops/R-3.7-201106131736/eclipse-SDK-3.7-linux-gtk-x86_64.tar.gz
+などとしてもいい。その後は、こちらに書いてある通りやればいい。ここでは省略したが、最後のまとめに全処理を書いておいた。</p>
+
+<h1>Aptana Pluginを入れる</h1>
+
+<p>http://www.aptana.com/products/studio3/download</p>
+
+<p>ここへ行き、Eclipse Plug-in Versionにチェックした上で、下のDownloadボタンを押す。
+http://download.aptana.com/studio3/plugin/install
+すると、↑が表示されるはずなので、これをコピーし、</p>
+
+<p>  EclipseのHelp -&gt; Install New Software
+  冒頭の"Work with"のテキストボックスにペースト
+  下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う</p>
+
+<p>で、めでたくAptanaプラグインが導入され、Ruby固有の処理が可能になる。</p>
+
+<h1>ruby-debugを入れる</h1>
+
+<p>これを入れないと、Eclipseのデバッガが有効にならない。入れていない場合、Eclipseのデバッグ開始時に次のようなメッセージが出ると思う。</p>
+
+<p>  Unable to find 'rdebug-ide' binary script. May need to install 'ruby-debug-ide' gem, or may need to add your gem executable directory to your PATH (check location via 'gem environment').</p>
+
+<p>つまり、ruby-debug-ideを入れなければならない。しかし、単純に gem install ruby-debug-ideとすると、</p>
+
+<p>  # gem install ruby-debug-ide
+  Building native extensions.  This could take a while...
+  ERROR:  Error installing ruby-debug-ide:</p>
+
+<pre><code>ERROR: Failed to build gem native extension.
+
+      /usr/local/bin/ruby mkrf_conf.rb
+</code></pre>
+
+<p>  Building native extensions.  This could take a while...</p>
+
+<p>  Gem files will remain installed in /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16 for inspection.
+  Results logged to /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16/ext/gem_make.out</p>
+
+<p>このようになると思う。ruby-debug-ideはruby-debug-baseという別のライブラリに依存しているので、そちらを先に入れなければならない。</p>
+
+<p>しかし、gem install ruby-debug-baseとすると、これもまた簡単にいかない。</p>
+
+<p>  # gem install ruby-debug-base
+  ERROR:  Error installing ruby-debug-base:</p>
+
+<pre><code>rbx-require-relative requires Ruby version ~&amp;gt; 1.8.7.
+</code></pre>
+
+<p>1.8.7なんか使ってないのに…。調べてみると、どうやら1.9.2用のruby-debug19というものがあり、これがruby-debug-baseに値するらしい。したがって、それを先に入れる。</p>
+
+<p>…えっさすがに今度はうまく行くよね？　いやいや上手くいきません。頭の痛いことに、これもそのままではインストールできない。</p>
+
+<p>  # gem install ruby-debug19
+  Building native extensions.  This could take a while...
+  ERROR:  Error installing ruby-debug19:</p>
+
+<pre><code>ERROR: Failed to build gem native extension.
+
+      /usr/local/rvm/rubies/ruby-1.9.2-p290/bin/ruby extconf.rb
+</code></pre>
+
+<p>  <strong><em> extconf.rb failed </em></strong></p>
+
+<p>  ...
+  /usr/local/rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require': no such file to load -- openssl (LoadError)</p>
+
+<p>  ...</p>
+
+<p>  Gem files will remain installed in /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12 for inspection.
+  Results logged to /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12/ext/trace_nums/gem_make.out</p>
+
+<p>長いので何が問題かが分かりづらいが、中盤に「opensslが見つからない」とある。ただし、ここで yum install openssl openssl-develとかやっても効果がない（というよりも、yumでMySQL5.5を入れたなら、両者とも依存ライブラリとしてすでにインストールされているはず)。</p>
+
+<p>そこで再度、消さずに取っておいたRubyのソースが活躍する。zlibのときと同様にソース付属のスクリプトを使い、次のように実行する。</p>
+
+<p>  cd rubyのディレクトリ/ext/openssl
+  ruby extconf.rb
+  make
+  make install</p>
+
+<p>そうすると、やっと</p>
+
+<p>  gem install ruby-debug19
+  gem install ruby-debug-ide</p>
+
+<p>が通るようになる。ここでgem listを確認してみると、</p>
+
+<p>  gem list
+  archive-tar-minitar (0.5.2)
+  columnize (0.3.4)
+  linecache19 (0.5.12)
+  rake (0.9.2 ruby)
+  ruby-debug-base19 (0.11.25)
+  ruby-debug-ide (0.4.16)
+  ruby-debug19 (0.11.6)
+  ruby_core_source (0.1.5)</p>
+
+<p>このようにbaseもideも入ってると思う。そして、Eclipseのデバッグも有効に機能するはず。</p>
+
+<h1>結局何をやればいいのか</h1>
+
+<p>以下を上から実行すればいいと思います。ただし上述のように、適宜バージョン等を変えて。</p>
+
+<p>Ruby</p>
+
+<h1>irbの履歴機能を有効にするための準備</h1>
+
+<p>yum -y install readline-devel</p>
+
+<h1>まだ入れていなければ、Cコンパイラのインストール</h1>
+
+<p>yum -y install gcc</p>
+
+<h1>rubyのインストール</h1>
+
+<p>wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
+tar xvzf ruby-1.9.2-p290.tar.gz
+cd ./ruby-1.9.2-p290
+./configure
+make
+make install
+RubyGems</p>
+
+<h1>RubyGemsのインストール</h1>
+
+<p>wget http://rubyforge.org/frs/download.php/75255/rubygems-1.8.8.tgz
+tar xvzf rubygems-1.8.8.tgz
+cd rubygems-1.8.8
+ruby setup.rb</p>
+
+<h1>zlibのインストール</h1>
+
+<p>yum install -y zlib-devel
+cd ./ruby-1.9.2-p290/ext/zlib
+ruby extconf.rb
+make
+make instal
+MySQLとMySQL/Ruby</p>
+
+<h1>remiレポジトリを有効にする。epelはremiが依存するパッケージなので、これも必要。</h1>
+
+<p>rpm -ivh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
+rpm -ivh http://remi-mirror.dedipower.com/enterprise/remi-release-6.rpm</p>
+
+<h1>MySQL5.5のインストール</h1>
+
+<p>yum --enablerepo=remi,epel install mysql mysql-devel</p>
+
+<h1>MySQL/Rubyのインストール</h1>
+
+<h1>問題が出た場合は、記事を参照</h1>
+
+<p>gem install mysql
+Eclipse</p>
+
+<h1>eclipseのインストール</h1>
+
+<p>wget http://www.ring.gr.jp/pub/misc/eclipse/downloads/drops/R-3.7-201106131736/eclipse-SDK-3.7-linux-gtk-x86_64.tar.gz
+tar -xvzf eclipse-SDK-3.7-linux-gtk-x86_64.tar.gz -C /opt</p>
+
+<h1>読み取りのパーミッションを付与し、/usr/binとのパスを繋げる。</h1>
+
+<h1>以下、/optは適宜変更する。</h1>
+
+<p>chmod -R +r /opt/eclipse
+touch /usr/bin/eclipse
+chmod 755 /usr/bin/eclipse</p>
+
+<h1>　以下の内容のファイルを、</h1>
+
+<h1>/usr/bin/eclipseという名前で作る（この行の下から）。</h1>
+
+<h1>!/bin/sh</h1>
+
+<p>export ECLIPSE_HOME="/opt/eclipse"</p>
+
+<p>$ECLIPSE_HOME/eclipse $*</p>
+
+<h2>Create following file, with our favourite editor</h2>
+
+<p>/usr/share/applications/eclipse.desktop</p>
+
+<h1>以下の内容のファイルを、</h1>
+
+<h1>/usr/share/applications/eclipse.desktopという名前で作る。</h1>
+
+<p>[Desktop Entry]
+Encoding=UTF-8
+Name=Eclipse
+Comment=Eclipse SDK 3.7
+Exec=eclipse
+Icon=/opt/eclipse/icon.xpm
+Terminal=false
+Type=Application
+Categories=GNOME;Application;Development;
+StartupNotify=true
+Aptana Plugin</p>
+
+<h1>EclipseのHelp -&gt; Install New Software</h1>
+
+<h1>冒頭の"Work with"のテキストボックスにペースト</h1>
+
+<h1>下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う</h1>
+
+<p>ruby-debug</p>
+
+<h1>opensslのインストール？</h1>
+
+<p>cd ./ruby-1.9.2-p290/ext/openssl
+ruby extconf.rb
+make
+make install</p>
+
+<h1>ruby-debugのインストール</h1>
+
+<p>gem install ruby-debug19
+gem install ruby-debug-ide
+&nbsp;]]></p>
+
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = disqus_identifier && 'badid' || '';
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://hd-mon.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=hd-mon">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+    <em>Updated at  </em>
+  </div>
+
+  <footer></footer>
+
+  <script type="text/javascript">
+  var disqus_shortname = 'hd-mon';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/hd-mon/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+</body>
+</html>
