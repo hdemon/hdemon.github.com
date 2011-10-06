@@ -124,6 +124,7 @@ body {
 
     #clear {
       @include clearfix;
+      clear: both;
       width: 900px;
     }
   }
