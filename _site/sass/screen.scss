@@ -172,6 +172,12 @@ body {
     h1 {
       @include explorizer;
     }
+    #ex-wrapper {
+      width: 300px;
+      height: 300px;
+      margin: 20px;
+      background: #CCC;
+    }
   }
 
   section#nicoscraper {
@@ -267,6 +273,11 @@ body {
       margin: 0 20px;
       padding: 10px 25px;
       @include border-radius(7px, 7px);
+
+      blockquote {
+        margin: 0 10px;
+        padding: 0;        
+      }
     }
 
     .highlight {
