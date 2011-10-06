@@ -167,44 +167,47 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 foo(10).bar();
 のようなチェーンメソッドがあれば、
 
-
-
-
-foo(10)
-CallExpression
-
-
-.bar
-.IdentifierName
-
-
-()
-Arguments
-
-
-
-
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>foo(10)</td>
+<td>CallExpression</td>
+</tr>
+<tr>
+<td>.bar</td>
+<td>.IdentifierName</td>
+</tr>
+<tr>
+<td>()</td>
+<td>Arguments</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 直接的には上の様になりますが、
-
-
-
-
-foo
-MemberExpression
-
-
-(10)
-Arguments
-
-
-bar
-MemberExpression
-
-
-()
-Arguments
-
-
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>foo</td>
+<td>MemberExpression</td>
+</tr>
+<tr>
+<td>(10)</td>
+<td>Arguments</td>
+</tr>
+<tr>
+<td>bar</td>
+<td>MemberExpression</td>
+</tr>
+<tr>
+<td>()</td>
+<td>Arguments</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 
 
 最終的にはこの形に分解して解釈するということでしょう。詳細は次の章で見ていきます。
@@ -260,128 +263,123 @@ console.log(this); // global
 
 これらの構文を解析してみます。まず、closure直下で呼ぶ場合はどうでしょうか。この場合は、
 
-
-
-
-closure
-MemberExpression : PrimaryExpression : Identifier
-
-
- ()
-Arguments : ()
-
-
-
-
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>closure</td>
+<td>MemberExpression : PrimaryExpression : Identifier</td>
+</tr>
+<tr>
+<td> ()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 となるのではないかと思います。そしてmethod直下で呼び出す場合は、
-
-
-
-
-obj
-MemberExpression :
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>obj</td>
+<td>MemberExpression :
 PrimaryExpression :
-Identifier
-MemberExpression :
+Identifier</td>
+<td rowspan="3">MemberExpression :
 MemberExpression
-.IdentifierName
-
-
-.
-
-
-
- method
-?
-
-
- ()
-Arguments : ()
-
-
-
-
+.IdentifierName</td>
+</tr>
+<tr>
+<td>.</td>
+<td></td>
+</tr>
+<tr>
+<td> method</td>
+<td>?</td>
+</tr>
+<tr>
+<td> ()</td>
+<td colspan="2">Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 と解釈できるのではないでしょうか。この類型の場合は、類型として仕様上に明記されていることから、Identifierではなく、MemberExpression .IdentifierNameとして解析されると思われます。
 
 最後に即時関数の場合。
-
-
-
-
-外側の()を含めた全体
-PrimaryExpression : ( Expression )
-
-
-function(){}
-Expression : MemberExpression :
-FunctionExpression
-
-
-functionの後ろの()
-Arguments : ()
-
-
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>外側の()を含めた全体</td>
+<td>PrimaryExpression : ( Expression )</td>
+</tr>
+<tr>
+<td>function(){}</td>
+<td>Expression : MemberExpression :
+FunctionExpression</td>
+</tr>
+<tr>
+<td>functionの後ろの()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
 
 
 これらを整理すると、
 
-	スコープチェーン上にある関数名を指定して呼び出すパターン
-
-	Identifier
-
-	あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。
-
-	MemberExpression .IdentifierName
-
-	即時関数として呼び出すパターン
-
-	FunctionExpression
-
++ スコープチェーン上にある関数名を指定して呼び出すパターン ->	Identifier
++ あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。 -> MemberExpression .IdentifierName
++ 即時関数として呼び出すパターン -> FunctionExpression
 
 をそれぞれ評価した値を調べれば、先の分岐に当てはめることができるはずです。
 
 まずは1.のIdentifierのパターンから見ていきます。
-Identifierを評価すると、何が返ってくるのか。
+
+#Identifierを評価すると、何が返ってくるのか。
 Identifierを評価するとき、
-11.1.2 Identifier Reference
-An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of evaluating an
+> 11.1.2 Identifier Reference
+> An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of evaluating an
 Identifier is always a value of type Reference.
-識別子を評価した結果は、常にReference型である。
+>  識別子を評価した結果は、常にReference型である。
 
 というルールが存在します。Reference型とは、
-A Reference is a resolved name binding. A Reference consists of three components, the base value, the referenced name and the Boolean valued strict reference flag. The base value is either undefined, an Object, a Boolean, a String, a Number, or an environment record (10.2.1). A base value of undefined indicates that the reference could not be resolved to a binding. The referenced name is a String.
-Referenceは名前束縛を解決した結果である。Referenceは base value, referenced name, strict reference flagの3つの要素からなる。base valueはundefined, Object, Boolean, String, Number, enviroment recordのいずれかである。base valueがundefinedの場合、それは参照が束縛を解決できなかった事を意味する。referenced nameはString型である。
+> A Reference is a resolved name binding. A Reference consists of three components, the base value, the referenced name and the Boolean valued strict reference flag. The base value is either undefined, an Object, a Boolean, a String, a Number, or an environment record (10.2.1). A base value of undefined indicates that the reference could not be resolved to a binding. The referenced name is a String.
+>  Referenceは名前束縛を解決した結果である。Referenceは base value, referenced name, strict reference flagの3つの要素からなる。base valueはundefined, Object, Boolean, String, Number, enviroment recordのいずれかである。base valueがundefinedの場合、それは参照が束縛を解決できなかった事を意味する。referenced nameはString型である。
 
 とあるように、識別子の名前解決のための型のようです。あるいは特別なラッパーオブジェクトと言ってもいいかも知れません。これによれば、Reference型だがbase valueはObject型ということがあり得ますし、その場合Type(ref)の結果はObjectではなくReferenceになります。
 
 さらに、Identifierの名前解決を行うとき、GetIdentifierReferenceという内部関数が呼ばれます。GetIdentifierReferenceはexecution contextの持つスコープ情報である Lexical Environmentを参照し、再帰的に該当する識別子を探します。
-10.3.1 Identifier Resolution
-Identifier resolution is the process of determining the binding of an Identifier using the LexicalEnvironment of the running execution context. During execution of ECMAScript code, the syntactic production PrimaryExpression : Identifier is evaluated using the following algorithm:
-識別子解決は、実行中のexecution contextのLexicalEnvironmentを使用し、識別子束縛を決定するプロセスである。ECMAScriptコード実行中、PrimaryExpression : Identifierにあたる構文上の生成物は次のアルゴリズムによって評価される。
-1. Let env be the running execution context‘s LexicalEnvironment.
-実行中のexecution contextのLexicalEnvironmentをenvに入れる。
-...
-
-3. Return the result of calling GetIdentifierReference function passing env, Identifier, and strict as arguments.
-The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String
-GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。
+> 10.3.1 Identifier Resolution
+> Identifier resolution is the process of determining the binding of an Identifier using the LexicalEnvironment of the running execution context. During execution of ECMAScript code, the syntactic production PrimaryExpression : Identifier is evaluated using the following algorithm:
+>  識別子解決は、実行中のexecution contextのLexicalEnvironmentを使用し、識別子束縛を決定するプロセスである。ECMAScriptコード実行中、PrimaryExpression : Identifierにあたる構文上の生成物は次のアルゴリズムによって評価される。
+> 1. Let env be the running execution context‘s LexicalEnvironment.
+>  実行中のexecution contextのLexicalEnvironmentをenvに入れる。
+> ...
+> 
+> 3. Return the result of calling GetIdentifierReference function passing env, Identifier, and strict as arguments.
+> The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String
+>  GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。
 
 このとき、GetIdentifierReferenceは特定オブジェクトへの参照ではなく、 Environment Recordsをbase valueに入れて返します。
-10.2.2.1 GetIdentifierReference (lex, name, strict)
-The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String
-name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed:
-1. If lex is the value null, then
-a. Return a value of type Reference whose base value is undefined, whose referenced name is name,
-and whose strict mode flag is strict.
-2. Let envRec be lex‘s environment record.
-3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the
-argument N.
-4. If exists is true, then
-a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and
-whose strict mode flag is strict.
-5. Else
-a. Let outer be the value of lex’s outer environment reference.
-b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments
+> 10.2.2.1 GetIdentifierReference (lex, name, strict)
+> The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String
+> name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed:
+> 1. If lex is the value null, then
+> a. Return a value of type Reference whose base value is undefined, whose referenced name is name,
+> and whose strict mode flag is strict.
+> 2. Let envRec be lex‘s environment record.
+> 3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the
+> argument N.
+> 4. If exists is true, then
+> a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and
+> whose strict mode flag is strict.
+> 5. Else
+> a. Let outer be the value of lex’s outer environment reference.
+> b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments
 
 全てを追っていくと頭が痛くなるので、要点だけ見ると、GetIdentifierReferenceは、
 
@@ -392,16 +390,16 @@ b. Return the result of calling GetIdentifierReference passing outer, name, and 
 があると分かります。つまり、Identiferを評価した時点で、undefinedかReference型のどちらかが返ってくることが確定し、結果として少なくともFunction Callの分岐6-aには該当しない事が確定します。
 
 そして、6-aに該当しないということは、ThisBindingの値はundefinedかImplicitThisValueのどちらかであることも確定します。ImplicitThisValueは
-10.2.1.2.6 ImplicitThisValue()
-Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true.
-Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。
-1. Let envRec be the object environment record for which the method was invoked.
-envRecに、そのメソッドを呼び出したenvironment recordを入れる。
-2. If the provideThis flag of envRec is true, return the binding object for envRec.
-envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。
-3. Otherwise, return undefined
-そうでなければ、undefinedを返す。
-
+> 10.2.1.2.6 ImplicitThisValue()
+> Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true.
+> Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。
+> 1. Let envRec be the object environment record for which the method was invoked.
+> envRecに、そのメソッドを呼び出したenvironment recordを入れる。
+> 2. If the provideThis flag of envRec is true, return the binding object for envRec.
+> envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。
+> 3. Otherwise, return undefined
+> そうでなければ、undefinedを返す。
+> 
 というルールがあり、説明は省きますが、provideThisがtrueとなるのはWithを指定されたとき (( あと、ECMAScript 5thのbindメソッドもこれを使うのかも？ )) ぐらいらしいので、実用上の殆どの場合はundefinedが返ってくることになります。
 
 まとめてみましょう。
@@ -415,23 +413,23 @@ envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクト�
 やっと一つ答えが出ました。続いて2.のパターンを見てみます。
 MemberExpression .IdentifierNameを評価すると何が返ってくるのか。
 MemberExpression .IdentifierNameの類型は、直接仕様に記載されていません。しかし、
-The dot notation is explained by the following syntactic conversion:
-MemberExpression . IdentifierName
-is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ]
-...
-ドット表記は、次のようば構文的変換によって説明される。
-"MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。
+Th> e dot notation is explained by the following syntactic conversion:
+> MemberExpression . IdentifierName
+> is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ]
+> ...
+> ドット表記は、次のようば構文的変換によって説明される。
+> "MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。
 
 という事から、次のルールが適用されます。
-The production MemberExpression : MemberExpression [ Expression ] is evaluated as follows:
-1. Let baseReference be the result of evaluating MemberExpression.
-baseReferenceに、MemberExpressionを評価した値を入れる。
-2. Let baseValue be GetValue(baseReference).
-baseValueに、GetValue(baseReference)の戻り値を入れる。
-...
-8. Return a value of type Reference whose base value is baseValue and whose referenced name is
-propertyNameString, and whose strict mode flag is strict.
-base valueにbaseValueを入れたReference型の値を返す。 
+The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows:
+> 1. Let baseReference be the result of evaluating MemberExpression.
+> baseReferenceに、MemberExpressionを評価した値を入れる。
+> 2. Let baseValue be GetValue(baseReference).
+> baseValueに、GetValue(baseReference)の戻り値を入れる。
+> ...
+> 8. Return a value of type Reference whose base value is baseValue and whose referenced name is
+> propertyNameString, and whose strict mode flag is strict.
+> base valueにbaseValueを入れたReference型の値を返す。 
 
 GetValue自体も大変ややこしいロジックなのですが、結局ははいくつかの例外処理を除き、参照先の値を返すだけだと思われます。そうすると、関数呼び出しという前提を置くなら、MemberExpression [ Expression ]を評価した場合はbase valueにある関数オブジェクトへの参照を持つReference型が返ってくることになります。
 
@@ -445,29 +443,32 @@ GetValue自体も大変ややこしいロジックなのですが、結局はは
 
 即時関数を評価すると何が返ってくるのか。
 即時関数、つまり
-(function(){
 
-}());
+{% highlight javascript %}
+(function(){}());
+{% endhighlight %}
+
 この慣用表現の構文をもう一度掲載すると、
 
-
-
-
-外側の()
-PrimaryExpression : ( Expression )
-
-
-function(){}
-MemberExpression : FunctionExpression
-
-
-functionの後ろの()
-Arguments : ()
-
-
-
-
-こうなると思われます。これは先の二類型と違ってIdentifierが関係しません。( Expression )を評価すると、自動的にExpressionを評価する事になるだけ(11.1.6参照)なので、FunctionExpressionの評価のみが問題となります。
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>外側の()</td>
+<td>PrimaryExpression : ( Expression )</td>
+</tr>
+<tr>
+<td>function(){}</td>
+<td>MemberExpression : FunctionExpression</td>
+</tr>
+<tr>
+<td>functionの後ろの()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+これは先の二類型と違ってIdentifierが関係しません。( Expression )を評価すると、自動的にExpressionを評価する事になるだけ(11.1.6参照)なので、FunctionExpressionの評価のみが問題となります。
 FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }
 is evaluated as follows:
 ...
@@ -488,7 +489,7 @@ FunctionExpressionを評価すると、以上のルールに従い、Object型�
 	Object型の値が返ってきた場合、Function Callの過程はThisBindingにundefinedを代入する。
 	だから、即時関数の直下ではthisはundefinedもしくはglobalになる。
 
- 簡単な総括
+簡単な総括
 以下のルールで、大体の説明ができると思います。
 11.2.3 Function Calls
 The production CallExpression : MemberExpression Arguments is evaluated as follows:
@@ -516,27 +517,3 @@ thisValueにundefinedを設定する。
 	Identifierを評価すると、base valueにEnvironment Recordsが入ったReference型が返ってくる。
 	 MemberExpression : MemberExpression [ Expression ] を評価すると、base valueにMemberExpressionへの参照が入ったReference型が返ってくる。
 	FunctionExpressionを評価すると、Object型（そのFunctionへの参照）が返ってくる。
-
-		
-		727
-		2011-05-30 15:42:07
-		2011-05-30 06:42:07
-		open
-		open
-		javascript%e3%81%aethis%e3%82%92%e3%82%81%e3%81%90%e3%82%8b%e5%86%92%e9%99%ba
-		publish
-		0
-		0
-		post
-		
-		0
-		
-		
-		
-		
-		
-		
-			_edit_last
-			
-		
-	
