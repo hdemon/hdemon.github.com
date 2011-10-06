@@ -301,7 +301,7 @@ body {
 
     table {
       @include table-scaffolding;
-      
+      @include inner-table-borders(1px, #7a98c6);
     }
 
     ul {
