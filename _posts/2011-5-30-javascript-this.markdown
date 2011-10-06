@@ -127,7 +127,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > ...
 
-> 3.Set the ThisBinding to the global object.
+> 3\. Set the ThisBinding to the global object.
 
 というように、分かりやすくglobal objectが代入されるようです（ただ、global objectが入れられるパターンは後述するように他にもあります）。
 次に、Function codeの定義を見てみます。
@@ -140,19 +140,19 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > > 次の手順は、関数オブジェクトが含むFunction codeのexecution contextにコントロールが写ったときに実行され、呼び出し元はthisArgとargumentsListを渡す。
 
-> 1.If the function code is strict code, set the ThisBinding to thisArg.
+> 1\. If the function code is strict code, set the ThisBinding to thisArg.
 
 > > strictなら（="use strict";使用時）、ThisBindingにthisArgを入れる。
 
-> 2.Else if thisArg is null or undefined, set the ThisBinding to the global object.
+> 2\. Else if thisArg is null or undefined, set the ThisBinding to the global object.
 
 > > thisArgがnullもしくはundefinedの場合、ThisBindingにはglobal objectを入れる。
 
-> 3.Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).
+> 3\. Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).
 
 > > thisArgがオブジェクトではないときは、ToObject(thisArg)の値を入れる。
 
-> 4.Else set the ThisBinding to thisArg.
+> 4\. Else set the ThisBinding to thisArg.
 
 > ...
 
@@ -167,7 +167,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 >  "MemberExpression" "Arguments"の形式をとり、全体として"CallExpression"だと解釈できる構文は、次のように評価される。
 
-> 1.Let ref be the result of evaluating MemberExpression.
+> 1\. Let ref be the result of evaluating MemberExpression.
 
 > > refに、MemberExpressionを評価した結果を入れる。
 
@@ -175,7 +175,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > 
 
-> 6.If Type(ref) is Reference, then
+> 6\. If Type(ref) is Reference, then
 
 > > refがReference型である場合、
 
@@ -195,7 +195,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > > thisの暗黙値=大抵はundefinedをthisValueとする。
 
-> 7.Else, Type(ref) is not Reference.
+> 7\. Else, Type(ref) is not Reference.
 
 > > refがReference型でなければ、
 
@@ -308,9 +308,9 @@ var foo = bar;
 3.は引数関係なので飛ばします。4.で先ほど処理した型を判別し、Objectでなければエラーを返します。関数の参照を持っていない変数に括弧を付けて、あたかも関数であるかのように実行したときの文法エラーを出すためのフィルターと考えるべきでしょう。5.も同様のフィルターと思われます。
 
 さて、6からが重要な部分です。もう一度引用します。
-> 6.If Type(ref) is Reference, then
+> 6\. If Type(ref) is Reference, then
 
->   a.If IsPropertyReference(ref) is true, then
+> \s\sa\. If IsPropertyReference(ref) is true, then
 
 >     i.Let thisValue be GetBase(ref).
 
@@ -319,7 +319,7 @@ var foo = bar;
 >     i.Let thisValue be the result of calling the 
 ImplicitThisValue concrete method of GetBase(ref).
 
-> 7.Else, Type(ref) is not Reference.
+> 7\. Else, Type(ref) is not Reference.
 
 >   a.Let thisValue be undefined.
 
@@ -446,13 +446,13 @@ Identifierを評価するとき、
 > An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of evaluating an
 Identifier is always a value of type Reference.
 
->  識別子を評価した結果は、常にReference型である。
+> > 識別子を評価した結果は、常にReference型である。
 
 というルールが存在します。Reference型とは、
 
 > A Reference is a resolved name binding. A Reference consists of three components, the base value, the referenced name and the Boolean valued strict reference flag. The base value is either undefined, an Object, a Boolean, a String, a Number, or an environment record (10.2.1). A base value of undefined indicates that the reference could not be resolved to a binding. The referenced name is a String.
 
-> > Referenceは名前束縛を解決した結果である。Referenceは base value, referenced name, strict reference flagの3つの要素からなる。base valueはundefined, Object, Boolean, String, Number, enviroment recordのいずれかである。base valueがundefinedの場合、それは参照が束縛を解決できなかった事を意味する。referenced nameはString型である。
+> > *Referenceは名前束縛を解決した結果である。*Referenceは base value, referenced name, strict reference flagの3つの要素からなる。base valueはundefined, Object, Boolean, String, Number, enviroment recordのいずれかである。base valueがundefinedの場合、それは参照が束縛を解決できなかった事を意味する。referenced nameはString型である。
 
 とあるように、識別子の名前解決のための型のようです。あるいは特別なラッパーオブジェクトと言ってもいいかも知れません。これによれば、Reference型だがbase valueはObject型ということがあり得ますし、その場合Type(ref)の結果はObjectではなくReferenceになります。
 
@@ -464,7 +464,7 @@ Identifier is always a value of type Reference.
 
 > > 識別子解決は、実行中のexecution contextのLexicalEnvironmentを使用し、識別子束縛を決定するプロセスである。ECMAScriptコード実行中、PrimaryExpression : Identifierにあたる構文上の生成物は次のアルゴリズムによって評価される。
 
-> 1. Let env be the running execution context‘s LexicalEnvironment.
+> 1\.  Let env be the running execution context‘s LexicalEnvironment.
 
 >  実行中のexecution contextのLexicalEnvironmentをenvに入れる。
 
@@ -472,7 +472,7 @@ Identifier is always a value of type Reference.
 
 > 
 
-> 3. Return the result of calling GetIdentifierReference function passing env, Identifier, and strict as arguments.
+> 3\. Return the result of calling GetIdentifierReference function passing env, Identifier, and strict as arguments.
 
 > The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String
 
