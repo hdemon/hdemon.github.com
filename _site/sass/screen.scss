@@ -18,6 +18,10 @@
   user-select: none;  
 }
 
+@mixin darkgray {
+  color: #333;   
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -164,7 +168,7 @@ body {
           text-decoration: underline;              
         }    
         &:visited {          
-          color: #333;             
+          @include darkgray;             
         }    
       }
       span {
@@ -369,7 +373,7 @@ body {
     ul {
       list-style-type: circle;  
       margin: 10px 45px; 
-      color: #333;   
+      @include darkgray;   
     }
 
     img {
