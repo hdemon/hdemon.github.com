@@ -275,11 +275,10 @@ body {
       @include border-radius(7px, 7px);
       
       p {
+        text-indent: 0;
         margin: 0;
         strong {
-          // = text-indent: 0
-          font-weight: bold;
-          margin-left: -15px;
+          font-weight: bold;;
         }
       }
 
