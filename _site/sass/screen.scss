@@ -21,7 +21,6 @@
 * {
   padding: 0;
   margin: 0;
-  color: #333;
 
   a {
     text-decoration: none;        
@@ -328,10 +327,6 @@ body {
       margin: 10px 0; 
     }
 
-    .highlight pre code span {      
-      color: white;
-    }
-
     blockquote {
       quotes: none;
       font-size: 14px;
@@ -373,7 +368,8 @@ body {
 
     ul {
       list-style-type: circle;  
-      margin: 10px 45px;    
+      margin: 10px 45px; 
+      color: #333;   
     }
 
     img {
