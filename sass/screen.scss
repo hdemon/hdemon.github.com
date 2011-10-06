@@ -150,10 +150,14 @@ body {
       list-style-type: circle;
       margin-top: 10px;
       a {
-        text-decoration: none;              
+        text-decoration: none;
+        color: #666;             
         &:hover {
           text-decoration: underline;              
-        }        
+        }    
+        &:visited {          
+          color: #333;             
+        }    
       }
       span {
         font-weight: normal;
