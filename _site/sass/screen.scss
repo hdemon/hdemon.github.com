@@ -159,9 +159,6 @@ body {
 
 #mc-lib {
   header {
-    #deco {
-      @include list-decorate; 
-    }
     h1 { 
       @include lib-label; 
     }
@@ -173,6 +170,14 @@ body {
     }
   }
 
+  section {
+    h1 {      
+      #deco {
+        @include list-decorate; 
+      }
+    }
+  }
+  
   section#explorizer {
     h1 {
       @include explorizer;
