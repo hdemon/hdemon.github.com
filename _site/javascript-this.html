@@ -242,19 +242,23 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <blockquote><p>refがReference型である場合、</p></blockquote>
 
-<p>a.If IsPropertyReference(ref) is true, then</p>
+<p>&nbsp;&nbsp;
+a.If IsPropertyReference(ref) is true, then</p>
 
 <blockquote><p>refのbase valueがundefinedもしくはEnvironment Record以外なら、</p></blockquote>
 
-<p>i.Let thisValue be GetBase(ref).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i.Let thisValue be GetBase(ref).</p>
 
 <blockquote><p>base valueの参照を返す。</p></blockquote>
 
-<p>b.Else, the base of ref is an Environment Record</p>
+<p>&nbsp;&nbsp;
+b.Else, the base of ref is an Environment Record</p>
 
 <blockquote><p>そうでなければ、</p></blockquote>
 
-<p>i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).</p>
 
 <blockquote><p>thisの暗黙値=大抵はundefinedをthisValueとする。</p></blockquote>
 
@@ -262,7 +266,8 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <blockquote><p>refがReference型でなければ、</p></blockquote>
 
-<p>a.Let thisValue be undefined.</p>
+<p>&nbsp;&nbsp;
+a.Let thisValue be undefined.</p>
 
 <blockquote><p>thisValueにundefinedを設定する。</p></blockquote>
 
@@ -274,35 +279,49 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <p>Syntax</p>
 
-<p>MemberExpression :</p>
+<p>&nbsp;&nbsp;
+MemberExpression :</p>
 
-<p>PrimaryExpression</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+PrimaryExpression</p>
 
-<p>FunctionExpression</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+FunctionExpression</p>
 
-<p>MemberExpression [ Expression ]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression [ Expression ]</p>
 
-<p>MemberExpression.IdentifierName</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression.IdentifierName</p>
 
-<p>new MemberExpression Arguments</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+new MemberExpression Arguments</p>
 
 <p>...</p>
 
-<p>CallExpression :</p>
+<p>&nbsp;&nbsp;
+CallExpression :</p>
 
-<p>MemberExpression Arguments</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression Arguments</p>
 
-<p>CallExpression Arguments</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression Arguments</p>
 
-<p>CallExpression [ Expression ]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression [ Expression ]</p>
 
-<p>CallExpression.IdentifierName</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression.IdentifierName</p>
 
-<p>Arguments :</p>
+<p>&nbsp;&nbsp;
+Arguments :</p>
 
-<p>( )</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+( )</p>
 
-<p>( ArgumentList )</p></blockquote>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+( ArgumentList )</p></blockquote>
 
 <p>記法の勉強をしていないので感覚的な解釈ですが、11.2.3の"CallExpression : MemberExpression Arguments"は、CallExpressionの類型の一つを示しているようですね。ただ、CallExpressionのその他の類型は全てCallExpression自身を含んでいるので、最終的には"MebmerExpression + Arguments"の構文に還元されるのだと思います。例えば、</p>
 
@@ -385,11 +404,15 @@ ImplicitThisValue concrete method of GetBase(ref).</p>
 <p>&nbsp;&nbsp;
 a. Let thisValue be undefined.</p></blockquote>
 
-<p>6と7によれば、
-1. Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値
-2. Type(ref) が Reference かつ、IsPropertyReference(ref) が真でなく、refがEnviroment Recordであるとき、thisValue は GetBase(ref)　InplicitThisValueの値。
-3. Type(ref) が Reference ではないとき、thisValue は undefined
-という場合分けができます。とうとう核心部分までやって来ましたね。まず、Type(ref)ですが、これは単純にrefの型を返す内部関数です（8を参照）。</p>
+<p>6と7によれば、</p>
+
+<ol>
+<li><p>Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値</p></li>
+<li><p>Type(ref) が Reference かつ、IsPropertyReference(ref) が真でなく、refがEnviroment Recordであるとき、thisValue は GetBase(ref)　InplicitThisValueの値。</p></li>
+<li><p>Type(ref) が Reference ではないとき、thisValue は undefined
+という場合分けができます。とうとう核心部分までやって来ましたね。まず、Type(ref)ですが、これは単純にrefの型を返す内部関数です（8を参照）。</p></li>
+</ol>
+
 
 <p>refがどのような値を持っているかは、MemberExpressionの形態によって決定されますから、それぞれの場合の仕様書の表記を見てみないといけません。次の項目では、この三類型が、我々がいつも行っている関数呼び出しのどの類型にあたるのかを検討します。
 我々はいつも、どんなやり方で関数を呼び出しているか。</p>
@@ -638,26 +661,17 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <p>The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows:</p>
 
-<blockquote><ol>
-<li>Let baseReference be the result of evaluating MemberExpression.</li>
-</ol>
-
+<blockquote><p>1. Let baseReference be the result of evaluating MemberExpression.</p>
 
 <p>baseReferenceに、MemberExpressionを評価した値を入れる。</p>
 
-<ol>
-<li>Let baseValue be GetValue(baseReference).</li>
-</ol>
-
+<p>2. Let baseValue be GetValue(baseReference).</p>
 
 <p>baseValueに、GetValue(baseReference)の戻り値を入れる。</p>
 
 <p>...</p>
 
-<ol>
-<li>Return a value of type Reference whose base value is baseValue and whose referenced name is</li>
-</ol>
-
+<p>8. Return a value of type Reference whose base value is baseValue and whose referenced name is</p>
 
 <p>propertyNameString, and whose strict mode flag is strict.</p>
 
@@ -714,10 +728,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <p>...</p>
 
-<ol>
-<li>Create a new native ECMAScript object and let F be that object.</li>
-</ol>
-
+<p>1. Create a new native ECMAScript object and let F be that object.</p>
 
 <p>...</p>
 

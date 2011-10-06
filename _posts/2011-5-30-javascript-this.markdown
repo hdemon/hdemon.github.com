@@ -179,18 +179,22 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > > refがReference型である場合、
 
+> &nbsp;&nbsp;
 > a.If IsPropertyReference(ref) is true, then
 
 > > refのbase valueがundefinedもしくはEnvironment Record以外なら、
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > i.Let thisValue be GetBase(ref).
 
 > > base valueの参照を返す。
 
+> &nbsp;&nbsp;
 > b.Else, the base of ref is an Environment Record
 
 > > そうでなければ、
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).
 
 > > thisの暗黙値=大抵はundefinedをthisValueとする。
@@ -199,6 +203,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > > refがReference型でなければ、
 
+> &nbsp;&nbsp;
 > a.Let thisValue be undefined.
 
 > > thisValueにundefinedを設定する。
@@ -211,34 +216,49 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 > Syntax
 
+> &nbsp;&nbsp;
 > MemberExpression :
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > PrimaryExpression
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > FunctionExpression
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > MemberExpression [ Expression ]
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > MemberExpression.IdentifierName
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > new MemberExpression Arguments
 
 > ...
 
+
+> &nbsp;&nbsp;
 > CallExpression :
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > MemberExpression Arguments
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > CallExpression Arguments
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > CallExpression [ Expression ]
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > CallExpression.IdentifierName
 
+> &nbsp;&nbsp;
 > Arguments :
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > ( )
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > ( ArgumentList )
 
 
@@ -330,8 +350,11 @@ ImplicitThisValue concrete method of GetBase(ref).
 
 
 6と7によれば、
+
 1. Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値
+
 2. Type(ref) が Reference かつ、IsPropertyReference(ref) が真でなく、refがEnviroment Recordであるとき、thisValue は GetBase(ref)　InplicitThisValueの値。
+
 3. Type(ref) が Reference ではないとき、thisValue は undefined
 という場合分けができます。とうとう核心部分までやって来ましたね。まず、Type(ref)ですが、これは単純にrefの型を返す内部関数です（8を参照）。
 
@@ -567,17 +590,17 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 The prod> uction MemberExpression : MemberExpression [ Expression ] is evaluated as follows: 
 
-> 1. Let baseReference be the result of evaluating MemberExpression. 
+> 1\. Let baseReference be the result of evaluating MemberExpression. 
 
 > baseReferenceに、MemberExpressionを評価した値を入れる。
  
-> 2. Let baseValue be GetValue(baseReference). 
+> 2\. Let baseValue be GetValue(baseReference). 
 
 > baseValueに、GetValue(baseReference)の戻り値を入れる。 
 
 > ... 
 
-> 8. Return a value of type Reference whose base value is baseValue and whose referenced name is 
+> 8\. Return a value of type Reference whose base value is baseValue and whose referenced name is 
 
 > propertyNameString, and whose strict mode flag is strict. 
 
@@ -631,7 +654,7 @@ GetValue自体も大変ややこしいロジックなのですが、結局はは
 
 > ...
 
-> 1. Create a new native ECMAScript object and let F be that object.
+> 1\. Create a new native ECMAScript object and let F be that object.
 
 > ...
 
