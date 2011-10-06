@@ -159,6 +159,9 @@ body {
 
 #mc-lib {
   header {
+    #deco {
+      @include list-decorate; 
+    }
     h1 { 
       @include lib-label; 
     }
