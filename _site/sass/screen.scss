@@ -6,6 +6,7 @@
 @import "compass/reset";
 @import "compass/css3/border-radius";
 @import "compass/utilities/general/clearfix";
+@import "compass/utilities/tables";
 
 @import "sprites.scss";
 
@@ -296,6 +297,11 @@ body {
         padding: 10px;
         @include border-radius(7px, 7px);    
       }
+    }
+
+    table {
+      @include table-scaffolding;
+      
     }
 
     ul {
