@@ -126,13 +126,15 @@
 
 <p>ここで、handleObjをhandleObjに入れています。やはり最後は配列なんですね。handlersはeventsを、eventsはelemDataを参照しており、elemDataは個々のjQueryオブジェクト内のプロパティを参照しているのだと思われます。で、その中に、今回登録したhandleがあるわけです。</p>
 
-<p>うーん、大変ややこしいですね。でもまあ、大体の構造は分かりました。「個々のjQueryオブジェクトは、自分に関連付けられるイベントの情報を自前で保存している」という点が重要だと思います。 次はunbindメソッドです。
-unbindの仕組み</p>
+<p>うーん、大変ややこしいですね。でもまあ、大体の構造は分かりました。「個々のjQueryオブジェクトは、自分に関連付けられるイベントの情報を自前で保存している」という点が重要だと思います。 次はunbindメソッドです。</p>
+
+<h1>unbindの仕組み</h1>
 
 <p>unbindもbindと基本構造は同じですね。さて、unbindが呼び出すremoveですが、bind以上に長いので、重要部分のみを抜粋します。</p>
 
-<p>addではhandlersがevents[ type ]を参照していましたから、removeでも同じだと考えると、eventType[ j ]とadd内のhandlerが対応すると考えてよさそうです。handlerが指定されていないで呼び出された場合、こうやってイベント登録の全消去を行うわけですね。 この後、removeEventというIE対策のラッパー関数を介してremoveEventListenerが呼び出されます。
-まとめ</p>
+<p>addではhandlersがevents[ type ]を参照していましたから、removeでも同じだと考えると、eventType[ j ]とadd内のhandlerが対応すると考えてよさそうです。handlerが指定されていないで呼び出された場合、こうやってイベント登録の全消去を行うわけですね。 この後、removeEventというIE対策のラッパー関数を介してremoveEventListenerが呼び出されます。</p>
+
+<h1>まとめ</h1>
 
 <ul>
 <li>jQueryでは、DOMオブジェクト毎に配列の形でハンドラを保管している。</li>

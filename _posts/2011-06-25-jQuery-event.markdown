@@ -239,7 +239,8 @@ _dataはjQuery.dataと同じでした。つまり、elem = thisで示される�
 {% endhighlight %}
 
 うーん、大変ややこしいですね。でもまあ、大体の構造は分かりました。「個々のjQueryオブジェクトは、自分に関連付けられるイベントの情報を自前で保存している」という点が重要だと思います。 次はunbindメソッドです。
-unbindの仕組み
+
+#unbindの仕組み
 
 {% highlight javascript %}
 unbind: function( type, fn ) {
@@ -293,7 +294,8 @@ remove: function( elem, types, handler, pos ) {
 {% endhighlight %}
 
 addではhandlersがevents[ type ]を参照していましたから、removeでも同じだと考えると、eventType[ j ]とadd内のhandlerが対応すると考えてよさそうです。handlerが指定されていないで呼び出された場合、こうやってイベント登録の全消去を行うわけですね。 この後、removeEventというIE対策のラッパー関数を介してremoveEventListenerが呼び出されます。
-まとめ
+
+#まとめ
 
 + jQueryでは、DOMオブジェクト毎に配列の形でハンドラを保管している。
 + oneはややこしいことはしていない。単に無名関数でくるんで、まっさきにイベント登録を消した上で目的の関数を実行するだけ。
