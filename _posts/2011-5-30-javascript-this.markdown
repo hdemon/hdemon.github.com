@@ -1,8 +1,7 @@
-
-JavaScriptの&quot;this&quot;をめぐる冒険
-
-Mon, 30 May 2011 06:42:07 +0000
-
+---
+layout: post
+title: "JavaScriptの&quot;this&quot;をめぐる冒険"
+---
 
 + 大変長いです。
 + 実践的な事は書いてありません。
