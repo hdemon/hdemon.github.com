@@ -1,6 +1,5 @@
 ---
 layout: post
-style: text
 title: "CentOS 6 64bitで、Ruby 1.9.2 + eclipse 3.7 + MySQL 5.5の開発環境を整える。"
 ---
 
@@ -20,12 +19,12 @@ yum -y install readline-devel gcc
 それが終わったら、
 
 {% highlight bash %}
-  wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
-  tar xvzf ruby-1.9.2-p290.tar.gz
-  cd ruby-1.9.2-p290
-  ./configure
-  make
-  make install
+wget ftp://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
+tar xvzf ruby-1.9.2-p290.tar.gz
+cd ruby-1.9.2-p290
+./configure
+make
+make install
 {% endhighlight %}
 
 このようにすればいい。
@@ -37,41 +36,41 @@ yum -y install readline-devel gcc
 yumだとバージョンがやっぱり古いので、これもソースから入れる。
 
 {% highlight bash %}
-  wget http://rubyforge.org/frs/download.php/75255/rubygems-1.8.8.tgz
-  tar xvzf rubygems-1.8.8.tgz
-  cd rubygems-1.8.8
-  ruby setup.rb
+wget http://rubyforge.org/frs/download.php/75255/rubygems-1.8.8.tgz
+tar xvzf rubygems-1.8.8.tgz
+cd rubygems-1.8.8
+ruby setup.rb
 {% endhighlight %}
 
 これで終わり。ただし、このままではgem実行時に
 
 {% highlight bash %}
-  # gem install mysql
-  ERROR:  Loading command: install (LoadError)
-      no such file to load -- zlib
-  ERROR:  While executing gem ... (NameError)
-      uninitialized constant Gem::Commands::InstallCommand
+# gem install mysql
+ERROR:  Loading command: install (LoadError)
+    no such file to load -- zlib
+ERROR:  While executing gem ... (NameError)
+    uninitialized constant Gem::Commands::InstallCommand
 {% endhighlight %}
 
 という「zlibが足りない」エラーが出るはず。それを回避するため、zlib-develをyumで入れた後、先ほど解凍したRubyソースディレクトリ内の、/ext/zlib/extconf.rbを実行する。
 
 {% highlight bash %}
-  yum install -y zlib-devel
-  cd Rubyソースのディレクトリ/ext/zlib
-  ruby extconf.rb
-  make
-  make install
+yum install -y zlib-devel
+cd Rubyソースのディレクトリ/ext/zlib
+ruby extconf.rb
+make
+make install
 {% endhighlight %}
 
 ちなみに、zlib-develをインストールせずにruby extconf.rbとした場合には、次のようなエラーが出るはず。
 
 {% highlight bash %}
-  # ruby extconf.rb
-  checking for deflateReset() in -lz... no
-  checking for deflateReset() in -llibz... no
-  checking for deflateReset() in -lzlib1... no
-  checking for deflateReset() in -lzlib... no
-  checking for deflateReset() in -lzdll... no
+# ruby extconf.rb
+checking for deflateReset() in -lz... no
+checking for deflateReset() in -llibz... no
+checking for deflateReset() in -lzlib1... no
+checking for deflateReset() in -lzlib... no
+checking for deflateReset() in -lzdll... no
 {% endhighlight %}
 
 なお、Rubyのソースはこの後さらに使う機会があるので、まだ消してはいけない。
@@ -83,17 +82,18 @@ yumだとバージョンがやっぱり古いので、これもソースから�
 rpmでもソースコンパイルでも構わないが、"Minimal Desktop"構成だとすでにMySQL 5.1が入っており、へたに後入れして関連ライブラリごとのバージョン相違などを起こしたくないので、できるだけyumでやりたい。
 
 ただ当然ながら、保守派のCentOSさんのデフォルトレポジトリには5.5が入っていない。そこで、5.5が存在するremiレポジトリを使えるようにする ((CentOS "6"かつ64bit用のレポジトリをダウンロードしている事に注意。)) 。
-# remiレポジトリを有効にする。epelはremiが依存するパッケージなので、これも必要。
+
 
 {% highlight bash %}
-  rpm -ivh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
-  rpm -ivh http://remi-mirror.dedipower.com/enterprise/remi-release-6.rpm
+# remiレポジトリを有効にする。epelはremiが依存するパッケージなので、これも必要。
+rpm -ivh http://download.fedora.redhat.com/pub/epel/6/x86_64/epel-release-6-5.noarch.rpm
+rpm -ivh http://remi-mirror.dedipower.com/enterprise/remi-release-6.rpm
 {% endhighlight %}
 
 その後、
 
 {% highlight bash %}
-  yum --enablerepo=remi -y install mysql mysql-devel mysql-server
+yum --enablerepo=remi -y install mysql mysql-devel mysql-server
 {% endhighlight %}
 
 とする。
@@ -103,39 +103,39 @@ rpmでもソースコンパイルでも構わないが、"Minimal Desktop"構成
 MySQL/Rubyとは、とみたまさひろ氏の作ったRuby用MySQL API。実はRuby/MySQLというRubyのみで書かれたライブラリもあり、作者はそちらの使用を薦めているのだが、今回はMySQL/Rubyを入れる。それには、単に
 
 {% highlight bash %}
-  gem install mysql
+gem install mysql
 {% endhighlight %}
 
 とすればよい。ただし、私と全く同じ環境でやればエラーは出ないと思うが、場合によっては次のようなエラーが出るかもしれない（以前経験したが、どういう環境だったかは忘れた。ソースからMySQLを入れた後、適切な設定をしないままだとこうなるんじゃなかったか）。
 
 {% highlight bash %}
-  # gem install mysql
-  Building native extensions.  This could take a while...
-  ERROR:  Error installing mysql:
-    ERROR: Failed to build gem native extension.
+# gem install mysql
+Building native extensions.  This could take a while...
+ERROR:  Error installing mysql:
+  ERROR: Failed to build gem native extension.
 
-  /usr/local/bin/ruby extconf.rb install mysql
-  checking for mysql_query() in -lmysqlclient... no
-  checking for main() in -lm... yes
-  checking for mysql_query() in -lmysqlclient... no
-  checking for main() in -lz... yes
-  checking for mysql_query() in -lmysqlclient... no
-  checking for main() in -lsocket... no
-  checking for mysql_query() in -lmysqlclient... no
-  checking for main() in -lnsl... yes
-  checking for mysql_query() in -lmysqlclient... no
-  *** extconf.rb failed ***
-  Could not create Makefile due to some reason, probably lack of
-  necessary libraries and/or headers.  Check the mkmf.log file for more
-  details.  You may need configuration options.
+/usr/local/bin/ruby extconf.rb install mysql
+checking for mysql_query() in -lmysqlclient... no
+checking for main() in -lm... yes
+checking for mysql_query() in -lmysqlclient... no
+checking for main() in -lz... yes
+checking for mysql_query() in -lmysqlclient... no
+checking for main() in -lsocket... no
+checking for mysql_query() in -lmysqlclient... no
+checking for main() in -lnsl... yes
+checking for mysql_query() in -lmysqlclient... no
+*** extconf.rb failed ***
+Could not create Makefile due to some reason, probably lack of
+necessary libraries and/or headers.  Check the mkmf.log file for more
+details.  You may need configuration options.
 {% endhighlight %}
 
 どうやら、mysqlのメソッドの存在を認識できていない様子。ならばmysqlの設定の存在を教えてあげればいい。具体的には、
 
 {% highlight bash %}
-  gem install mysql -- --with-mysql-config
-  # もしくは
-  gem install mysql -- --with-mysql-config=(パス)/mysql_config
+gem install mysql -- --with-mysql-config
+# もしくは
+gem install mysql -- --with-mysql-config=(パス)/mysql_config
 {% endhighlight %}
 
 とする。mysql_configのパスは、
@@ -159,9 +159,8 @@ http://www.aptana.com/products/studio3/download
 http://download.aptana.com/studio3/plugin/install
 すると、↑が表示されるはずなので、これをコピーし、
 
-  EclipseのHelp -&gt; Install New Software
-  冒頭の"Work with"のテキストボックスにペースト
-  下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う
+- EclipseのHelp -&gt; Install New Software 冒頭の"Work with"のテキストボックスにペースト
+- 下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う
 
 で、めでたくAptanaプラグインが導入され、Ruby固有の処理が可能になる。
 
@@ -170,22 +169,22 @@ http://download.aptana.com/studio3/plugin/install
 これを入れないと、Eclipseのデバッガが有効にならない。入れていない場合、Eclipseのデバッグ開始時に次のようなメッセージが出ると思う。
 
 {% highlight bash %}
-  Unable to find 'rdebug-ide' binary script. May need to install 'ruby-debug-ide' gem, or may need to add your gem executable directory to your PATH (check location via 'gem environment').
+Unable to find 'rdebug-ide' binary script. May need to install 'ruby-debug-ide' gem, or may need to add your gem executable directory to your PATH (check location via 'gem environment').
 {% endhighlight %}
 
 つまり、ruby-debug-ideを入れなければならない。しかし、単純に gem install ruby-debug-ideとすると、
 
 {% highlight bash %}
-  # gem install ruby-debug-ide
-  Building native extensions.  This could take a while...
-  ERROR:  Error installing ruby-debug-ide:
-    ERROR: Failed to build gem native extension.
+# gem install ruby-debug-ide
+Building native extensions.  This could take a while...
+ERROR:  Error installing ruby-debug-ide:
+  ERROR: Failed to build gem native extension.
 
-          /usr/local/bin/ruby mkrf_conf.rb
-  Building native extensions.  This could take a while...
+        /usr/local/bin/ruby mkrf_conf.rb
+Building native extensions.  This could take a while...
 
-  Gem files will remain installed in /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16 for inspection.
-  Results logged to /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16/ext/gem_make.out
+Gem files will remain installed in /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16 for inspection.
+Results logged to /usr/local/lib/ruby/gems/1.9.1/gems/ruby-debug-ide-0.4.16/ext/gem_make.out
 {% endhighlight %}
 
 このようになると思う。ruby-debug-ideはruby-debug-baseという別のライブラリに依存しているので、そちらを先に入れなければならない。
@@ -193,9 +192,9 @@ http://download.aptana.com/studio3/plugin/install
 しかし、gem install ruby-debug-baseとすると、これもまた簡単にいかない。
 
 {% highlight bash %}
-  # gem install ruby-debug-base
-  ERROR:  Error installing ruby-debug-base:
-    rbx-require-relative requires Ruby version ~&gt; 1.8.7.
+# gem install ruby-debug-base
+ERROR:  Error installing ruby-debug-base:
+  rbx-require-relative requires Ruby version ~&gt; 1.8.7.
 {% endhighlight %}
 
 1.8.7なんか使ってないのに…。調べてみると、どうやら1.9.2用のruby-debug19というものがあり、これがruby-debug-baseに値するらしい。したがって、それを先に入れる。
@@ -203,21 +202,21 @@ http://download.aptana.com/studio3/plugin/install
 …えっさすがに今度はうまく行くよね？　いやいや上手くいきません。頭の痛いことに、これもそのままではインストールできない。
 
 {% highlight bash %}
-  # gem install ruby-debug19
-  Building native extensions.  This could take a while...
-  ERROR:  Error installing ruby-debug19:
-    ERROR: Failed to build gem native extension.
+# gem install ruby-debug19
+Building native extensions.  This could take a while...
+ERROR:  Error installing ruby-debug19:
+  ERROR: Failed to build gem native extension.
 
-          /usr/local/rvm/rubies/ruby-1.9.2-p290/bin/ruby extconf.rb
-  *** extconf.rb failed ***
+        /usr/local/rvm/rubies/ruby-1.9.2-p290/bin/ruby extconf.rb
+*** extconf.rb failed ***
 
-  ...
-  /usr/local/rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require': no such file to load -- openssl (LoadError)
-  
-  ...
+...
+/usr/local/rvm/rubies/ruby-1.9.2-p290/lib/ruby/site_ruby/1.9.1/rubygems/custom_require.rb:36:in `require': no such file to load -- openssl (LoadError)
 
-  Gem files will remain installed in /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12 for inspection.
-  Results logged to /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12/ext/trace_nums/gem_make.out
+...
+
+Gem files will remain installed in /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12 for inspection.
+Results logged to /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12/ext/trace_nums/gem_make.out
 {% endhighlight %}
 
 
@@ -226,31 +225,31 @@ http://download.aptana.com/studio3/plugin/install
 そこで再度、消さずに取っておいたRubyのソースが活躍する。zlibのときと同様にソース付属のスクリプトを使い、次のように実行する。
 
 {% highlight bash %}
-  cd rubyのディレクトリ/ext/openssl
-  ruby extconf.rb
-  make
-  make install
+cd rubyのディレクトリ/ext/openssl
+ruby extconf.rb
+make
+make install
 {% endhighlight %}
 
 そうすると、やっと
 
 {% highlight bash %}
-  gem install ruby-debug19
-  gem install ruby-debug-ide
+gem install ruby-debug19
+gem install ruby-debug-ide
 {% endhighlight %}
 
 が通るようになる。ここでgem listを確認してみると、
 
 {% highlight bash %}
-  gem list
-  archive-tar-minitar (0.5.2)
-  columnize (0.3.4)
-  linecache19 (0.5.12)
-  rake (0.9.2 ruby)
-  ruby-debug-base19 (0.11.25)
-  ruby-debug-ide (0.4.16)
-  ruby-debug19 (0.11.6)
-  ruby_core_source (0.1.5)
+gem list
+archive-tar-minitar (0.5.2)
+columnize (0.3.4)
+linecache19 (0.5.12)
+rake (0.9.2 ruby)
+ruby-debug-base19 (0.11.25)
+ruby-debug-ide (0.4.16)
+ruby-debug19 (0.11.6)
+ruby_core_source (0.1.5)
 {% endhighlight %}
 
 このようにbaseもideも入ってると思う。そして、Eclipseのデバッグも有効に機能するはず。

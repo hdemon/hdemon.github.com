@@ -94,8 +94,6 @@
 
 <p>ただ当然ながら、保守派のCentOSさんのデフォルトレポジトリには5.5が入っていない。そこで、5.5が存在するremiレポジトリを使えるようにする ((CentOS "6"かつ64bit用のレポジトリをダウンロードしている事に注意。)) 。</p>
 
-<h1>remiレポジトリを有効にする。epelはremiが依存するパッケージなので、これも必要。</h1>
-
 <p>その後、</p>
 
 <p>とする。</p>
@@ -126,9 +124,11 @@ wget http://www.ring.gr.jp/pub/misc/eclipse/downloads/drops/R-3.7-201106131736/e
 http://download.aptana.com/studio3/plugin/install
 すると、↑が表示されるはずなので、これをコピーし、</p>
 
-<p>  EclipseのHelp -&gt; Install New Software
-  冒頭の"Work with"のテキストボックスにペースト
-  下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う</p>
+<ul>
+<li>EclipseのHelp -&gt; Install New Software 冒頭の"Work with"のテキストボックスにペースト</li>
+<li>下のボックスに"Aptana Studio 3"が現れるので、チェックをして右下のインストールボタンを押し、支持に従う</li>
+</ul>
+
 
 <p>で、めでたくAptanaプラグインが導入され、Ruby固有の処理が可能になる。</p>
 
