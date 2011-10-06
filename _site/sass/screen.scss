@@ -170,14 +170,20 @@ body {
     }
   }
 
-  section {        
-    .deco {
-      display: inline-block;
-      @include list-decorate; 
+  section { 
+    h1 {
+      margin-bottom: 5px;
+      .deco {
+        display: inline-block;
+        @include list-decorate; 
+      }
+      .caption {  
+        display: inline-block;  
+        margin-left: 7px;
+      }
     }
-    .caption {  
-      display: inline-block;  
-      margin-left: 7px;
+    p {
+      line-height: 24px;
     }
   }
 
