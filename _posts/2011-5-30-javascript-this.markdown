@@ -183,21 +183,25 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 > &nbsp;&nbsp;
 > a.If IsPropertyReference(ref) is true, then
 
+> &nbsp;&nbsp;
 > > refのbase valueがundefinedもしくはEnvironment Record以外なら、
 
 > &nbsp;&nbsp;&nbsp;&nbsp; 
 > i.Let thisValue be GetBase(ref).
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > > base valueの参照を返す。
 
 > &nbsp;&nbsp;
 > b.Else, the base of ref is an Environment Record
 
+> &nbsp;&nbsp;
 > > そうでなければ、
 
 > &nbsp;&nbsp;&nbsp;&nbsp; 
 > i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).
 
+> &nbsp;&nbsp;&nbsp;&nbsp; 
 > > thisの暗黙値=大抵はundefinedをthisValueとする。
 
 > 7\. Else, Type(ref) is not Reference.
@@ -207,6 +211,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 > &nbsp;&nbsp;
 > a.Let thisValue be undefined.
 
+> &nbsp;&nbsp;
 > > thisValueにundefinedを設定する。
 
 > ...

@@ -248,20 +248,28 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 <p>&nbsp;&nbsp;
 a.If IsPropertyReference(ref) is true, then</p>
 
+<p>&nbsp;&nbsp;</p>
+
 <blockquote><p>refのbase valueがundefinedもしくはEnvironment Record以外なら、</p></blockquote>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;
 i.Let thisValue be GetBase(ref).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
 <blockquote><p>base valueの参照を返す。</p></blockquote>
 
 <p>&nbsp;&nbsp;
 b.Else, the base of ref is an Environment Record</p>
 
+<p>&nbsp;&nbsp;</p>
+
 <blockquote><p>そうでなければ、</p></blockquote>
 
 <p>&nbsp;&nbsp;&nbsp;&nbsp;
 i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>
 
 <blockquote><p>thisの暗黙値=大抵はundefinedをthisValueとする。</p></blockquote>
 
@@ -271,6 +279,8 @@ i.Let thisValue be the result of calling the ImplicitThisValue concrete method o
 
 <p>&nbsp;&nbsp;
 a.Let thisValue be undefined.</p>
+
+<p>&nbsp;&nbsp;</p>
 
 <blockquote><p>thisValueにundefinedを設定する。</p></blockquote>
 
