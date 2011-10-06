@@ -170,14 +170,16 @@ body {
     }
   }
 
-  section {
-    h1 {      
-      #deco {
-        @include list-decorate; 
-      }
+  section {        
+    #deco {
+      display: inline-block;
+      @include list-decorate; 
+    }
+    h1 {  
+      display: inline-block;  
     }
   }
-  
+
   section#explorizer {
     h1 {
       @include explorizer;
