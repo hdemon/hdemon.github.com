@@ -158,7 +158,7 @@ body {
       font-weight: bold;
       list-style-type: circle;
       margin-top: 10px;
-      a {
+      & > a {
         text-decoration: none;
         color: #666;             
         &:hover {
