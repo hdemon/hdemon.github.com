@@ -22,8 +22,9 @@ JavaScriptの"this"の難しさは、「thisが書かれているオブジェク
 
 参考：　[ECMAScript 5th 仕様書](http://www.ecma-international.org/publications/standards/Ecma-262.htm)
 
-> ECMA-262 5th　
-> 11.1.1 The this Keyword
+> ECMA-262 5th  
+
+> *11.1.1 The this Keyword*
 > The this keyword evaluates to the value of the ThisBinding of the current execution context.
 
 「thisは現在のexecution contextのthis/ThisBindingの値を返す」という事でしょうか。これだけじゃなんとも言えませんが、
