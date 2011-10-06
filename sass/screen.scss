@@ -308,6 +308,7 @@ body {
         font-size: 26px;
         margin-top: 20px;
         margin-bottom: 15px;
+        @include darkgray;   
       }
       #date {
         font-size: 12px;
@@ -318,12 +319,14 @@ body {
       font-size: 22px;
       font-weight: bold;
       margin-top: 32px;
-      margin-bottom: 20px
+      margin-bottom: 20px;
+      @include darkgray;   
     }
 
     h2 {
       font-size: 16px;
       font-weight: bold;
+      @include darkgray;   
     }
 
     p {
