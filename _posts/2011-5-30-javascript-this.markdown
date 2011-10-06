@@ -183,7 +183,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 > &nbsp;&nbsp;
 > a.If IsPropertyReference(ref) is true, then
 
-> &nbsp;&nbsp;
+> > &nbsp;&nbsp;
 > > refのbase valueがundefinedもしくはEnvironment Record以外なら、
 
 > &nbsp;&nbsp;&nbsp;&nbsp; 
