@@ -545,7 +545,7 @@ Identifier is always a value of type Reference.</p>
 
 <p>1.  Let env be the running execution context‘s LexicalEnvironment.</p>
 
-<p> 実行中のexecution contextのLexicalEnvironmentをenvに入れる。</p>
+<blockquote><p>実行中のexecution contextのLexicalEnvironmentをenvに入れる。</p></blockquote>
 
 <p>...</p>
 
@@ -553,7 +553,7 @@ Identifier is always a value of type Reference.</p>
 
 <p>The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String</p>
 
-<p>GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。</p></blockquote>
+<blockquote><p>GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。</p></blockquote></blockquote>
 
 <p>このとき、GetIdentifierReferenceは特定オブジェクトへの参照ではなく、 Environment Recordsをbase valueに入れて返します。</p>
 
@@ -563,30 +563,27 @@ Identifier is always a value of type Reference.</p>
 
 <p>name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed:</p>
 
-<ol>
-<li>If lex is the value null, then</li>
-</ol>
+<p>1. If lex is the value null, then</p>
 
+<p>&nbsp;&nbsp;
+a. Return a value of type Reference whose base value is undefined, whose referenced name is name, and whose strict mode flag is strict.</p>
 
-<p>  a. Return a value of type Reference whose base value is undefined, whose referenced name is name, and whose strict mode flag is strict.</p>
+<p>2. Let envRec be lex‘s environment record.</p>
 
-<ol>
-<li><p>Let envRec be lex‘s environment record.</p></li>
-<li><p>Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the argument N.</p></li>
-<li><p>If exists is true, then</p></li>
-</ol>
+<p>3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the argument N.</p>
 
+<p>4. If exists is true, then</p>
 
-<p>  a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and whose strict mode flag is strict.</p>
+<p>&nbsp;&nbsp;
+a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and whose strict mode flag is strict.</p>
 
-<ol>
-<li>Else</li>
-</ol>
+<p>5. Else</p>
 
+<p>&nbsp;&nbsp;
+a. Let outer be the value of lex’s outer environment reference.</p>
 
-<p>  a. Let outer be the value of lex’s outer environment reference.</p>
-
-<p>  b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments</p></blockquote>
+<p>&nbsp;&nbsp;
+b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments</p></blockquote>
 
 <p>全てを追っていくと頭が痛くなるので、要点だけ見ると、GetIdentifierReferenceは、</p>
 
@@ -607,24 +604,15 @@ Identifier is always a value of type Reference.</p>
 
 <blockquote><p>Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。</p></blockquote>
 
-<ol>
-<li>Let envRec be the object environment record for which the method was invoked.</li>
-</ol>
-
+<p>1. Let envRec be the object environment record for which the method was invoked.</p>
 
 <blockquote><p>envRecに、そのメソッドを呼び出したenvironment recordを入れる。</p></blockquote>
 
-<ol>
-<li>If the provideThis flag of envRec is true, return the binding object for envRec.</li>
-</ol>
-
+<p>2. If the provideThis flag of envRec is true, return the binding object for envRec.</p>
 
 <blockquote><p>envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。</p></blockquote>
 
-<ol>
-<li>Otherwise, return undefined</li>
-</ol>
-
+<p>3. Otherwise, return undefined</p>
 
 <blockquote><p>そうでなければ、undefinedを返す。</p></blockquote></blockquote>
 
@@ -748,37 +736,6 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 <li>だから、即時関数の直下ではthisはundefinedもしくはglobalになる。</li>
 </ul>
 
-
-<p>簡単な総括
-以下のルールで、大体の説明ができると思います。</p>
-
-<blockquote><p><strong>11.2.3 Function Calls</strong>
-The production CallExpression : MemberExpression Arguments is evaluated as follows:</p></blockquote>
-
-<p>"MemberExpression" "Arguments"の形式をとり、全体として"CallExpression"だと解釈できる構文は、次のように評価される。
-1.Let ref be the result of evaluating MemberExpression.
- refに、MemberExpressionを評価した結果を入れる。
-...</p>
-
-<p>6.If Type(ref) is Reference, then
-refがReference型である場合、
-a.If IsPropertyReference(ref) is true, then
-refのbase valueがundefinedもしくはEnvironment Record以外なら、
-i.Let thisValue be GetBase(ref).
-base valueの参照を返す。
-b.Else, the base of ref is an Environment Record
-そうでなければ、
-i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).
-thisの暗黙値=大抵はundefinedをthisValueとする。
-7.Else, Type(ref) is not Reference.
-refがReference型でなければ、
-a.Let thisValue be undefined.
-thisValueにundefinedを設定する。
-...</p>
-
-<p>  Identifierを評価すると、base valueにEnvironment Recordsが入ったReference型が返ってくる。
-   MemberExpression : MemberExpression [ Expression ] を評価すると、base valueにMemberExpressionへの参照が入ったReference型が返ってくる。
-  FunctionExpressionを評価すると、Object型（そのFunctionへの参照）が返ってくる。</p>
 
     </article>
     
