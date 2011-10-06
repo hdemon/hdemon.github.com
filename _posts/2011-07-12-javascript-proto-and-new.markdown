@@ -30,7 +30,7 @@ alert( inst.prototype );
 
 #prototypeはオブジェクトの原型ではなく、プロトタイプオブジェクトの原型のようなもの。
 
-Objがnewを付けて呼ばれるときに、コンストラクタはObj.prototypeを探す。そして、Obj.prototypeが参照するオブジェクトをObjのプロトタイプとしてコピーする。プロトタイプオブジェクトそのものを示すのは __proto__ であり、ECMAScriptの仕様上は内部プロパティである。ただ、ブラウザ側の独自実装として大抵は__proto__としてアクセスできる。だから、
+Objがnewを付けて呼ばれるときに、コンストラクタはObj.prototypeを探す。そして、Obj.prototypeが参照するオブジェクトをObjのプロトタイプとしてコピーする。プロトタイプオブジェクトそのものを示すのは \_\_proto\_\_ であり、ECMAScriptの仕様上は内部プロパティである。ただ、ブラウザ側の独自実装として大抵は\_\_proto\_\_としてアクセスできる。だから、
 
 {% highlight javascript %}
 function Obj() {}
@@ -39,7 +39,7 @@ Obj.prototype.method = function() {
 }
 
 var inst = new Obj;
-Obj.prototype === inst.__proto__ // true
+Obj.prototype === inst.\_\_proto\_\_ // true
 Obj.prototype = null; // インスタンス生成後にprototypeを初期化しても、
 inst.method(); // インスタンスに影響はない。
 {% endhighlight %}
@@ -132,7 +132,7 @@ function Obj() {
 #まとめ
 
 + prototypeはプロトタイプオブジェクトそのものではなく、コンストラクタがプロトタイプオブジェクトを作るときに参照する原型である。
-+ プロトタイプオブジェクトの参照を持つのは、一般的には__proto__である。
++ プロトタイプオブジェクトの参照を持つのは、一般的には\_\_proto\_\_である。
 + prototypeは、newを付けて呼ばれたコンストラクタが暗黙にプロトタイプオブジェクトの原型として参照するという一点において、ただのオブジェクトと区別される。
 + コンストラクタは、newを付けて呼ぶことでthisとプロトタイプに関する暗黙の処理を行う。
 + thisはユーザ側で再定義できないし、newを付けなければプロトタイプオブジェクトは作成されないが、それ以外の点ではnewをつけようが付けまいがコンストラクタはただの関数。
