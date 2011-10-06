@@ -219,8 +219,10 @@ ERROR:  Error installing ruby-debug19:
 
 ...
 
-Gem files will remain installed in /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12 for inspection.
-Results logged to /usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12/ext/trace_nums/gem_make.out
+Gem files will remain installed in 
+/usr/local/rvm/gems/ruby-1.9.2-p290/gems/linecache19-0.5.12 for inspection.
+Results logged to /usr/local/rvm/gems/ \
+ruby-1.9.2-p290/gems/linecache19-0.5.12/ext/trace_nums/gem_make.out
 {% endhighlight %}
 
 
