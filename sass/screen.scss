@@ -147,7 +147,7 @@ body {
     }
     div {
       position: absolute;
-      @include article-icon; 
+      @include parchment; 
       top: -29px;
       right: 38px;
     }
@@ -182,7 +182,7 @@ body {
     }
     div {
       position: absolute;
-      @include lib-icon; 
+      @include monster1; 
       top: -18px;
       right: 26px;
     }
@@ -250,7 +250,7 @@ body {
     }
     div {
       position: absolute;
-      @include webs-icon; 
+      @include meat; 
       top: -25px;
       right: 42px;
     }
@@ -271,12 +271,12 @@ body {
     }
     div {
       position: absolute;
-      @include aboutme-icon; 
+      @include pudding; 
       top: -25px;
       right: 35px;
     }
   }
-  
+
   ul {
     margin-left: 37px;
     li {
