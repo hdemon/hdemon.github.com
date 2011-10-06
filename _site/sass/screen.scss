@@ -332,6 +332,7 @@ body {
     p {
       text-indent: 1em;
       margin: 10px 0; 
+      @include darkgray;   
     }
 
     blockquote {
