@@ -310,18 +310,23 @@ var foo = bar;
 さて、6からが重要な部分です。もう一度引用します。
 > 6\. If Type(ref) is Reference, then
 
+> &nbsp;&nbsp;
 > a\. If IsPropertyReference(ref) is true, then
 
-> &nbsp;&nbsp;i.Let thisValue be GetBase(ref).
+> &nbsp;&nbsp;&nbsp;&nbsp; 
+> i\. Let thisValue be GetBase(ref).
 
->   b.Else, the base of ref is an Environment Record
+> &nbsp;&nbsp;
+> b\. Else, the base of ref is an Environment Record
 
->     i.Let thisValue be the result of calling the 
+> &nbsp;&nbsp;&nbsp;&nbsp;
+> i\. Let thisValue be the result of calling the 
 ImplicitThisValue concrete method of GetBase(ref).
 
 > 7\. Else, Type(ref) is not Reference.
 
->   a.Let thisValue be undefined.
+> &nbsp;&nbsp;
+> a\. Let thisValue be undefined.
 
 
 6と7によれば、

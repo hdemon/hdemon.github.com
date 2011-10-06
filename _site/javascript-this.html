@@ -367,20 +367,23 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <blockquote><p>6. If Type(ref) is Reference, then</p>
 
-<p>a. If IsPropertyReference(ref) is true, then</p>
+<p>&nbsp;&nbsp;
+a. If IsPropertyReference(ref) is true, then</p>
 
-<p>&nbsp;&nbsp;i.Let thisValue be GetBase(ref).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i. Let thisValue be GetBase(ref).</p>
 
-<p>  b.Else, the base of ref is an Environment Record</p>
+<p>&nbsp;&nbsp;
+b. Else, the base of ref is an Environment Record</p>
 
-<pre><code>i.Let thisValue be the result of calling the 
-</code></pre>
-
-<p>ImplicitThisValue concrete method of GetBase(ref).</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i. Let thisValue be the result of calling the
+ImplicitThisValue concrete method of GetBase(ref).</p>
 
 <p>7. Else, Type(ref) is not Reference.</p>
 
-<p>  a.Let thisValue be undefined.</p></blockquote>
+<p>&nbsp;&nbsp;
+a. Let thisValue be undefined.</p></blockquote>
 
 <p>6と7によれば、
 1. Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値
