@@ -99,7 +99,7 @@ body > header hgroup #title-logo {
   position: absolute;
   top: 72px;
   left: 20px;
-  background: url("/images/index.png?1317885197") no-repeat 0px -538px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -538px;
   width: 273px;
   height: 25px;
 }
@@ -108,7 +108,7 @@ body > header hgroup #title-icon {
   position: absolute;
   top: 26px;
   left: 540px;
-  background: url("/images/index.png?1317885197") no-repeat 0px -455px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -455px;
   width: 82px;
   height: 73px;
 }
@@ -162,7 +162,7 @@ body #wrapper article header {
   margin-bottom: 20px;
   height: 26px;
   width: 380px;
-  background: url("/images/index.png?1317885197") no-repeat 0px -116px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -116px;
   width: 399px;
   height: 26px;
 }
@@ -193,21 +193,21 @@ body footer {
   width: 900px;
   margin-top: 100px;
   margin-bottom: 20px;
-  background: url("/images/index.png?1317885197") no-repeat 0px -195px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -195px;
   width: 174px;
   height: 42px;
 }
 
 /* line 132, ../sass/screen.scss */
 #article header h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -95px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -95px;
   width: 56px;
   height: 11px;
 }
 /* line 135, ../sass/screen.scss */
 #article header div {
   position: absolute;
-  background: url("/images/index.png?1317885197") no-repeat 0px -42px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -42px;
   width: 37px;
   height: 43px;
   top: -23px;
@@ -237,14 +237,14 @@ body footer {
 
 /* line 162, ../sass/screen.scss */
 #mc-lib header h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -296px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -296px;
   width: 187px;
   height: 15px;
 }
 /* line 165, ../sass/screen.scss */
 #mc-lib header div {
   position: absolute;
-  background: url("/images/index.png?1317885197") no-repeat 0px -247px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -18px;
@@ -253,7 +253,7 @@ body footer {
 /* line 174, ../sass/screen.scss */
 #mc-lib section #deco {
   display: inline-block;
-  background: url("/images/index.png?1317885197") no-repeat 0px -321px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -321px;
   width: 17px;
   height: 16px;
 }
@@ -263,7 +263,7 @@ body footer {
 }
 /* line 184, ../sass/screen.scss */
 #mc-lib section#explorizer h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -152px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -152px;
   width: 107px;
   height: 15px;
 }
@@ -276,27 +276,27 @@ body footer {
 }
 /* line 196, ../sass/screen.scss */
 #mc-lib section#nicoscraper h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -372px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -372px;
   width: 99px;
   height: 15px;
 }
 /* line 202, ../sass/screen.scss */
 #mc-lib section#nicomanip h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -347px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -347px;
   width: 104px;
   height: 15px;
 }
 
 /* line 210, ../sass/screen.scss */
 #mc-web header h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -626px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -626px;
   width: 230px;
   height: 15px;
 }
 /* line 213, ../sass/screen.scss */
 #mc-web header div {
   position: absolute;
-  background: url("/images/index.png?1317885197") no-repeat 0px -573px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -573px;
   width: 65px;
   height: 43px;
   top: -25px;
@@ -304,21 +304,21 @@ body footer {
 }
 /* line 222, ../sass/screen.scss */
 #mc-web section#ynn h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px -651px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -651px;
   width: 269px;
   height: 26px;
 }
 
 /* line 230, ../sass/screen.scss */
 #aboutme header h1 {
-  background: url("/images/index.png?1317885197") no-repeat 0px 0px;
+  background: url("/images/index.png?1317885239") no-repeat 0px 0px;
   width: 74px;
   height: 11px;
 }
 /* line 233, ../sass/screen.scss */
 #aboutme header div {
   position: absolute;
-  background: url("/images/index.png?1317885197") no-repeat 0px -247px;
+  background: url("/images/index.png?1317885239") no-repeat 0px -247px;
   width: 83px;
   height: 39px;
   top: -25px;
