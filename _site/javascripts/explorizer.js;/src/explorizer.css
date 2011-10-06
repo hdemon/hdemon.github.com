@@ -1,0 +1,205 @@
+/*
+
+$wrapperで指定するラッパー要素には、以下の指定をして下さい。
+
+{
+    position: relative or absolute;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+　これは、テキスト選択機能を無効にし、ドラッグによる選択時の誤作動を防ぐものです。
+$wrapperに対して設定しさえすれば異常動作は防げますが、$wrapper内からドラッグを始め、
+$wrapper外にマウスボタンを押したままドラッグをすると、画面全体がテキスト選択状態になる、あるいは
+その切替で画面がちらつく場合があります。
+　これはブラウザがテキストを扱うものである以上、避けられない現象だと思われます。もし、$wrapper外の
+ある要素について、その要素のテキストが選択できなくても構わないのであれば、同様に上の指定をする
+ことで、その部分についてはちらつきを抑えることが出来ます。ちらつきを抑える最善の策は、body内の
+あらゆる要素について上記の指定をすることです。
+
+*/
+
+/*
+outer wrapper
+ 最も外側のラッパーで、フォームの表示位置を決める。フォームを移動させる時は、
+ これに対して位置指定を行う。
+*/
+.hdex_ow * {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+.hdex_ow {
+    position:   absolute;
+    background: #fff;
+    /*border:     1px dotted #ccc;*/
+    border-bottom-right-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    -webkit-box-shadow: #666 0px 6px 6px;
+    -moz-box-shadow:    #666 0px 6px 6px;
+    box-shadow:         #666 0px 6px 6px;
+    z-index:            0;
+}
+
+/* bar */
+.hdex_titleBar {
+    position:       absolute;
+    top:            -30px;
+    height:         30px;
+    width:          100%;
+    background:     #321919;
+    -webkit-box-shadow: #666 0px 2px 5px;
+    -moz-box-shadow:    #666 0px 2px 5px;
+    box-shadow:         #666 0px 2px 5px;
+        /*border:         1px dotted #DDD;*/
+    border-top-right-radius:10px 10px;
+    border-top-left-radius: 10px 10px;
+    z-index:                2;
+}
+
+    .hdex_titleBar .selected {
+        background: #eaffea;
+    }
+
+    .hdex_titleBar .unselect {
+        background: #fff;
+    }
+
+    .hdex_titleSpc {
+        position:   absolute;
+        margin:     6px 0 0 15px;
+        font-size:  12px;
+    }
+
+    .hdex_removeBtn {
+        position:   absolute;
+        width:      18px;
+        height:     18px;
+        top:        6px;
+        right:      7px;
+        background:         url("removewnd.png");
+        background-position:center;
+        background-repeat:  no-repeat;
+    }
+
+/*
+inner wrapper 
+ 自動スクロールと、要素のドラッグによる選択の組み合わせを可能にするためのもの。
+*/
+.hdex_iw {
+    position:       relative;
+    height:         100%;
+    width:          100%;
+    overflow:       auto;
+    overflow-x:     hidden;
+    overflow-y:     auto;
+    overflow:       -moz-scrollbars-vertical;
+}
+
+/*
+content area
+ 要素を追加できる、一番内側のラッパー。
+*/
+.hdex_ct {
+    overflow:       auto;
+}
+
+#hdex_cursor {
+    position:       absolute;
+    margin-top:     -40px;
+    margin-left:    -65px;
+    width:          58px;
+    height:         38px;
+    z-index:        99;
+}
+
+/* カーソル内に表示されるテキスト */
+#hdex_cursor_text {
+    color:          #ccc;
+    font-weight:    bolder;
+    padding:        8px 0 0 25px;
+    -webkit-user-select:none;
+    -khtml-user-select:    none;
+    -moz-user-select:none;
+    user-select:     none;    
+}
+
+/* コピー時のカーソル */
+.cursor_copy {
+    background:     url("./cursor.png") 0 0 ;
+    opacity:        0.8;
+}
+
+/* 移動時のカーソル */
+.cursor_move {
+    background:     url("./cursor.png") 0 -50px ;
+    opacity:        0.8;
+}
+
+/*
+select box
+ ドラッグによる選択時に表示されるボックス
+*/
+.hdex_slctBox {
+    position:       absolute;
+    border:         1px solid #e60;
+    z-index:        990;
+    background:     #fff0e0;
+    -webkit-opacity:0.2;
+    -moz-opacity:   0.2;
+    opacity:        0.2;
+    z-index:        99;
+}
+
+/*
+ ドラッグ選択時の、マウスを離す前の「現在選択範囲に入っている」要素
+*/
+.ex_preselect {
+    border-color:   #ffe9c9     !important;
+}
+
+/*
+ 選択が確定した要素
+*/
+.ex_selected {
+    border-color:   #ffd9b9     !important;
+}
+
+.hdex_resize {
+    position:       absolute;
+}
+
+/* 以下、スクロールバーの外観設定 */
+::-webkit-scrollbar {
+    width:          10px;
+    height:         0px;
+}
+
+::-moz-scrollbars {
+    width:          10px;
+    height:         0px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    height:                 50px;
+    background-color:       #aaa;
+    -webkit-border-radius:  6px;
+}
+
+::-moz-scrollbars-thumb:vertical {
+    height:             50px;
+    background-color:   #aaa;
+    -moz-border-radius: 6px;
+}
+
+/* フォーム内要素 */
+.hdex_elem {
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
