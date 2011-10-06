@@ -310,9 +310,9 @@ var foo = bar;
 さて、6からが重要な部分です。もう一度引用します。
 > 6\. If Type(ref) is Reference, then
 
-> \s\sa\. If IsPropertyReference(ref) is true, then
+> a\. If IsPropertyReference(ref) is true, then
 
->     i.Let thisValue be GetBase(ref).
+> &nbsp;&nbsp;i.Let thisValue be GetBase(ref).
 
 >   b.Else, the base of ref is an Environment Record
 

@@ -367,10 +367,9 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <blockquote><p>6. If Type(ref) is Reference, then</p>
 
-<p>\s\sa. If IsPropertyReference(ref) is true, then</p>
+<p>a. If IsPropertyReference(ref) is true, then</p>
 
-<pre><code>i.Let thisValue be GetBase(ref).
-</code></pre>
+<p>&nbsp;&nbsp;i.Let thisValue be GetBase(ref).</p>
 
 <p>  b.Else, the base of ref is an Environment Record</p>
 
