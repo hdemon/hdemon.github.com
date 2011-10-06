@@ -37,15 +37,15 @@ JavaScriptの"this"の難しさは、「thisが書かれているオブジェク
 
 #execution contextを理解しないと始まらない
 
-> 10.3 Execution Contexts 
+> *10.3 Execution Contexts* 
 > When control is transferred to ECMAScript executable code, control is entering an execution context. 
->  コントロールがexecutable codeに移るとき、コントロールはexecution contextに入る。 
+> > コントロールがexecutable codeに移るとき、コントロールはexecution contextに入る。 
 > Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context. 
->  アクティブなexecution contextsは、論理的なスタックである。この論理的スタックの一番上にあるexecution contextsが、実行中のexecution contextsである。 
+> > アクティブなexecution contextsは、論理的なスタックである。この論理的スタックの一番上にあるexecution contextsが、実行中のexecution contextsである。 
 > A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context. 
->  現在実行中のexecution contextに結び付けられたexecutable codeから、（実行中の）execution contextに結び付けられていないexecution codeにコントロールが移るときに、新しいexecution contextが作られる。 
+> > 現在実行中のexecution contextに結び付けられたexecutable codeから、（実行中の）execution contextに結び付けられていないexecution codeにコントロールが移るときに、新しいexecution contextが作られる。 
 > The newly created execution context is pushed onto the stack and becomes the running execution context. 
->  新しく作られたexecution contextはスタックにpushされ、それが実行中のexecution contextとなる。 
+> > 新しく作られたexecution contextはスタックにpushされ、それが実行中のexecution contextとなる。 
  
 なるほど。少し強引に解釈すると、
 
@@ -57,16 +57,16 @@ JavaScriptの"this"の難しさは、「thisが書かれているオブジェク
 
 #execution contextが、thisの値を決めるパラメータを持っている。
 > An execution context contains whatever state is necessary to track the execution progress of its associated code. In addition, each execution context has the state components listed in Table 19.
->  execution contextには、それに結び付けられたコードが実行の経過を追うために必要な状態のすべてが含まれている。加えて、個々のexecution contextは以下の状態を保持している。
+> > execution contextには、それに結び付けられたコードが実行の経過を追うために必要な状態のすべてが含まれている。加えて、個々のexecution contextは以下の状態を保持している。
 > 
-> Table 19 —Execution Context State Components
-> LexicalEnvironment Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.
+> *Table 19 —Execution Context State Components*
+> *LexicalEnvironment* Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.
 > ...
-> ThisBinding The value associated with the this keyword within ECMAScript code associated with this execution context.
->  このexecution contextに結び付けられたECMAScript中のthisの語句に結び付けられる。
-> 10.4 Establishing an Execution Context
+> *ThisBinding* The value associated with the this keyword within ECMAScript code associated with this execution context.
+> > このexecution contextに結び付けられたECMAScript中のthisの語句に結び付けられる。
+> *10.4 Establishing an Execution Context*
 > When control enters an execution context, the execution context’s ThisBinding is set...
->  コントロールがexecution contextに入るとき、ThisBindingが設定される。
+> > コントロールがexecution contextに入るとき、ThisBindingが設定される。
 
 execution contextが内部的にthisの値を定めるパラメータを持っており、それはexecution contextが立ち上がる時に定められ、かつその内容決定の仕組みはコードの種類によって変わりうるということですね。でも、その仕組みについてはまだ書いてありません。もう少し読み進める必要がありますが、その前に一旦まとめてみます。
 
@@ -78,24 +78,24 @@ execution contextが内部的にthisの値を定めるパラメータを持っ�
 では次に、具体的なコードの種類と、それぞれのthisの決め方を調べていきます。
 
 #executable codeは３種類ある。
-> 10.1 Types of Executable Code
+> *10.1 Types of Executable Code*
 > There are three types of ECMAScript executable code:
 Global code is source text that is treated as an ECMAScript Program. The global code of a particular Program does not include any source text that is parsed as part of a FunctionBody.
->  グローバルコードはECMAScriptプログラムとして扱われる。ある特定のプログラムのグローバルコードは、FunctionBodyと解釈できるソースを含まない。
+> > グローバルコードはECMAScriptプログラムとして扱われる。ある特定のプログラムのグローバルコードは、FunctionBodyと解釈できるソースを含まない。
 > Eval code ...
 
 > Function code is source text that is parsed as part of a FunctionBody.
 > The function code of a particular FunctionBody does not include any source text that is parsed as part of a nested FunctionBody.
->  関数コードは、FunctionBodyを成すものと解釈されるソースである。ある特定のFunctionBodyの関数コードは、FunctionBodyを入れ子として含むことはない。
+> > 関数コードは、FunctionBodyを成すものと解釈されるソースである。ある特定のFunctionBodyの関数コードは、FunctionBodyを入れ子として含むことはない。
 > ...
 
 コードにはGlobal / Eval / Function の３つの種類があります。
 ただ、Globalとは定義上「FunctionBodyを含まないコード」であり、Evalはeval関数を使った際の例外的なコードであるということから、最後のFunction codeの理解が重要になるように思われます（Evalの読解は長くなりそうなので、今回は取り上げません）。
 ちなみに、Global codeと認定された場合は、
-> 10.4.1 Entering Global Code
+> *10.4.1 Entering Global Code*
 > ...
 > 
-> 10.4.1.1 Initial Global Execution Context
+> *10.4.1.1 Initial Global Execution Context*
 > The following steps are performed to initialize a global execution context for ECMAScript code C:
 > ...
 > 3.Set the ThisBinding to the global object.
@@ -104,7 +104,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 次に、Function codeの定義を見てみます。
 
 #Function codeの場合の、thisを決定する仕組み
-> 10.4.3 Entering Function Code
+> *10.4.3 Entering Function Code*
 > The following steps are performed when control enters the execution context for function code contained in function object F, a caller provided thisArg, and a caller provided argumentsList:
 >  次の手順は、関数オブジェクトが含むFunction codeのexecution contextにコントロールが写ったときに実行され、呼び出し元はthisArgとargumentsListを渡す。
 > 1.If the function code is strict code, set the ThisBinding to thisArg.
