@@ -65,6 +65,10 @@ body {
           font-size: 13px;
           color: white;
           line-height: 20px;
+
+          a {
+            color: white;    
+          }
         }
       }
     }
@@ -73,14 +77,6 @@ body {
   #wrapper {
     margin: 0 auto;
     width: 900px;
-
-    a {
-      color: white;
-      text-decoration: none;        
-      &:hover {
-        text-decoration: underline;            
-      }
-    }
 
     #left-content {
       float:  left;
