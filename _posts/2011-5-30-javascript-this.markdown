@@ -579,7 +579,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 > The dot notation is explained by the following syntactic conversion: 
 
-> MemberExpression . IdentifierName 
+> &nbsp;&nbsp;&nbsp;&nbsp;MemberExpression . IdentifierName 
 
 > is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ] 
 
