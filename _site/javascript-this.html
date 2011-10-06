@@ -76,9 +76,9 @@
 
 <p>参考：　<a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMAScript 5th 仕様書</a></p>
 
-<blockquote><p>ECMA-262 5th</p>
+<blockquote><p><strong>ECMA-262 5th</strong></p>
 
-<p><em>11.1.1 The this Keyword</em></p>
+<p><strong>11.1.1 The this Keyword</strong></p>
 
 <p>The this keyword evaluates to the value of the ThisBinding of the current execution context.</p></blockquote>
 
@@ -95,7 +95,7 @@
 
 <h1>execution contextを理解しないと始まらない</h1>
 
-<blockquote><p><em>10.3 Execution Contexts</em></p>
+<blockquote><p><strong>10.3 Execution Contexts</strong></p>
 
 <p>When control is transferred to ECMAScript executable code, control is entering an execution context.</p>
 
@@ -130,17 +130,17 @@
 
 <blockquote><p>execution contextには、それに結び付けられたコードが実行の経過を追うために必要な状態のすべてが含まれている。加えて、個々のexecution contextは以下の状態を保持している。</p></blockquote>
 
-<p><em>Table 19 —Execution Context State Components</em></p>
+<p><strong>Table 19 —Execution Context State Components</strong></p>
 
-<p><em>LexicalEnvironment</em> Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.</p>
+<p><strong>LexicalEnvironment</strong> Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.</p>
 
 <p>...</p>
 
-<p><em>ThisBinding</em> The value associated with the this keyword within ECMAScript code associated with this execution context.</p>
+<p><strong>ThisBinding</strong> The value associated with the this keyword within ECMAScript code associated with this execution context.</p>
 
 <blockquote><p>このexecution contextに結び付けられたECMAScript中のthisの語句に結び付けられる。</p></blockquote>
 
-<p><em>10.4 Establishing an Execution Context</em></p>
+<p><strong>10.4 Establishing an Execution Context</strong></p>
 
 <p>When control enters an execution context, the execution context’s ThisBinding is set...</p>
 
@@ -160,7 +160,7 @@
 
 <h1>executable codeは３種類ある。</h1>
 
-<blockquote><p><em>10.1 Types of Executable Code</em></p>
+<blockquote><p><strong>10.1 Types of Executable Code</strong></p>
 
 <p>There are three types of ECMAScript executable code:
 Global code is source text that is treated as an ECMAScript Program. The global code of a particular Program does not include any source text that is parsed as part of a FunctionBody.</p>
@@ -181,11 +181,11 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 ただ、Globalとは定義上「FunctionBodyを含まないコード」であり、Evalはeval関数を使った際の例外的なコードであるということから、最後のFunction codeの理解が重要になるように思われます（Evalの読解は長くなりそうなので、今回は取り上げません）。
 ちなみに、Global codeと認定された場合は、</p>
 
-<blockquote><p><em>10.4.1 Entering Global Code</em></p>
+<blockquote><p><strong>10.4.1 Entering Global Code</strong></p>
 
 <p>...</p>
 
-<p><em>10.4.1.1 Initial Global Execution Context</em></p>
+<p><strong>10.4.1.1 Initial Global Execution Context</strong></p>
 
 <p>The following steps are performed to initialize a global execution context for ECMAScript code C:</p>
 
@@ -198,7 +198,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <h1>Function codeの場合の、thisを決定する仕組み</h1>
 
-<blockquote><p><em>10.4.3 Entering Function Code</em></p>
+<blockquote><p><strong>10.4.3 Entering Function Code</strong></p>
 
 <p>The following steps are performed when control enters the execution context for function code contained in function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
 
@@ -218,14 +218,15 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <p>4.Else set the ThisBinding to thisArg.</p>
 
-<p>...
-おさらいですが、thisが直接的に参照するのはexecution context内のThisBindingです。ここにはthisArgをどんな場合にThisBindingに設定するかということしか書いていませんが、thisArgは呼び出し側が提供するものだ、とも書かれています。ということは、呼び出し側のロジックを見てみなければなりません。</p></blockquote>
+<p>...</p></blockquote>
+
+<p>おさらいですが、thisが直接的に参照するのはexecution context内のThisBindingです。ここにはthisArgをどんな場合にThisBindingに設定するかということしか書いていませんが、thisArgは呼び出し側が提供するものだ、とも書かれています。ということは、呼び出し側のロジックを見てみなければなりません。</p>
 
 <h1>thisを直接決めるのは一体誰か。</h1>
 
 <p>では、関数呼び出し時の内部処理について見てみましょう。</p>
 
-<blockquote><p>11.2.3 Function Calls</p>
+<blockquote><p><strong>11.2.3 Function Calls</strong></p>
 
 <p>The production CallExpression : MemberExpression Arguments is evaluated as follows:</p>
 
@@ -269,7 +270,7 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <p>上から見ていきましょう。まず、CallExpression : MemberExpression Argumentsとは何なのか。11.2はこのように表記されています。</p>
 
-<blockquote><p>11.2 Left-Hand-Side Expressions</p>
+<blockquote><p><strong>11.2 Left-Hand-Side Expressions</strong></p>
 
 <p>Syntax</p>
 
@@ -364,19 +365,23 @@ Global code is source text that is treated as an ECMAScript Program. The global 
 
 <p>さて、6からが重要な部分です。もう一度引用します。</p>
 
-<blockquote><p>6.If Type(ref) is Reference, then
-  a.If IsPropertyReference(ref) is true, then</p>
+<blockquote><p>6.If Type(ref) is Reference, then</p>
+
+<p>  a.If IsPropertyReference(ref) is true, then</p>
 
 <pre><code>i.Let thisValue be GetBase(ref).
 </code></pre>
 
 <p>  b.Else, the base of ref is an Environment Record</p>
 
-<pre><code>i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).
+<pre><code>i.Let thisValue be the result of calling the 
 </code></pre>
 
-<p>7.Else, Type(ref) is not Reference.
-  a.Let thisValue be undefined.</p></blockquote>
+<p>ImplicitThisValue concrete method of GetBase(ref).</p>
+
+<p>7.Else, Type(ref) is not Reference.</p>
+
+<p>  a.Let thisValue be undefined.</p></blockquote>
 
 <p>6と7によれば、
 1. Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値
@@ -490,7 +495,7 @@ FunctionExpression</td>
 
 <p>Identifierを評価するとき、</p>
 
-<blockquote><p>11.1.2 Identifier Reference</p>
+<blockquote><p><strong>11.1.2 Identifier Reference</strong></p>
 
 <p>An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of evaluating an
 Identifier is always a value of type Reference.</p>
@@ -507,7 +512,7 @@ Identifier is always a value of type Reference.</p>
 
 <p>さらに、Identifierの名前解決を行うとき、GetIdentifierReferenceという内部関数が呼ばれます。GetIdentifierReferenceはexecution contextの持つスコープ情報である Lexical Environmentを参照し、再帰的に該当する識別子を探します。</p>
 
-<blockquote><p>10.3.1 Identifier Resolution</p>
+<blockquote><p><strong>10.3.1 Identifier Resolution</strong></p>
 
 <p>Identifier resolution is the process of determining the binding of an Identifier using the LexicalEnvironment of the running execution context. During execution of ECMAScript code, the syntactic production PrimaryExpression : Identifier is evaluated using the following algorithm:</p>
 
@@ -529,11 +534,11 @@ Identifier is always a value of type Reference.</p>
 
 <p>The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String</p>
 
-<p> GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。</p></blockquote>
+<p>GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。</p></blockquote>
 
 <p>このとき、GetIdentifierReferenceは特定オブジェクトへの参照ではなく、 Environment Recordsをbase valueに入れて返します。</p>
 
-<blockquote><p>10.2.2.1 GetIdentifierReference (lex, name, strict)</p>
+<blockquote><p><strong>10.2.2.1 GetIdentifierReference (lex, name, strict)</strong></p>
 
 <p>The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String</p>
 
@@ -577,7 +582,7 @@ Identifier is always a value of type Reference.</p>
 
 <p>そして、6-aに該当しないということは、ThisBindingの値はundefinedかImplicitThisValueのどちらかであることも確定します。ImplicitThisValueは</p>
 
-<blockquote><p>10.2.1.2.6 ImplicitThisValue()</p>
+<blockquote><p><strong>10.2.1.2.6 ImplicitThisValue()</strong></p>
 
 <p>Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true.</p>
 
@@ -703,7 +708,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 
 <p>これは先の二類型と違ってIdentifierが関係しません。( Expression )を評価すると、自動的にExpressionを評価する事になるだけ(11.1.6参照)なので、FunctionExpressionの評価のみが問題となります。</p>
 
-<blockquote><p>FunctionExpression : function ( FormalParameterListopt ) { FunctionBody }</p>
+<blockquote><p><strong>FunctionExpression</strong> : function ( FormalParameterListopt ) { FunctionBody }</p>
 
 <p>is evaluated as follows:</p>
 
@@ -740,7 +745,7 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 <p>簡単な総括
 以下のルールで、大体の説明ができると思います。</p>
 
-<blockquote><p>11.2.3 Function Calls
+<blockquote><p><strong>11.2.3 Function Calls</strong>
 The production CallExpression : MemberExpression Arguments is evaluated as follows:</p></blockquote>
 
 <p>"MemberExpression" "Arguments"の形式をとり、全体として"CallExpression"だと解釈できる構文は、次のように評価される。
