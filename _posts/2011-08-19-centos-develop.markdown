@@ -36,8 +36,7 @@ make install
 yumだとバージョンがやっぱり古いので、これもソースから入れる。
 
 {% highlight bash %}
-wget http://rubyforge.org/frs/download.php/ \
-75255/rubygems-1.8.8.tgz
+wget http://rubyforge.org/frs/download.php/75255/rubygems-1.8.8.tgz
 tar xvzf rubygems-1.8.8.tgz
 cd rubygems-1.8.8
 ruby setup.rb
