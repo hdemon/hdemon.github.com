@@ -513,6 +513,8 @@ Identifier is always a value of type Reference.
 
 > name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed: 
 
+>
+
 > 1\. If lex is the value null, then 
 
 > &nbsp;&nbsp;
