@@ -364,9 +364,11 @@ body {
       }
 
       blockquote {
-        color: #555;
         margin: 10px 30px;
-        padding: 0;        
+        padding: 0;  
+        p {          
+          color: #555;
+        }     
       }
     }
 
