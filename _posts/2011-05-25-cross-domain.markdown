@@ -92,26 +92,26 @@ Level2では、クロスドメイン通信は条件付きで許可されます�
 
 「許可する」というのは、繰り返しになりますが「リクエストを送らない」ということではなく、ユーザにデータを受け渡さないということです。仕様書では、リクエストが返ってきたときの処理に関して、
 
-> 6.1.5. Cross-Origin Request with Preflight
+> *6.1.5. Cross-Origin Request with Preflight*
   
 > ...If the response has an HTTP status code of 301, 302, 303, or 307 Apply the cache and network error steps. ... Otherwise Perform a resource sharing check. If it returns fail, apply the cache and network error steps. Otherwise, if it returns pass, terminate this algorithm and set the cross-origin request status to success. Do not actually terminate the request. 
 
 > > ...もし、レスポンスが301、302、303、307のいずれかのHTTPステータスコードならば、the cache and network error stepsを動作させる。そうでなければ、resource sharing checkを行う。もしこの結果が失敗ならthe cache and network error stepsへ進むが、このチェックを通ったのならばアルゴリズムを終了し、cross-origin request statusをsuccessとする。
 
-> 6.1.2. Cross-Origin Request Status 
+> *6.1.2. Cross-Origin Request Status* 
 
 > Each cross-origin request has an associated cross-origin request status that CORS API specifications that enable an API to make cross-origin requests can hook into. It can take at most two distinct values over the course of a cross-origin request. The values are:
 
 > > cross-origin requestはおのおのcross-origin request statusを持っており、CORS APIの仕様はこれに接続できる。一連のcross-origin requestにおいて、このstatusは最大で２つの異なる値を持ちうる。
 
-> success 
+> *success* 
 
 > &nbsp;&nbsp; 
 > The resource can be shared. 
 
 > > リソースをシェアする。
 
-> abort error 
+> *abort error* 
 
 > &nbsp;&nbsp;  
 > The user aborted the request. 
@@ -184,11 +184,11 @@ Access-Control-Allow-Originヘッダは・・・付いていませんね。付�
 
 CORSではなく、[XMLHttpRequest level2の仕様](http://www.w3.org/TR/XMLHttpRequest2/)に以下のような記述があります。
 
-> 4.1. Origin and Base URL 
+> *4.1. Origin and Base URL* 
 
 > Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
 
-> 3.6.8. The send() method 
+> *3.6.8. The send() method* 
 
 > If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
 
