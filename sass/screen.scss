@@ -22,6 +22,16 @@
   color: #333;   
 }
 
+@mixin text {
+  a {
+    @include darkgray;
+  }
+  p {
+    line-height: 24px;
+    @include darkgray;   
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -192,6 +202,8 @@ body {
   }
 
   section { 
+    @include text;
+
     h1 {
       margin-bottom: 5px;
       .deco {
@@ -201,12 +213,6 @@ body {
       .caption {  
         display: inline-block;  
         margin-left: 7px;
-      }
-    }
-    a {
-      @include darkgray;
-    p {
-      line-height: 24px;   
       }
     }
   }
@@ -250,6 +256,8 @@ body {
 }
 
 #mc-web {
+  @include text;
+
   header {
     h1 { 
       @include webs-label; 
