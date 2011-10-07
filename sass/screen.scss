@@ -32,6 +32,32 @@
   }
 }
 
+@mixin each_section {
+  section {
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    @include text;
+
+    h1 {
+      margin-bottom: 5px;
+      .deco {
+        display: inline-block;
+        @include list-decorate; 
+      }
+      .caption {  
+        display: inline-block;  
+        margin-left: 7px;
+      }
+    }
+
+    p {
+      text-indent: 1em;
+    }
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -189,29 +215,7 @@ body {
     }
   }
 
-  section {
-    margin-left: 20px;
-    margin-right: 20px;
-    margin-top: 20px;
-    margin-bottom: 30px;
-    @include text;
-
-    h1 {
-      margin-bottom: 5px;
-      .deco {
-        display: inline-block;
-        @include list-decorate; 
-      }
-      .caption {  
-        display: inline-block;  
-        margin-left: 7px;
-      }
-    }
-
-    p {
-      text-indent: 1em;
-    }
-  }
+  @include each_section;
 
   section#explorizer {
     .caption {
@@ -265,6 +269,8 @@ body {
       right: 42px;
     }
   }
+
+  @include each_section;
 
   section#ynn {
     h1 {
