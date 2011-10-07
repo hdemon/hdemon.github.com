@@ -203,13 +203,10 @@ body {
         margin-left: 7px;
       }
     }
+    a {
+      @include darkgray;
     p {
-      line-height: 24px;
-      a {
-        @include darkgray;
-        &:visited {          
-          @include darkgray;             
-        }    
+      line-height: 24px;   
       }
     }
   }
