@@ -4,104 +4,106 @@ title: Hungry Daemonologue
 ---
 
 <div id="wrapper">
-    <div id="right-content">
-  <article id="article">   
+  <div id="right-content">
+    <article id="article">   
+        <header>
+      <h1></h1>
+      <div></div>
+        </header>
+        <ul>
+      {% for post in site.posts reverse %}
+      <li>
+          <a href="{{ post.url }}">
+        {{ post.title }} <span>{{ post.date | date: "%d %B %Y" }}</span>
+          </a>
+      </li>
+      {% endfor %}
+        </ul>
+    </article>
+
+    <article id="aboutme">
       <header>
-    <h1></h1>
-    <div></div>
+        <h1></h1>
+        <div></div>
       </header>
       <ul>
-    {% for post in site.posts reverse %}
-    <li>
-        <a href="{{ post.url }}">
-      {{ post.title }} <span>{{ post.date | date: "%d %B %Y" }}</span>
-        </a>
-    </li>
-    {% endfor %}
+        <li>好き嫌いをしない。</li>
+        <li>勉強成果を記録する。</li>
+        <li>「なぜなぜ？」としつこく問い続けるクソガキ精神を大切にする。</li>
       </ul>
+    </article>
+  </div>
+
+  <div id="left-content">
+    <article id="mc-lib">
+      <header>
+        <h1></h1>
+        <div></div>
+      </header>
+      <section id="explorizer">
+        <h1>
+          <div class="deco"></div>
+          <a href="https://github.com/hdemon/explorizer.js">
+            <div class="caption"></div>
+          </a>
+        </h1>        
+        
+        <div id="ex-wrapper"></div>
+        
+        <a href="https://github.com/hdemon/explorizer.js">
+            <p>エクスプローラー風GUIをブラウザ上に実現します。</p>
+            <p>生成されたフォームに対し、移動、拡大縮小、フォーム内要素の選択（ShiftやCtrlとクリックの組み合わせによる選択、ドラッグによる選択）、選択された要素の、他フォームへの移動やコピーなどが行えます。</p>
+        </a>
+      </section>
+
+      <section id="nicoscraper">
+        <h1>
+          <div class="deco"></div>
+          <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
+            <div class="caption"></div>
+          </a>
+        </h1>
+      
+      <div id="ncs-wrapper"></div>
+      
+      <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
+        <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
+      </a>
+    </section>
+
+    <section id="nicomanip">
+      <h1>
+        <div class="deco"></div>
+        <a href="https://github.com/hdemon/nicomanip.js">
+          <div class="caption"></div>            
+        </a>
+      </h1>
+      
+      <a href="https://github.com/hdemon/nicomanip.js">
+        <p>マイリスト管理ツールに使える、ブラウザアドオン用JavaScriptライブラリ。</p>
+        <p>自分のマイリストからマイリストと動画情報等を抽出し、検索やソート、その結果に基づく移動やコピーを簡単に行えます。</p>
+      </a>
+    </section>
   </article>
 
-  <article id="aboutme">
+  <article id="mc-web">
     <header>
       <h1></h1>
       <div></div>
     </header>
-    <ul>
-      <li>好き嫌いをしない。</li>
-      <li>勉強成果を記録する。</li>
-      <li>「なぜなぜ？」としつこく問い続けるクソガキ精神を大切にする。</li>
-    </ul>
-  </article>
-    </div>
-
-    <div id="left-content">
-  <article id="mc-lib">
-      <header>
-    <h1></h1>
-    <div></div>
-      </header>
-      <section id="explorizer">
-    <h1>
-        <div class="deco"></div>
-        <a href="https://github.com/hdemon/explorizer.js">
-      <div class="caption"></div>
-        </a>
-    </h1>        
-    <div id="ex-wrapper"></div>
-    <a href="https://github.com/hdemon/explorizer.js">
-        <p>エクスプローラー風GUIをブラウザ上に実現します。</p>
-        <p>生成されたフォームに対し、移動、拡大縮小、フォーム内要素の選択（ShiftやCtrlとクリックの組み合わせによる選択、ドラッグによる選択）、選択された要素の、他フォームへの移動やコピーなどが行えます。</p>
-    </a>
-      </section>
-
-      <section id="nicoscraper">
-    <h1>
-        <div class="deco"></div>
-        <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
-      <div class="caption"></div>
-        </a>
-    </h1>
-    <div id="ncs-wrapper"></div>
-    <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
-        <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
-    </a>
-      </section>
-
-      <section id="nicomanip">
-    <h1>
-        <div class="deco"></div>
-        <a href="https://github.com/hdemon/nicomanip.js">
-      <div class="caption"></div>            
-        </a>
-    </h1>
-    <a href="https://github.com/hdemon/nicomanip.js">
-        <p>マイリスト管理ツールに使える、ブラウザアドオン用JavaScriptライブラリ。</p>
-        <p>自分のマイリストからマイリストと動画情報等を抽出し、検索やソート、その結果に基づく移動やコピーを簡単に行えます。</p>
-    </a>
-      </section>
-  </article>
-
-  <article id="mc-web">
-      <header>
-    <h1></h1>
-    <div></div>
-      </header>
-      <section id="ynn">
-    <h1>
-        <div class="deco"></div>
+    <section id="ynn">
+      <h1>
         <div class="caption"></div>
-    </h1>
-    <p>
-      ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。 
-      <a href="http://d.hatena.ne.jp/hdemon/">
-        <strong>開発ブログはこちら</strong>
-      </a>
-    </p>
-      </section>
+      </h1>
+      <p>
+        ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。 
+        <a href="http://d.hatena.ne.jp/hdemon/">
+          <strong>開発ブログはこちら</strong>
+        </a>
+      </p>
+    </section>
   </article>
-    </div>
-
-    <div id="clear"></div>
+  </div><div id="clear"></div>
 </div>
 
 <!--  -->
