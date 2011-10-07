@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>jQueryはイベント操作をどのように行っているのか </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen" />
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- web font -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
+
+  <!-- highlighter -->
+  <script src="/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <div id="title-band"></div>
+    <hgroup>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+      <ul>
+        <li>twitter: <a href="https://twitter.com/#!/h_demon">@h_demon</a></li>
+        <li>mail: hdemon7@gmail.com</li>
+        <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
+      </ul>
+    </hgroup>
+  </header>
+
+  <div id="each-article">
+    <article>
+      <header>
+        <h1>
+          jQueryはイベント操作をどのように行っているのか
+        </h1>
+        <span id="date">
+          25 June 2011
+        </span>
+      </header>
+    <h1>addEventListenerの引数設定…煩わしくないですか？</h1>
+
+<p>addEventListenerを使い、さらにそのハンドラが参照する関数へデータを渡したい場合、</p>
+
+<ul>
+<li>addEventListenerを実行するコンテキストと、登録される側の関数の両方からアクセスできる変数やオブジェクトにデータを入れておく。</li>
+<li>無名関数を作り、その中で目的の関数を引数付きで呼び出す構造にする。</li>
+</ul>
+
+
+<p>という方法があると思います。そして後者の場合、後でイベントトリガーを削除できるようにするために、その無名関数を何かに代入してからaddEventListenerに入れたりします。…僕はそうするんですが、皆さんはどうですか？　つまり、こういう感じです。</p>
+
+<p>でも、文法上の制限はどうしようもないとは言え、目的の大したことなさの割にはコードが技巧的で、あまり美しいとは思えない。さらに、あるオブジェクトに登録された異なるリスナーを「一括で」削除したい場合、</p>
+
+<p>というやり方ができないという点も気になります。それができれば、addEventListenerの中に直接無名関数を書けばいいのに。この引数省略の表記はエラーにはならないはずですが、何も意味を持たない命令です。</p>
+
+<p>さて、世の中には同じように感じてくれる頭のいい人もいるもので、各種ライブラリではもっとシンプルかつ便利にリスナーの付け外しができるメソッドが提供されています。今回はその代表jQueryを題材に、どのような仕組みで簡便さを実現しているのかを解析してみたいと思います。</p>
+
+<h1>jQueryのイベント操作</h1>
+
+<p>その前に、まずjQueryのイベント関連の代表的な機能の紹介から。</p>
+
+<ul>
+<li>bindメソッドでイベント登録できるが、その際に引数を設定できる。引数は仮引数ではなく、event.dataを介して間接的に渡される。</li>
+<li>unbindメソッドの第2引数を省略することで、リスナー登録を全て消す事ができる。</li>
+<li>oneメソッドを使えば、1回限り有効なトリガーを設定できる。</li>
+</ul>
+
+
+<p>こんな素晴らしい機能があります。これらをどういう風に実現しているかを調べるわけですが、予想を立ててみたいと思います。</p>
+
+<ul>
+<li>oneメソッドを実現するには、イベントが発生したことをjQuery自身が認識する必要がある。</li>
+<li>ということは、jQuery内部のプロキシ的な関数へハンドラを渡し、それを経由させイベント発生を検知して、自分自身でイベントを削除しているのではないか。</li>
+<li>unbindで全消去できる機能は、ハンドラを配列かなんかに貯めておいて、unbindの時にその配列を走査しremoveEventListenerを実行するのではないか。</li>
+</ul>
+
+
+<h1>bind / oneの仕組み</h1>
+
+<p>さて…どうでしょうか。早速コードを見てみましょう。 コアに検索をかけてみたところ、こういう箇所が見つかりました。bindとoneをイテレータで一括定義というところが、いきなり玄人っぽくてオシャレです。というか、この表記のせいで検索に苦労しました。</p>
+
+<p>なお、A~Eは私が付けました。 A の".fn"はjQueryでは".prototype"のはず。そうしてみると、Dの部分以外はoneとbindで共通なんですね。 また、Bを見て、初めて複数登録ができる事を知りました。</p>
+
+<p>Cは第2引数が無いときの処理。特に変わった点はありませんが、個人的には「JavaScriptで多重定義ってこうやれば簡潔なんだ」という良い見本になりました。</p>
+
+<p>Dでは、one/bindどちらの場合も関数の参照をhandlerプロパティに代入するようですが、oneの場合は一度無名関数を作り、関数の冒頭でいきなり自分自身をunbindします。これで1回限りであることを保障するわけですね。その後引数を与えて実行します。</p>
+
+<p>Eは、unload時は登録を一回限りにしようという分岐です。破棄するんだから自ずと1回限りじゃないかと思うんですが、こうしないとブラウザによってはメモリが開放されなかったりするんでしょうか。</p>
+
+<p>最後にFでaddメソッドにほぼ全て丸投げしています。ということで、addメソッドも見てみましょう。長いので適宜省略しています。</p>
+
+<p>この部分はちょっと分かりません。handlerが重層構造になる状況というのはどういう場合でしょうか。handlerが参照する関数内でさらにbindなどをすると重層構造になるんですかね。その場合、このロジックだと1層目の関数をスキップしてしまいそうですが、いいんでしょうか。</p>
+
+<p>ここで再度guidが出てきますね。結局、oneでもbindでもユニークIDを割り振るようです。</p>
+
+<p>_dataはjQuery.dataと同じでした。つまり、elem = thisで示されるあるjQueryオブジェクトに関連付けられたデータを、ここで引き出すようです。そして、この後明らかになりますが、このデータ内にハンドラとかIDとかを詰め込んでいる様子です。これらのデータ/プロパティは、あるものについては$()セレクタで呼び出したときに自動的に付加され、その他はこの下で行われるように、参照を通じて納められるのではないでしょうか。</p>
+
+<p>ここでeventHandleに仮引数のhandleを入れてますね。eventHandleは、この後addEventListenerに直接渡される変数です。</p>
+
+<p>ここでhandleObjにbindの第2引数で指定するdataを入れてます。.extendはいわゆるディープコピーのはず。最後の最後にこのhandleObjが登場し、handlersという（恐らく）個々のjQueryオブジェクトに関連付けられる何かへの参照を保持する配列にpushされますから、これはaddメソッド内部のみで一時的な変更を加えて使うためコピーですね。</p>
+
+<p>そのhandlersです。unbindの際に重要になりますが、イベントの種類ごとに分かれているようです。ここで整理すると、bind/one内のthis = elem、elemに関連付けられたオブジェクト = elemData、events / eventHandle = elemData内のプロパティです。elemDataは、上で見たように、_dataメソッドでDOMオブジェクトに関連付けられています。</p>
+
+<p>やっとaddEventListenerが出てきます。eventHandleは少し上で出てきました。elemData.handleを指しています。</p>
+
+<p>ここで、handleObjをhandleObjに入れています。やはり最後は配列なんですね。handlersはeventsを、eventsはelemDataを参照しており、elemDataは個々のjQueryオブジェクト内のプロパティを参照しているのだと思われます。で、その中に、今回登録したhandleがあるわけです。</p>
+
+<p>うーん、大変ややこしいですね。でもまあ、大体の構造は分かりました。「個々のjQueryオブジェクトは、自分に関連付けられるイベントの情報を自前で保存している」という点が重要だと思います。 次はunbindメソッドです。</p>
+
+<h1>unbindの仕組み</h1>
+
+<p>unbindもbindと基本構造は同じですね。さて、unbindが呼び出すremoveですが、bind以上に長いので、重要部分のみを抜粋します。</p>
+
+<p>addではhandlersがevents[ type ]を参照していましたから、removeでも同じだと考えると、eventType[ j ]とadd内のhandlerが対応すると考えてよさそうです。handlerが指定されていないで呼び出された場合、こうやってイベント登録の全消去を行うわけですね。 この後、removeEventというIE対策のラッパー関数を介してremoveEventListenerが呼び出されます。</p>
+
+<h1>まとめ</h1>
+
+<ul>
+<li>jQueryでは、DOMオブジェクト毎に配列の形でハンドラを保管している。</li>
+<li>oneはややこしいことはしていない。単に無名関数でくるんで、まっさきにイベント登録を消した上で目的の関数を実行するだけ。</li>
+<li>unbindは保管したハンドラを利用して、イベント登録全消去機能を実現している。</li>
+</ul>
+
+
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = disqus_identifier && 'badid' || '';
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://hd-mon.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=hd-mon">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+    <em>Updated at  </em>
+  </div>
+
+  <footer></footer>
+
+  <script type="text/javascript">
+  var disqus_shortname = 'hd-mon';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/hd-mon/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+</body>
+</html>

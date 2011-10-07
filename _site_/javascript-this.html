@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>JavaScriptの&quot;this&quot;をめぐる冒険 </title>
+
+  <link rel="stylesheet" type="text/css" href="/stylesheets/screen.css" media="screen" />
+  
+  <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <!-- web font -->
+  <link href='http://fonts.googleapis.com/css?family=Maven+Pro:700' rel='stylesheet' type='text/css'>
+
+  <!-- highlighter -->
+  <script src="/vendor/highlight/highlight.pack.js"></script>
+  <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
+
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
+</head>
+
+<body>
+  <header>
+    <div id="title-band"></div>
+    <hgroup>
+      <div id="title-logo" class="sprites index-titlelogo"></div>
+      <div id="title-icon" class="sprites index-titleicon"></div>
+      <ul>
+        <li>twitter: <a href="https://twitter.com/#!/h_demon">@h_demon</a></li>
+        <li>mail: hdemon7@gmail.com</li>
+        <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
+      </ul>
+    </hgroup>
+  </header>
+
+  <div id="each-article">
+    <article>
+      <header>
+        <h1>
+          JavaScriptの&quot;this&quot;をめぐる冒険
+        </h1>
+        <span id="date">
+          30 May 2011
+        </span>
+      </header>
+    <h1>thisの仕様を読もう！</h1>
+
+<p>JavaScriptの"this"の難しさは、「thisが書かれているオブジェクトを指すだろう」という素朴な解釈とは異なる原理で動作する点にあると思います。</p>
+
+<p>結論を言えば、「ある関数が、obj.method();という形で特定のオブジェクトのプロパティとして呼び出されたとき、関数内部のthisはその親オブジェクトを指す」事が分かれば実用上問題ないと思うのですが、個人的にすっきりしないので、その原理を徹底的に解析しよう！仕様書を読もう！　というのが今回の記事の主旨です。したがって、</p>
+
+<ul>
+<li>大変長いです。</li>
+<li>実践的な事は書いてありません。</li>
+<li>推測を元に多くが書かれており、誤った解釈が存在する可能性があります。</li>
+</ul>
+
+
+<p>いつも通り、誤りがあれば指摘して下さると嬉しいです。</p>
+
+<h1>thisは何と定義されているか。</h1>
+
+<p>まずは定義から。以降は断りのない限り、全て5thの仕様です。また、文中の引用文章は読みやすさを考慮して適宜改行、強調を行っています。</p>
+
+<p>参考：　<a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm">ECMAScript 5th 仕様書</a></p>
+
+<blockquote><p><strong>ECMA-262 5th</strong></p>
+
+<p><strong>11.1.1 The this Keyword</strong></p>
+
+<p>The this keyword evaluates to the value of the ThisBinding of the current execution context.</p></blockquote>
+
+<p>「thisは現在のexecution contextのthis/ThisBindingの値を返す」という事でしょうか。これだけじゃなんとも言えませんが、</p>
+
+<ul>
+<li>execution contextと呼ばれる何かがある。</li>
+<li>execution contextは、currentという言葉から分かるように、移り変わるものである。</li>
+<li>execution contextには、thisの値を決定するようなパラメータがある。</li>
+</ul>
+
+
+<p>という事は分かりました。では、execution contextは何と定義されているのか。</p>
+
+<h1>execution contextを理解しないと始まらない</h1>
+
+<blockquote><p><strong>10.3 Execution Contexts</strong></p>
+
+<p>When control is transferred to ECMAScript executable code, control is entering an execution context.</p>
+
+<blockquote><p>コントロールがexecutable codeに移るとき、コントロールはexecution contextに入る。</p></blockquote>
+
+<p>Active execution contexts logically form a stack. The top execution context on this logical stack is the running execution context.</p>
+
+<blockquote><p>アクティブなexecution contextsは、論理的なスタックである。この論理的スタックの一番上にあるexecution contextsが、実行中のexecution contextsである。</p></blockquote>
+
+<p>A new execution context is created whenever control is transferred from the executable code associated with the currently running execution context to executable code that is not associated with that execution context.</p>
+
+<blockquote><p>現在実行中のexecution contextに結び付けられたexecutable codeから、（実行中の）execution contextに結び付けられていないexecution codeにコントロールが移るときに、新しいexecution contextが作られる。</p></blockquote>
+
+<p>The newly created execution context is pushed onto the stack and becomes the running execution context.</p>
+
+<blockquote><p>新しく作られたexecution contextはスタックにpushされ、それが実行中のexecution contextとなる。</p></blockquote></blockquote>
+
+<p>なるほど。少し強引に解釈すると、</p>
+
+<ul>
+<li>JavaScriptエンジンがコードを実行し始めたときに、同時にexecutable contextが作成される。</li>
+<li>コードは全てが連続しているわけではなく、何らかの基準で分けられている。そして、そのコードが切り替わるたびにexecutable contextも新しくなる。</li>
+<li>しかし、コードの切り替えは、前のコードを捨てるような形では行われない。本を上に積んでいくように貯められ、一番上に積まれているものから処理されていくる。</li>
+</ul>
+
+
+<p>ということでしょうか。5thはこの後より詳しく論じているので、もう少し続けてみます。</p>
+
+<h1>execution contextが、thisの値を決めるパラメータを持っている。</h1>
+
+<blockquote><p>An execution context contains whatever state is necessary to track the execution progress of its associated code. In addition, each execution context has the state components listed in Table 19.</p>
+
+<blockquote><p>execution contextには、それに結び付けられたコードが実行の経過を追うために必要な状態のすべてが含まれている。加えて、個々のexecution contextは以下の状態を保持している。</p></blockquote>
+
+<p><strong>Table 19 —Execution Context State Components</strong></p>
+
+<p><strong>LexicalEnvironment</strong> Identifies the Lexical Environment used to resolve identifier references made by code within this execution context.</p>
+
+<p>...</p>
+
+<p><strong>ThisBinding</strong> The value associated with the this keyword within ECMAScript code associated with this execution context.</p>
+
+<blockquote><p>このexecution contextに結び付けられたECMAScript中のthisの語句に結び付けられる。</p></blockquote>
+
+<p><strong>10.4 Establishing an Execution Context</strong></p>
+
+<p>When control enters an execution context, the execution context’s ThisBinding is set...</p>
+
+<blockquote><p>コントロールがexecution contextに入るとき、ThisBindingが設定される。</p></blockquote></blockquote>
+
+<p>execution contextが内部的にthisの値を定めるパラメータを持っており、それはexecution contextが立ち上がる時に定められ、かつその内容決定の仕組みはコードの種類によって変わりうるということですね。でも、その仕組みについてはまだ書いてありません。もう少し読み進める必要がありますが、その前に一旦まとめてみます。</p>
+
+<ul>
+<li>execution contextとは、コードごとに固有に存在する「説明書」のようなものであり、thisの内容のほか、スコープの情報や変数の情報が記されている。</li>
+<li>コード中でthisが呼ばれたとき、コードは自分のexecution contextに書かれたthisの指定先を調べる。</li>
+<li>このパラメータはexecution contextが作られたとき＝コードの実行順序が自分に回ってきたときに決定されるが、その決定方法はコードの種類によって異なるらしい。</li>
+</ul>
+
+
+<p>なお、execution contextに関しては<a href="http://d.hatena.ne.jp/oogatta/20101003/1286099289">こちらの優れた記事と邦訳</a>が大変参考になります。そちらを見て頂いた方が、execution contextの理解は早いかと思います。
+では次に、具体的なコードの種類と、それぞれのthisの決め方を調べていきます。</p>
+
+<h1>executable codeは３種類ある。</h1>
+
+<blockquote><p><strong>10.1 Types of Executable Code</strong></p>
+
+<p>There are three types of ECMAScript executable code:
+Global code is source text that is treated as an ECMAScript Program. The global code of a particular Program does not include any source text that is parsed as part of a FunctionBody.</p>
+
+<blockquote><p>グローバルコードはECMAScriptプログラムとして扱われる。ある特定のプログラムのグローバルコードは、FunctionBodyと解釈できるソースを含まない。</p></blockquote>
+
+<p>Eval code ...</p>
+
+<p>Function code is source text that is parsed as part of a FunctionBody.</p>
+
+<p>The function code of a particular FunctionBody does not include any source text that is parsed as part of a nested FunctionBody.</p>
+
+<blockquote><p>関数コードは、FunctionBodyを成すものと解釈されるソースである。ある特定のFunctionBodyの関数コードは、FunctionBodyを入れ子として含むことはない。</p></blockquote>
+
+<p>...</p></blockquote>
+
+<p>コードにはGlobal / Eval / Function の３つの種類があります。
+ただ、Globalとは定義上「FunctionBodyを含まないコード」であり、Evalはeval関数を使った際の例外的なコードであるということから、最後のFunction codeの理解が重要になるように思われます（Evalの読解は長くなりそうなので、今回は取り上げません）。
+ちなみに、Global codeと認定された場合は、</p>
+
+<blockquote><p><strong>10.4.1 Entering Global Code</strong></p>
+
+<p>...</p>
+
+<p><strong>10.4.1.1 Initial Global Execution Context</strong></p>
+
+<p>The following steps are performed to initialize a global execution context for ECMAScript code C:</p>
+
+<p>...</p>
+
+<p>3. Set the ThisBinding to the global object.</p></blockquote>
+
+<p>というように、分かりやすくglobal objectが代入されるようです（ただ、global objectが入れられるパターンは後述するように他にもあります）。
+次に、Function codeの定義を見てみます。</p>
+
+<h1>Function codeの場合の、thisを決定する仕組み</h1>
+
+<blockquote><p><strong>10.4.3 Entering Function Code</strong></p>
+
+<p>The following steps are performed when control enters the execution context for function code contained in function object F, a caller provided thisArg, and a caller provided argumentsList:</p>
+
+<blockquote><p>次の手順は、関数オブジェクトが含むFunction codeのexecution contextにコントロールが写ったときに実行され、呼び出し元はthisArgとargumentsListを渡す。</p></blockquote>
+
+<p>1. If the function code is strict code, set the ThisBinding to thisArg.</p>
+
+<blockquote><p>strictなら（="use strict";使用時）、ThisBindingにthisArgを入れる。</p></blockquote>
+
+<p>2. Else if thisArg is null or undefined, set the ThisBinding to the global object.</p>
+
+<blockquote><p>thisArgがnullもしくはundefinedの場合、ThisBindingにはglobal objectを入れる。</p></blockquote>
+
+<p>3. Else if Type(thisArg) is not Object, set the ThisBinding to ToObject(thisArg).</p>
+
+<blockquote><p>thisArgがオブジェクトではないときは、ToObject(thisArg)の値を入れる。</p></blockquote>
+
+<p>4. Else set the ThisBinding to thisArg.</p>
+
+<p>...</p></blockquote>
+
+<p>おさらいですが、thisが直接的に参照するのはexecution context内のThisBindingです。ここにはthisArgをどんな場合にThisBindingに設定するかということしか書いていませんが、thisArgは呼び出し側が提供するものだ、とも書かれています。ということは、呼び出し側のロジックを見てみなければなりません。</p>
+
+<h1>thisを直接決めるのは一体誰か。</h1>
+
+<p>では、関数呼び出し時の内部処理について見てみましょう。</p>
+
+<blockquote><p><strong>11.2.3 Function Calls</strong></p>
+
+<p>The production CallExpression : MemberExpression Arguments is evaluated as follows:</p>
+
+<p> "MemberExpression" "Arguments"の形式をとり、全体として"CallExpression"だと解釈できる構文は、次のように評価される。</p>
+
+<p>1. Let ref be the result of evaluating MemberExpression.</p>
+
+<blockquote><p>refに、MemberExpressionを評価した結果を入れる。</p></blockquote>
+
+<p>...</p>
+
+<p>6. If Type(ref) is Reference, then</p>
+
+<blockquote><p>refがReference型である場合、</p></blockquote>
+
+<p>&nbsp;&nbsp;
+a.If IsPropertyReference(ref) is true, then</p>
+
+<blockquote><p>&nbsp;&nbsp;
+refのbase valueがundefinedもしくはEnvironment Record以外なら、</p></blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i.Let thisValue be GetBase(ref).</p>
+
+<blockquote><p>&nbsp;&nbsp;&nbsp;&nbsp;
+base valueの参照を返す。</p></blockquote>
+
+<p>&nbsp;&nbsp;
+b.Else, the base of ref is an Environment Record</p>
+
+<blockquote><p>&nbsp;&nbsp;
+そうでなければ、</p></blockquote>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i.Let thisValue be the result of calling the ImplicitThisValue concrete method of GetBase(ref).</p>
+
+<blockquote><p>&nbsp;&nbsp;&nbsp;&nbsp;
+thisの暗黙値=大抵はundefinedをthisValueとする。</p></blockquote>
+
+<p>7. Else, Type(ref) is not Reference.</p>
+
+<blockquote><p>refがReference型でなければ、</p></blockquote>
+
+<p>&nbsp;&nbsp;
+a.Let thisValue be undefined.</p>
+
+<blockquote><p>&nbsp;&nbsp;
+thisValueにundefinedを設定する。</p></blockquote>
+
+<p>...</p></blockquote>
+
+<p>上から見ていきましょう。まず、CallExpression : MemberExpression Argumentsとは何なのか。11.2はこのように表記されています。</p>
+
+<blockquote><p><strong>11.2 Left-Hand-Side Expressions</strong></p>
+
+<p>Syntax</p>
+
+<p>&nbsp;&nbsp;
+MemberExpression :</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+PrimaryExpression</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+FunctionExpression</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression [ Expression ]</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression.IdentifierName</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+new MemberExpression Arguments</p>
+
+<p>...</p>
+
+<p>&nbsp;&nbsp;
+CallExpression :</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+MemberExpression Arguments</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression Arguments</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression [ Expression ]</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+CallExpression.IdentifierName</p>
+
+<p>&nbsp;&nbsp;
+Arguments :</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+( )</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+( ArgumentList )</p></blockquote>
+
+<p>記法の勉強をしていないので感覚的な解釈ですが、11.2.3の"CallExpression : MemberExpression Arguments"は、CallExpressionの類型の一つを示しているようですね。ただ、CallExpressionのその他の類型は全てCallExpression自身を含んでいるので、最終的には"MebmerExpression + Arguments"の構文に還元されるのだと思います。例えば、</p>
+
+<p>のようなチェーンメソッドがあれば、</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>foo(10)</td>
+<td>CallExpression</td>
+</tr>
+<tr>
+<td>.bar</td>
+<td>.IdentifierName</td>
+</tr>
+<tr>
+<td>()</td>
+<td>Arguments</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>直接的には上の様になりますが、</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>foo</td>
+<td>MemberExpression</td>
+</tr>
+<tr>
+<td>(10)</td>
+<td>Arguments</td>
+</tr>
+<tr>
+<td>bar</td>
+<td>MemberExpression</td>
+</tr>
+<tr>
+<td>()</td>
+<td>Arguments</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>最終的にはこの形に分解して解釈するということでしょう。詳細は次の章で見ていきます。</p>
+
+<p>話をFunction Callsに戻します。以上から、1.におけるMemberExpressionとは実行演算子()を外した関数名の部分だと言う事が分かります。関数名を評価するということは、</p>
+
+<p>と処理をすることと（恐らく）同義ですから、refには関数の参照が入ります。
+次に、2.で参照refを内部関数GetValueで処理します。GetValueだけで今回の記事と同じぐらいの説明が要りそうなので、立ち入った説明はしません（し、僕もよくわかってません）が、その名のとおり入れられた参照先の具体的な値を返します（8.7.1参照）。</p>
+
+<p>3.は引数関係なので飛ばします。4.で先ほど処理した型を判別し、Objectでなければエラーを返します。関数の参照を持っていない変数に括弧を付けて、あたかも関数であるかのように実行したときの文法エラーを出すためのフィルターと考えるべきでしょう。5.も同様のフィルターと思われます。</p>
+
+<p>さて、6からが重要な部分です。もう一度引用します。</p>
+
+<blockquote><p>6. If Type(ref) is Reference, then</p>
+
+<p>&nbsp;&nbsp;
+a. If IsPropertyReference(ref) is true, then</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i. Let thisValue be GetBase(ref).</p>
+
+<p>&nbsp;&nbsp;
+b. Else, the base of ref is an Environment Record</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;
+i. Let thisValue be the result of calling the
+ImplicitThisValue concrete method of GetBase(ref).</p>
+
+<p>7. Else, Type(ref) is not Reference.</p>
+
+<p>&nbsp;&nbsp;
+a. Let thisValue be undefined.</p></blockquote>
+
+<p>6と7によれば、</p>
+
+<ol>
+<li><p>Type(ref) が Reference かつ、IsPropertyReference(ref) が真のとき、thisValue は GetBase(ref)の値</p></li>
+<li><p>Type(ref) が Reference かつ、IsPropertyReference(ref) が真でなく、refがEnviroment Recordであるとき、thisValue は GetBase(ref)　InplicitThisValueの値。</p></li>
+<li><p>Type(ref) が Reference ではないとき、thisValue は undefined
+という場合分けができます。とうとう核心部分までやって来ましたね。まず、Type(ref)ですが、これは単純にrefの型を返す内部関数です（8を参照）。</p></li>
+</ol>
+
+
+<p>refがどのような値を持っているかは、MemberExpressionの形態によって決定されますから、それぞれの場合の仕様書の表記を見てみないといけません。次の項目では、この三類型が、我々がいつも行っている関数呼び出しのどの類型にあたるのかを検討します。
+我々はいつも、どんなやり方で関数を呼び出しているか。</p>
+
+<p>//全て non-strict modeの場合。
+たぶん、次の３つが主なパターンではないでしょうか。</p>
+
+<ul>
+<li>スコープチェーン上にある関数名を指定して呼び出す。</li>
+<li>あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。</li>
+<li>即時関数として呼び出す。</li>
+</ul>
+
+
+<p>上の例の場合、method直下で呼び出した=2.のパターン以外のthisは、全てglobal(strict modeならundefined)を指します。closure下は新しいexecution contextに移っていますから、そのthisの内容を決定しているのは"closure();"の評価結果です。即時関数の場合も、「内部にFunction codeを含まないcode」として、"(function(){}());"の部分の評価結果のみに、thisの値は依存していると考えられます。</p>
+
+<p>これらの構文を解析してみます。まず、closure直下で呼ぶ場合はどうでしょうか。この場合は、</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>closure</td>
+<td>MemberExpression : PrimaryExpression : Identifier</td>
+</tr>
+<tr>
+<td> ()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>となるのではないかと思います。そしてmethod直下で呼び出す場合は、</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>obj</td>
+<td>MemberExpression :
+PrimaryExpression :
+Identifier</td>
+<td rowspan="3">MemberExpression :
+MemberExpression
+.IdentifierName</td>
+</tr>
+<tr>
+<td>.</td>
+<td></td>
+</tr>
+<tr>
+<td> method</td>
+<td>?</td>
+</tr>
+<tr>
+<td> ()</td>
+<td colspan="2">Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>と解釈できるのではないでしょうか。この類型の場合は、類型として仕様上に明記されていることから、Identifierではなく、MemberExpression .IdentifierNameとして解析されると思われます。</p>
+
+<p>最後に即時関数の場合。</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>外側の()を含めた全体</td>
+<td>PrimaryExpression : ( Expression )</td>
+</tr>
+<tr>
+<td>function(){}</td>
+<td>Expression : MemberExpression :
+FunctionExpression</td>
+</tr>
+<tr>
+<td>functionの後ろの()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>これらを整理すると、</p>
+
+<ul>
+<li>スコープチェーン上にある関数名を指定して呼び出すパターン -> Identifier</li>
+<li>あるオブジェクトのプロパティである関数を、object.method()の形で呼び出す。 -> MemberExpression .IdentifierName</li>
+<li>即時関数として呼び出すパターン -> FunctionExpression</li>
+</ul>
+
+
+<p>をそれぞれ評価した値を調べれば、先の分岐に当てはめることができるはずです。</p>
+
+<p>まずは1.のIdentifierのパターンから見ていきます。</p>
+
+<h1>Identifierを評価すると、何が返ってくるのか。</h1>
+
+<p>Identifierを評価するとき、</p>
+
+<blockquote><p><strong>11.1.2 Identifier Reference</strong></p>
+
+<p>An Identifier is evaluated by performing Identifier Resolution as specified in 10.3.1. The result of evaluating an
+Identifier is always a value of type Reference.</p>
+
+<blockquote><p>識別子を評価した結果は、常にReference型である。</p></blockquote></blockquote>
+
+<p>というルールが存在します。Reference型とは、</p>
+
+<blockquote><p>A Reference is a resolved name binding. A Reference consists of three components, the base value, the referenced name and the Boolean valued strict reference flag. The base value is either undefined, an Object, a Boolean, a String, a Number, or an environment record (10.2.1). A base value of undefined indicates that the reference could not be resolved to a binding. The referenced name is a String.</p>
+
+<blockquote><p><em>Referenceは名前束縛を解決した結果である。</em>Referenceは base value, referenced name, strict reference flagの3つの要素からなる。base valueはundefined, Object, Boolean, String, Number, enviroment recordのいずれかである。base valueがundefinedの場合、それは参照が束縛を解決できなかった事を意味する。referenced nameはString型である。</p></blockquote></blockquote>
+
+<p>とあるように、識別子の名前解決のための型のようです。あるいは特別なラッパーオブジェクトと言ってもいいかも知れません。これによれば、Reference型だがbase valueはObject型ということがあり得ますし、その場合Type(ref)の結果はObjectではなくReferenceになります。</p>
+
+<p>さらに、Identifierの名前解決を行うとき、GetIdentifierReferenceという内部関数が呼ばれます。GetIdentifierReferenceはexecution contextの持つスコープ情報である Lexical Environmentを参照し、再帰的に該当する識別子を探します。</p>
+
+<blockquote><p><strong>10.3.1 Identifier Resolution</strong></p>
+
+<p>Identifier resolution is the process of determining the binding of an Identifier using the LexicalEnvironment of the running execution context. During execution of ECMAScript code, the syntactic production PrimaryExpression : Identifier is evaluated using the following algorithm:</p>
+
+<blockquote><p>識別子解決は、実行中のexecution contextのLexicalEnvironmentを使用し、識別子束縛を決定するプロセスである。ECMAScriptコード実行中、PrimaryExpression : Identifierにあたる構文上の生成物は次のアルゴリズムによって評価される。</p></blockquote>
+
+<p>1.  Let env be the running execution context‘s LexicalEnvironment.</p>
+
+<blockquote><p>実行中のexecution contextのLexicalEnvironmentをenvに入れる。</p></blockquote>
+
+<p>...</p>
+
+<p>3. Return the result of calling GetIdentifierReference function passing env, Identifier, and strict as arguments.</p>
+
+<p>The result of evaluating an identifier is always a value of type Reference with its referenced name component equal to the Identifier String</p>
+
+<blockquote><p>GetIdentifierReferenceにenvを与えた結果を返す。識別子を評価したこの結果は常にReference型であり、そのreferenced nameは識別子の文字列に等しい。</p></blockquote></blockquote>
+
+<p>このとき、GetIdentifierReferenceは特定オブジェクトへの参照ではなく、 Environment Recordsをbase valueに入れて返します。</p>
+
+<blockquote><p><strong>10.2.2.1 GetIdentifierReference (lex, name, strict)</strong></p>
+
+<p>The abstract operation GetIdentifierReference is called with a Lexical Environment lex, an identifier String</p>
+
+<p>name, and a Boolean flag strict. The value of lex may be null. When called, the following steps are performed:</p>
+
+<p>1. If lex is the value null, then</p>
+
+<p>&nbsp;&nbsp;
+a. Return a value of type Reference whose base value is undefined, whose referenced name is name, and whose strict mode flag is strict.</p>
+
+<p>2. Let envRec be lex‘s environment record.</p>
+
+<p>3. Let exists be the result of calling the HasBinding(N) concrete method of envRec passing name as the argument N.</p>
+
+<p>4. If exists is true, then</p>
+
+<p>&nbsp;&nbsp;
+a. Return a value of type Reference whose base value is envRec, whose referenced name is name, and whose strict mode flag is strict.</p>
+
+<p>5. Else</p>
+
+<p>&nbsp;&nbsp;
+a. Let outer be the value of lex’s outer environment reference.</p>
+
+<p>&nbsp;&nbsp;
+b. Return the result of calling GetIdentifierReference passing outer, name, and strict as arguments</p></blockquote>
+
+<p>全てを追っていくと頭が痛くなるので、要点だけ見ると、GetIdentifierReferenceは、</p>
+
+<ul>
+<li>undefinedを返すパターン(1-a)、</li>
+<li>base valueがenvironment recordであるReference型を返すパターン(4-a)、</li>
+<li>再帰的に自分を呼び出すパターン(5-b)</li>
+</ul>
+
+
+<p>があると分かります。つまり、Identiferを評価した時点で、undefinedかReference型のどちらかが返ってくることが確定し、結果として少なくともFunction Callの分岐6-aには該当しない事が確定します。</p>
+
+<p>そして、6-aに該当しないということは、ThisBindingの値はundefinedかImplicitThisValueのどちらかであることも確定します。ImplicitThisValueは</p>
+
+<blockquote><p><strong>10.2.1.2.6 ImplicitThisValue()</strong></p>
+
+<p>Object Environment Records return undefined as their ImplicitThisValue unless their provideThis flag is true.</p>
+
+<blockquote><p>Object Evironment Recordsは、（そのプロパティである）provideThisがtrueで無い限り、「thisの暗黙値」としてundefinedを返す。</p></blockquote>
+
+<p>1. Let envRec be the object environment record for which the method was invoked.</p>
+
+<blockquote><p>envRecに、そのメソッドを呼び出したenvironment recordを入れる。</p></blockquote>
+
+<p>2. If the provideThis flag of envRec is true, return the binding object for envRec.</p>
+
+<blockquote><p>envRecのprovideThis がtrueなら、envRecに束縛されたオブジェクトを返す。</p></blockquote>
+
+<p>3. Otherwise, return undefined</p>
+
+<blockquote><p>そうでなければ、undefinedを返す。</p></blockquote></blockquote>
+
+<p>というルールがあり、説明は省きますが、provideThisがtrueとなるのはWithを指定されたとき (( あと、ECMAScript 5thのbindメソッドもこれを使うのかも？ )) ぐらいらしいので、実用上の殆どの場合はundefinedが返ってくることになります。</p>
+
+<p>まとめてみましょう。</p>
+
+<ul>
+<li>関数は関数宣言か、関数式を変数に代入する形で定義されるが、どちらも識別子を使って呼び出される。</li>
+<li>識別子を使って呼び出された場合、識別子を評価した結果はReference型である(加えて、Identifierは常にGetIdenrifierReferenceを通して返されるということは、IdentifierのReference-&gt;base valueの値は常にenvironment record型という事になるはずです)。</li>
+<li>Reference型の場合、Thisの暗黙値はundefinedに設定される。 ((strict modeならundefined、そうでなければglobal objectを返すことになりますが、暗黙値にはそもそもundefiendが設定されていることから、「ECMAScript 5thのstrict modeでは、関数の識別子のみで関数を呼び出した場合にはundefinedを返す」というのは特別な処理ではなく、むしろ特別な例外処理を省いた結果だったということが分かります。（もっとも、strict modeが完全に実装されているブラウザは2011/7/12現在ではまだ少ないようで、Firefox 5ぐらいでしか確認できません）。))</li>
+<li>With文等の特殊な場合を除いて、暗黙値は変更されない。</li>
+<li>だから、この場合のthisはglobalもしくはundefinedになる。</li>
+</ul>
+
+
+<p>やっと一つ答えが出ました。続いて2.のパターンを見てみます。
+MemberExpression .IdentifierNameを評価すると何が返ってくるのか。
+MemberExpression .IdentifierNameの類型は、直接仕様に記載されていません。しかし、</p>
+
+<blockquote><p>The dot notation is explained by the following syntactic conversion:</p>
+
+<p>&nbsp;&nbsp;&nbsp;&nbsp;MemberExpression . IdentifierName</p>
+
+<p>is identical in its behaviour to MemberExpression [  &lt;identifier-name-string  ]</p>
+
+<p>...</p>
+
+<blockquote><p>ドット表記は、次のようば構文的変換によって説明される。</p></blockquote>
+
+<p>"MemberExpression . IdentifierName"は、”MemberExpression [  &lt;identifier-name-string  ]"と全く同等にふるまう。</p></blockquote>
+
+<p>という事から、次のルールが適用されます。</p>
+
+<blockquote><p><em>The production MemberExpression : MemberExpression [ Expression ] is evaluated as follows:</em></p>
+
+<p>1. Let baseReference be the result of evaluating MemberExpression.</p>
+
+<blockquote><p>baseReferenceに、MemberExpressionを評価した値を入れる。</p></blockquote>
+
+<p>2. Let baseValue be GetValue(baseReference).</p>
+
+<blockquote><p>baseValueに、GetValue(baseReference)の戻り値を入れる。</p></blockquote>
+
+<p>...</p>
+
+<p>8. Return a value of type Reference whose base value is baseValue and whose referenced name is</p>
+
+<p>propertyNameString, and whose strict mode flag is strict.</p>
+
+<blockquote><p>base valueにbaseValueを入れたReference型の値を返す。 </p></blockquote></blockquote>
+
+<p>GetValue自体も大変ややこしいロジックなのですが、結局ははいくつかの例外処理を除き、参照先の値を返すだけだと思われます。そうすると、関数呼び出しという前提を置くなら、MemberExpression [ Expression ]を評価した場合はbase valueにある関数オブジェクトへの参照を持つReference型が返ってくることになります。</p>
+
+<p>この場合、IsPropertyReference(type Object) === true となり、Function Callにおける分岐の6-aに該当し、ThisBindingにはMemberExpression [ Expression ]のMemberExpression部分、すなわちobj.method();ならobjへの参照が代入される事になります。</p>
+
+<p>まとめます。</p>
+
+<ul>
+<li>obj.method();という関数の呼び出し方は、obj<a href="">"method"</a>とする場合と、構文解釈上は全く同じに扱われる。</li>
+<li>この場合、objへの参照がそのままThisBindingに代入され、thisはobjを指すことになる。</li>
+<li>"obj"自体はIdentifierであるが、Identifierを評価した値そのものがThisBindingに代入されない点が、前項の場合と異なる。</li>
+</ul>
+
+
+<h1>即時関数を評価すると何が返ってくるのか。</h1>
+
+<p>即時関数、つまり</p>
+
+<p>この慣用表現の構文をもう一度掲載すると、</p>
+
+<blockquote>
+<table border="0">
+<tbody>
+<tr>
+<td>外側の()</td>
+<td>PrimaryExpression : ( Expression )</td>
+</tr>
+<tr>
+<td>function(){}</td>
+<td>MemberExpression : FunctionExpression</td>
+</tr>
+<tr>
+<td>functionの後ろの()</td>
+<td>Arguments : ()</td>
+</tr>
+</tbody>
+</table>
+</blockquote>
+
+
+<p>これは先の二類型と違ってIdentifierが関係しません。( Expression )を評価すると、自動的にExpressionを評価する事になるだけ(11.1.6参照)なので、FunctionExpressionの評価のみが問題となります。</p>
+
+<blockquote><p><strong>FunctionExpression</strong> : function ( FormalParameterListopt ) { FunctionBody }</p>
+
+<p>is evaluated as follows:</p>
+
+<p>...</p>
+
+<p>13.2 Creating Function Objects</p>
+
+<p>...</p>
+
+<p>1. Create a new native ECMAScript object and let F be that object.</p>
+
+<p>...</p>
+
+<ol>
+<li>Return F.</li>
+</ol>
+</blockquote>
+
+<p>FunctionExpressionを評価すると、以上のルールに従い、Object型の値が戻ってくるようです。つまりReference型+base valueがObject型という事ではなく、単なるObject型になると思われます。この解釈が正しければ、7.に該当し、undefinedがThisBindingに代入されます。その後は前項と一緒です。</p>
+
+<p>まとめます。</p>
+
+<ul>
+<li>即時関数の外側の括弧は、関数呼び出しについて言えば、中身の評価に影響を及ぼさない。</li>
+<li>FunctionExpressionを評価すると、直接Object型の値が返ってくる。</li>
+<li>Object型の値が返ってきた場合、Function Callの過程はThisBindingにundefinedを代入する。</li>
+<li>だから、即時関数の直下ではthisはundefinedもしくはglobalになる。</li>
+</ul>
+
+
+    </article>
+    
+    
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_identifier = disqus_identifier && 'badid' || '';
+      (function() {
+       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+       dsq.src = 'http://hd-mon.disqus.com/embed.js';
+       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript=hd-mon">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+    
+    <em>Updated at  </em>
+  </div>
+
+  <footer></footer>
+
+  <script type="text/javascript">
+  var disqus_shortname = 'hd-mon';
+  (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.src = 'http://disqus.com/forums/hd-mon/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+  </script>
+</body>
+</html>

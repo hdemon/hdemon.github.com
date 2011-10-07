@@ -1,0 +1,392 @@
+/* Welcome to Compass.
+ * In this file you should write your main styles. (or centralize your imports)
+ * Import this file using the following HTML or equivalent:
+ * <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css" /> */
+
+@import "compass/reset";
+@import "compass/css3";
+@import "compass/css3/border-radius";
+@import "compass/utilities/general/clearfix";
+@import "compass/utilities/tables";
+
+@import "sprites.scss";
+
+@mixin cancelSelect {
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  user-select: none;  
+}
+
+@mixin darkgray {
+  color: #333;   
+}
+
+* {
+  padding: 0;
+  margin: 0;
+
+  a {
+    text-decoration: none;        
+    &:hover {
+      text-decoration: underline;            
+    }
+  }
+
+  em, strong {
+    font-weight: bold;
+  }
+}
+
+body {
+  background: url("/images/back.png") repeat;
+
+  & > header {
+    margin-bottom: 40px;
+    background: url("/images/title-band.png") repeat-x;
+    height: 123px;
+
+    hgroup {
+      margin: 0 auto;
+      width: 900px;
+      position: relative;
+      top: 0;
+      
+      #title-logo {
+        position: absolute;
+        top: 72px;
+        left: 20px;
+        @include title-logo;
+      }
+
+      #title-icon {
+        position: absolute;
+        top: 26px;
+        left: 540px;
+        @include title-icon;
+      }
+
+      ul {
+        position: absolute;
+        left: 660px;
+        top: 31px;
+
+        li {
+          font-family: 'Maven Pro', sans-serif;
+          font-size: 13px;
+          color: white;
+          line-height: 20px;
+
+          a {
+            color: white;    
+          }
+        }
+      }
+    }
+  }
+
+  #wrapper {
+    margin: 0 auto;
+    width: 900px;
+
+    #left-content {
+      float:  left;
+    }
+
+    #right-content {
+      float:  right;    
+    }
+
+    article {  
+      width: 400px;
+      margin-bottom: 50px;
+      font-size: 12px;
+      line-height: 20px;
+
+      header {
+        position: relative;
+        padding-top:6px;
+        padding-left:20px;
+        margin-bottom: 20px;
+        height: 26px;
+        width: 380px;    
+        @include caption-label
+      }
+
+      section {
+        margin-left: 20px;
+        margin-top: 20px;
+        margin-bottom: 30px;
+        h1 {
+          // margin-bottom: 15px;
+        }
+        p {
+          text-indent: 1em;
+        }
+      }
+    }
+
+    #clear {
+      @include clearfix;
+      clear: both;
+      width: 900px;
+    }
+  }
+
+  footer {
+    position: relative;
+    margin: 0 auto;
+    width: 900px;      
+    margin-top: 100px;
+    margin-bottom: 20px;
+    @include hashi;
+  }
+}
+
+#article {
+  header {
+    h1 { 
+      @include article-label; 
+    }
+    div {
+      position: absolute;
+      @include parchment; 
+      top: -29px;
+      right: 38px;
+    }
+  }
+  ul {
+    margin-left: 37px;
+    li {
+      font-weight: bold;
+      list-style-type: circle;
+      margin-top: 10px;
+      & > a {
+        text-decoration: none;
+        color: #666;             
+        &:hover {
+          text-decoration: underline;              
+        }    
+        &:visited {          
+          @include darkgray;             
+        }    
+      }
+      span {
+        font-weight: normal;
+      }
+    }
+  }
+}
+
+#mc-lib {
+  header {
+    h1 { 
+      @include lib-label; 
+    }
+    div {
+      position: absolute;
+      @include monster1; 
+      top: -18px;
+      right: 26px;
+    }
+  }
+
+  section { 
+    h1 {
+      margin-bottom: 5px;
+      .deco {
+        display: inline-block;
+        @include list-decorate; 
+      }
+      .caption {  
+        display: inline-block;  
+        margin-left: 7px;
+      }
+    }
+    p {
+      line-height: 24px;
+    }
+    a {
+      &:visited {          
+        @include darkgray;             
+      }    
+    }
+  }
+
+  section#explorizer {
+    .caption {
+      @include explorizer;
+    }
+    #ex-wrapper {
+      position: relative;
+      width: 300px;
+      height: 250px;
+      @include border-radius(5px, 5px);
+      margin: 12px 30px 20px 30px;
+      background: #CCC;
+      @include box-shadow(gray 2px 2px 10px);
+      @include cancelSelect;
+
+      .hdex_elem {
+        float:          left;
+        width:          16px;
+        height:         16px;
+        margin:         5px 0 0 5px;
+        border:         #eee solid;
+        border-radius:  5px;
+      }
+    }
+  }
+
+  section#nicoscraper {
+    .caption {
+      @include nicoscraper;
+    }
+  }
+
+  section#nicomanip {
+    .caption {
+      @include nicomanip;
+    }
+  }
+}
+
+#mc-web {
+  header {
+    h1 { 
+      @include webs-label; 
+    }
+    div {
+      position: absolute;
+      @include meat; 
+      top: -25px;
+      right: 42px;
+    }
+  }
+
+  section#ynn {
+    h1 {
+      @include ynn;
+      margin-bottom: 15px;
+    }
+  }
+}
+
+#aboutme {
+  header {
+    h1 { 
+      @include aboutme-label; 
+    }
+    div {
+      position: absolute;
+      @include pudding; 
+      top: -25px;
+      right: 35px;
+    }
+  }
+
+  ul {
+    margin-left: 37px;
+    li {
+      list-style-type: circle;
+      margin-top: 10px;
+    }
+  }
+}
+
+
+#each-article {
+  width: 800px;
+  margin: 0 auto;
+  padding: 50px;
+  font-size: 16px;
+  line-height: 28px;
+  background: url("/images/article-back.png") repeat;
+  @include border-radius(15px, 15px);
+
+  article {
+    margin-bottom: 120px;
+
+    header {
+      margin-bottom: 50px;
+      h1 {
+        font-size: 26px;
+        margin-top: 20px;
+        margin-bottom: 15px;
+        @include darkgray;   
+      }
+      #date {
+        font-size: 12px;
+      }
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: bold;
+      margin-top: 32px;
+      margin-bottom: 20px;
+      @include darkgray;   
+    }
+
+    h2 {
+      font-size: 16px;
+      font-weight: bold;
+      @include darkgray;   
+    }
+
+    p {
+      text-indent: 1em;
+      margin: 10px 0; 
+      @include darkgray;   
+    }
+
+    blockquote {
+      quotes: none;
+      font-size: 14px;
+      background: url("/images/back.png") repeat;
+      margin: 20px 20px;
+      padding: 10px 25px;
+      @include border-radius(7px, 7px);
+      
+      p {
+        text-indent: 0;
+        margin: 0;
+      }
+
+      blockquote {
+        color: #555;
+        margin: 10px 30px;
+        padding: 0;        
+      }
+    }
+
+    .highlight {
+      margin: 20px 0;
+      pre {
+        margin: 0 20px;
+        padding: 10px;
+        @include border-radius(7px, 7px);    
+      }
+    }
+
+    table {
+      @include table-scaffolding;
+      @include inner-table-borders(1px, #7a98c6);
+      td {
+        border-right: dotted 1px #7a98c6;
+        border-bottom: dotted 1px #7a98c6;
+        padding: 5px 20px;
+      }
+    }
+
+    ul {
+      list-style-type: circle;  
+      margin: 10px 45px; 
+      @include darkgray;   
+    }
+
+    img {
+      margin: 20px 0;
+    }
+  }
+}
