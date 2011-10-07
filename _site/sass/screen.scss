@@ -22,6 +22,16 @@
   color: #333;   
 }
 
+@mixin text {
+  a {
+    @include darkgray;
+  }
+  p {
+    line-height: 24px;
+    @include darkgray;   
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -192,6 +202,8 @@ body {
   }
 
   section { 
+    @include text;
+
     h1 {
       margin-bottom: 5px;
       .deco {
@@ -202,14 +214,6 @@ body {
         display: inline-block;  
         margin-left: 7px;
       }
-    }
-    p {
-      line-height: 24px;
-    }
-    a {
-      &:visited {          
-        @include darkgray;             
-      }    
     }
   }
 
@@ -252,6 +256,8 @@ body {
 }
 
 #mc-web {
+  @include text;
+
   header {
     h1 { 
       @include webs-label; 
@@ -290,6 +296,7 @@ body {
     li {
       list-style-type: circle;
       margin-top: 10px;
+      @include darkgray;
     }
   }
 }

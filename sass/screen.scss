@@ -22,6 +22,16 @@
   color: #333;   
 }
 
+@mixin text {
+  a {
+    @include darkgray;
+  }
+  p {
+    line-height: 24px;
+    @include darkgray;   
+  }
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -192,6 +202,8 @@ body {
   }
 
   section { 
+    @include text;
+
     h1 {
       margin-bottom: 5px;
       .deco {
@@ -203,6 +215,7 @@ body {
         margin-left: 7px;
       }
     }
+<<<<<<< HEAD
     p {
       line-height: 24px;
       a {
@@ -212,6 +225,8 @@ body {
         }    
       }
     }
+=======
+>>>>>>> f30cce03cb8e3ac6d2c13b187171a92a2063c16a
   }
 
   section#explorizer {
@@ -253,6 +268,8 @@ body {
 }
 
 #mc-web {
+  @include text;
+
   header {
     h1 { 
       @include webs-label; 
