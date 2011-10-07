@@ -16,7 +16,7 @@ title: "クロスドメイン通信とはなんぞや。CORSとはなんぞや�
 #なぜクロスドメイン通信が制約されるのか
 
 まずは基本から。
-ブラウザ上のスクリプトが行うクロスドメイン通信には、ご存知の通り制約があります。でも考えてみれば、あるサーバがドメインの異なる別のサーバ間へリクエストすることは一般的な事、というより、それ自体がインターネットの機能を成している根幹要素であり、基本的にはそれを許可しなければ意味がありません。全体に公開したくない場合にのみ、IPによって、あるいは各種認証手続きによってフィルタリングするというスタンスです。
+ブラウザ上のスクリプトが行うクロスドメイン通信には、ご存知の通り制約があります。でも考えてみれば、あるサーバがドメインの異なる別のサーバ間へリクエストすることは一般的な事、というより、それ自体がインターネットの機能を成している根幹要素であり、基本的にはそれを許可しなければ意味がありません。全体に公開したくない場合にのみ、IPによってあるいは各種認証手続きによってフィルタリングするというスタンスです。
 ということは、「ブラウザ上スクリプトのクロスドメイン通信」と称してわざわざサーバ間通信と区別するのは、*ブラウザを用いた通信に各種認証手続きやIPフィルタのみでは対応しきれない特殊なリスクがあるからだ*と言えます。そしてそれは、
 
 + サーバ間の通信は、クライアントとなる側が自らあるいは信頼した第三者のスクリプトによって、自発的にリクエストする。
@@ -25,7 +25,7 @@ title: "クロスドメイン通信とはなんぞや。CORSとはなんぞや�
 + つまり、*「他人の作った悪意のあるスクリプトを」「事前の調査なく」「半自動的に」「自らの側で」*実行してしまう可能性がある。
 
 という点だと思われます。
-ただ、これらのリスクが存在するからといって、実行前にスクリプトの内容をいちいちユーザに確認させるようでは、利便性が大幅に損なわれブラウジングの意味が無くなります。そこで、半自動的に実行してしまうのはやむを得ないとしながら、それによって生まれるリスクをなるべく抑えるというアプローチを採っています（もちろん、ブラウザやその設定によっては、事前にユーザに確認をさせるでしょう）。それがクロスドメイン通信の制約だと、私は解釈しました。
+ただ、これらのリスクが存在するからといって、実行前にスクリプトの内容をいちいちユーザに確認させるようでは、利便性が大幅に損なわれブラウジングの意味が無くなります。そこで、半自動的に実行してしまうのはやむを得ないとしながら、それによって生まれるリスクをなるべく抑えるというアプローチを採っています（もちろん、ブラウザやその設定によっては、事前にユーザに確認をさせるでしょう）。それがクロスドメイン通信の制約の必要性だと、私は解釈しました。
 
 #具体的に、どんなリスクが生まれるのか。
 この項はちょっと知識と理解に自信がありません。しかし、調べた限りでは「クロスサイトスクリプティング（以下XSS)のバリエーションを増やす」、「DoS攻撃の踏み台に利用される」という2つのリスクが重要なんじゃないかと思います。以下簡単な解説。
@@ -59,7 +59,7 @@ title: "クロスドメイン通信とはなんぞや。CORSとはなんぞや�
 
 1は前者がW3Cが策定中の標準仕様であり、後者はIEの独自機能。どちらも、クロスドメイン通信を行う正規の手段です。リクエスト／レスポンスヘッダを主な基準としたCORSの条件（XDomainRequestはやはり独自基準）をパスした場合にのみ、最終的にユーザがデータへアクセスすることを可能にします。
 
-2は、$lt;script&gt;タグで外部のスクリプトが読み込める事を利用した、クロスドメイン制限回避の例外的手法です。リクエスト先のサーバがJavaScriptの関数をコールバックするコードを返す機構を備えていることが条件です。これについては後でもう少し詳しく述べます。
+2は、&lt;script&gt;タグで外部のスクリプトが読み込める事を利用した、クロスドメイン制限回避の例外的手法です。リクエスト先のサーバがJavaScriptの関数をコールバックするコードを返す機構を備えていることが条件です。これについては後でもう少し詳しく述べます。
 
 3は、第三のサーバを中継し直接的にはサーバ間の通信とすることで、同一生成元ポリシーの対象から外れる手法。当然、中継する機能を持ったサーバが必要です。
 
@@ -71,7 +71,7 @@ title: "クロスドメイン通信とはなんぞや。CORSとはなんぞや�
 + ブラウザにXMLHttpRequest Level1とLevel2の２つのメソッドが同居するのではなく、Level2に置き換わる。つまり、*Level2に準拠する限り、XMLHttpRequestはCORSのルールに従う。*
 + ただし、XMLHttpRequest Level2とCORS、そしてHTML5は独立したセクションであり、かつ現時点（2011/5)では全てドラフトであり、また前二者は"non-normative"である。
 
-[仕様書](http://www.w3.org/TR/cors/#cross-origin-request)
+参考:[CORS仕様](http://www.w3.org/TR/cors/#cross-origin-request)
 
 という感じです。つまり、クロスドメイン通信の制約についてはまだ多くがブラウザ側の裁量に任されており、各社のブラウザがどのように対応しているかは、個別に調べるか実験してみるかでしか判断できません。ちなみにW3Cにおける"non-normative"とか["SHOULD"](http://tools.ietf.org/html/rfc2119)などの言葉には厳密な定義があるので、是非読んでみてください。
 
@@ -92,20 +92,31 @@ Level2では、クロスドメイン通信は条件付きで許可されます�
 
 「許可する」というのは、繰り返しになりますが「リクエストを送らない」ということではなく、ユーザにデータを受け渡さないということです。仕様書では、リクエストが返ってきたときの処理に関して、
 
-> 6.1.5. Cross-Origin Request with Preflight  
+> 6.1.5. Cross-Origin Request with Preflight
+  
 > ...If the response has an HTTP status code of 301, 302, 303, or 307 Apply the cache and network error steps. ... Otherwise Perform a resource sharing check. If it returns fail, apply the cache and network error steps. Otherwise, if it returns pass, terminate this algorithm and set the cross-origin request status to success. Do not actually terminate the request. 
-> ...もし、レスポンスが301、302、303、307のいずれかのHTTPステータスコードならば、the cache and network error stepsを動作させる。そうでなければ、resource sharing checkを行う。もしこの結果が失敗ならthe cache and network error stepsへ進むが、このチェックを通ったのならばアルゴリズムを終了し、cross-origin request statusをsuccessとする。
+
+> > ...もし、レスポンスが301、302、303、307のいずれかのHTTPステータスコードならば、the cache and network error stepsを動作させる。そうでなければ、resource sharing checkを行う。もしこの結果が失敗ならthe cache and network error stepsへ進むが、このチェックを通ったのならばアルゴリズムを終了し、cross-origin request statusをsuccessとする。
 
 > 6.1.2. Cross-Origin Request Status 
+
 > Each cross-origin request has an associated cross-origin request status that CORS API specifications that enable an API to make cross-origin requests can hook into. It can take at most two distinct values over the course of a cross-origin request. The values are:
-> cross-origin requestはおのおのcross-origin request statusを持っており、CORS APIの仕様はこれに接続できる。一連のcross-origin requestにおいて、このstatusは最大で２つの異なる値を持ちうる。
->  
+
+> > cross-origin requestはおのおのcross-origin request statusを持っており、CORS APIの仕様はこれに接続できる。一連のcross-origin requestにおいて、このstatusは最大で２つの異なる値を持ちうる。
+
 > success 
->  The resource can be shared. 
->  リソースをシェアする。
+
+> &nbsp;&nbsp; 
+> The resource can be shared. 
+
+> > リソースをシェアする。
+
 > abort error 
->  The user aborted the request. 
->  ユーザはリクエストを中止する。
+
+> &nbsp;&nbsp;  
+> The user aborted the request. 
+
+> > ユーザはリクエストを中止する。
 
 このように書かれており、レスポンスが返ってきた時にresource sharing checkなるものを行い、それを通ればデータをユーザに渡すと読めます。他に例外的な規定が無いとするなら、ブラウザはユーザの要求通りのリクエストを行い、それに対してサーバはレスポンスをしている前提があると言えます。余談ですが、言葉の用法からすると、ユーザにデータを渡すまでの一連の処理を「リクエスト」としているようですね。
 
@@ -174,11 +185,14 @@ Access-Control-Allow-Originヘッダは・・・付いていませんね。付�
 CORSではなく、[XMLHttpRequest level2の仕様](http://www.w3.org/TR/XMLHttpRequest2/)に以下のような記述があります。
 
 > 4.1. Origin and Base URL 
+
 > Each XMLHttpRequest object has an associated XMLHttpRequest origin and an XMLHttpRequest base URL.
 
 > 3.6.8. The send() method 
+
 > If the XMLHttpRequest origin and the request URL are same origin ...These are the same-origin request steps.
-Otherwise These are the cross-origin request steps. 
+
+> Otherwise These are the cross-origin request steps. 
 
 ブラウザにはリクエストの性質を"same-origin"と"cross-origin"に分類するプロセスがあるようです。そして、その判断材料となるのが、XMLHttpRequestオブジェクトに結び付けられたoriginとbase URLというパラメータだそうです。ここで"cross-origin request"と認定されると、[CORSに規定されるCross-Origin Requestのプロセス]([http://dvcs.w3.org/hg/cors/raw-file/tip/Overview.html#cross-origin-request)に進みます。
 
