@@ -205,11 +205,12 @@ body {
     }
     p {
       line-height: 24px;
-    }
-    a {
-      &:visited {          
-        @include darkgray;             
-      }    
+      a {
+        @include darkgray;
+        &:visited {          
+          @include darkgray;             
+        }    
+      }
     }
   }
 
@@ -290,6 +291,7 @@ body {
     li {
       list-style-type: circle;
       margin-top: 10px;
+      @include darkgray;
     }
   }
 }
