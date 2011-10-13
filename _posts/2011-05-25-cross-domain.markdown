@@ -111,9 +111,9 @@ Level2では、クロスドメイン通信は条件付きで許可されます�
 
 > > リソースをシェアする。
 
-> *abort error* 
+> *abort error*
 
-> &nbsp;&nbsp;  
+> &nbsp;&nbsp;
 > The user aborted the request. 
 
 > > ユーザはリクエストを中止する。
@@ -141,7 +141,7 @@ xhr.send();
 
 ![crossdomain-code](/images/crossdomain-code.png)
 
-ご覧のように、「Origin http://hdemon.github.comは、Access-Control-Allow-Originによって許可されていないよ」と出ます。しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、
+ご覧のように、「Origin http://hdemon.github.comは、Access-Control-Allow-Originによって許可されていないよ」と出ます（hdemon.github.comとは、このサイトが置かれているドメインです。このページ上でツールを起動し、上のコードを実行しています）。しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、
 
 ![crossdomain-response](/images/crossdomain-response.png)
 
@@ -159,7 +159,7 @@ xhr.send();
 
 なるほどなるほど。CORSルールの下では、ブラウザの検閲がクロスドメイン通信の制約において大きな役割を担っている事が分かりました。
 
-しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだまだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、*JSONPはクロスドメイン通信制約の例外であるか、あるいはCORSに準じないと解釈できないとつじつまが合いません。*
+しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだまだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、*JSONPはクロスドメイン通信制約の例外であるか、あるいはCORSに準じない仕様になっていると解釈できないとつじつまが合いません。*
 
 まずは実験。さっきと同じAPIへ、scriptタグによってリクエストします。コードはこんな感じでしょうか。
 
@@ -169,6 +169,7 @@ function getTl(json) {
   alert(json);
 }
 </script>
+
 <script type="application/javascript" 
   src="http://search.twitter.com/search.json?q=h_demon&callback=getTl">
 </script>

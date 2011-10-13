@@ -22,7 +22,7 @@
   <script type="text/javascript">
 
     var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', '___YOUR_UA_HERE___']);
+    _gaq.push(['_setAccount', 'UA-23566516']);
     _gaq.push(['_trackPageview']);
 
     (function() {
@@ -186,7 +186,7 @@ The resource can be shared.</p>
 
 <p><em>abort error</em></p>
 
-<p>&nbsp;&nbsp;<br/>
+<p>&nbsp;&nbsp;
 The user aborted the request.</p>
 
 <blockquote><p>ユーザはリクエストを中止する。</p></blockquote></blockquote>
@@ -205,7 +205,7 @@ The user aborted the request.</p>
 
 <p><img src="/images/crossdomain-code.png" alt="crossdomain-code" /></p>
 
-<p>ご覧のように、「Origin http://hdemon.github.comは、Access-Control-Allow-Originによって許可されていないよ」と出ます。しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、</p>
+<p>ご覧のように、「Origin http://hdemon.github.comは、Access-Control-Allow-Originによって許可されていないよ」と出ます（hdemon.github.comとは、このサイトが置かれているドメインです。このページ上でツールを起動し、上のコードを実行しています）。しかし、プロトコル監視ツールを使ってリクエストとレスポンスを見てみると、</p>
 
 <p><img src="/images/crossdomain-response.png" alt="crossdomain-response" /></p>
 
@@ -226,7 +226,7 @@ The user aborted the request.</p>
 
 <p>なるほどなるほど。CORSルールの下では、ブラウザの検閲がクロスドメイン通信の制約において大きな役割を担っている事が分かりました。</p>
 
-<p>しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだまだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、<em>JSONPはクロスドメイン通信制約の例外であるか、あるいはCORSに準じないと解釈できないとつじつまが合いません。</em></p>
+<p>しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだまだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、<em>JSONPはクロスドメイン通信制約の例外であるか、あるいはCORSに準じない仕様になっていると解釈できないとつじつまが合いません。</em></p>
 
 <p>まずは実験。さっきと同じAPIへ、scriptタグによってリクエストします。コードはこんな感じでしょうか。</p>
 
