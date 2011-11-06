@@ -62,7 +62,24 @@
 
 <h1>prototypeはただのオブジェクトで、コンストラクタはただの関数。</h1>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{}</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obj</span><span class="p">;</span>
+</code></pre>
+</div>
+
+
 <p>こういうやり方をすれば、プロトタイプベースのJavaScriptにおいてもクラス／インスタンス的な機能を実現できると本には書いてある。しかし、prototypeもnewを付ける対象となるコンストラクタ関数も、内部的に特別な機能を与えられたものではない。確かに特別な働きをすることには違いないが、それは全てnewの働きである。コンストラクタとしてのfunctionは普通の関数宣言／式であり、</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obj</span><span class="p">;</span>
+<span class="nx">alert</span><span class="p">(</span> <span class="nx">inst</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">);</span>
+<span class="c1">// methodの表示を期待するが、結果はundefined</span>
+</code></pre>
+</div>
+
 
 <p>またprototypeはプロトタイプオブジェクトではない。</p>
 
@@ -70,13 +87,50 @@
 
 <p>Objがnewを付けて呼ばれるときに、コンストラクタはObj.prototypeを探す。そして、Obj.prototypeが参照するオブジェクトをObjのプロトタイプとしてコピーする。プロトタイプオブジェクトそのものを示すのは __proto__ であり、ECMAScriptの仕様上は内部プロパティである。ただ、ブラウザ側の独自実装として大抵は__proto__としてアクセスできる。だから、</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{}</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">method</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obj</span><span class="p">;</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">===</span> <span class="nx">inst</span><span class="p">.</span><span class="err">\</span><span class="nx">_</span><span class="err">\</span><span class="nx">_proto</span><span class="err">\</span><span class="nx">_</span><span class="err">\</span><span class="nx">_</span> <span class="c1">// true</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span> <span class="c1">// インスタンス生成後にprototypeを初期化しても、</span>
+<span class="nx">inst</span><span class="p">.</span><span class="nx">method</span><span class="p">();</span> <span class="c1">// インスタンスに影響はない。</span>
+</code></pre>
+</div>
+
+
 <p>である。</p>
 
 <h1>「newを付けることで、関数がコンストラクタ化する」わけではない。</h1>
 
 <p>正確には、「newを付けなくても、コンストラクタとしての機能の一部は果たせる」</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{}</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="nx">Obj</span><span class="p">();</span> <span class="c1">// new をはずす。</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">inst</span><span class="p">.</span><span class="nx">prop</span><span class="p">);</span> <span class="c1">// error</span>
+</code></pre>
+</div>
+
+
 <p>これは動かない。しかし、</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">that</span> <span class="o">=</span> <span class="p">{};</span>
+  <span class="k">for</span> <span class="p">(</span> <span class="nx">prop</span> <span class="k">in</span> <span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">)</span> <span class="p">{</span> <span class="c1">// 内容をコピーする</span>
+    <span class="nx">that</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">[</span><span class="nx">prop</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">that</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="nx">Obj</span><span class="p">();</span> <span class="c1">// new をはずす。</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">inst</span><span class="p">.</span><span class="nx">prop</span><span class="p">);</span> <span class="c1">// 1</span>
+</code></pre>
+</div>
+
 
 <p>これは動く。このコードの「プロパティを複製する」という機能に限れば、コンストラクタ内の5行がnewの役割を代替している事になる。やっていることは、</p>
 
@@ -89,13 +143,42 @@
 
 <p>だけである。inst = Obj() = Obj.prototypeのコピーなのだから、inst.propに1が代入されているのは当然。また、</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">inst2</span> <span class="o">=</span> <span class="nx">Obj</span><span class="p">();</span><span class="c1">// もう一つ作る。</span>
+<span class="nx">inst</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="c1">// 一方のプロパティを変更する。</span>
+<span class="nx">alert</span><span class="p">(</span><span class="nx">inst</span><span class="p">.</span><span class="nx">prop</span><span class="p">,</span> <span class="nx">inst2</span><span class="p">.</span><span class="nx">prop</span><span class="p">);</span> <span class="c1">// 2 1</span>
+</code></pre>
+</div>
+
+
 <p>インスタンス同士も独立する。プロトタイプオブジェクトは定義できないが、オブジェクトの原型作成装置としての最低限の機能は果たしている。</p>
 
 <h1>newはどんな仕事をしているのか。</h1>
 
 <p>newは、元から特別なthisにもう少し特別な意味を与えるだけ。</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">method</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">prop</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kd">var</span> <span class="nx">inst</span><span class="o">=</span> <span class="k">new</span> <span class="nx">Obj</span><span class="p">;</span>
+<span class="nx">inst</span><span class="p">.</span><span class="nx">method</span><span class="p">()</span> <span class="c1">// 1</span>
+</code></pre>
+</div>
+
+
 <p>inst.method()として呼び出されたとき、thisはinstを指す。このthisは、先のthatの時のように、prototypeの参照を明示的に代入されていないし、returnで返されているわけでもない。しかし、実際にmethod内のthisは、Obj.prototype + コンストラクタ内で定義されるプロパティを指している。これは、少なくとも</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">Obj</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">Obj</span><span class="p">.</span><span class="nx">prototype</span><span class="err">を継承して</span><span class="k">this</span><span class="err">を作る。</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">prop</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">return</span> <span class="k">this</span>
+<span class="p">}</span>
+</code></pre>
+</div>
+
 
 <p>という処理が行われている事を意味する。つまり、newを付けることで、</p>
 

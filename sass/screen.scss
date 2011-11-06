@@ -18,17 +18,15 @@
   user-select: none;  
 }
 
-@mixin darkgray {
-  color: #333;   
-}
+$darkgray:  #333; 
 
 @mixin text {
   a {
-    @include darkgray;
+    color: $darkgray;
   }
   p {
     line-height: 24px;
-    @include darkgray;   
+    color: $darkgray; 
   }
 }
 
@@ -74,11 +72,11 @@
   }
 }
 
+
 body {
   background: url("/images/back.png") repeat;
 
   & > header {
-    margin-bottom: 40px;
     background: url("/images/title-band.png") repeat-x;
     height: 123px;
 
@@ -122,8 +120,10 @@ body {
   }
 
   #wrapper {
+    padding-top: 40px;
     margin: 0 auto;
     width: 870px;
+    @include clearfix;
 
     #left-content {
       float:  left;
@@ -133,27 +133,26 @@ body {
       float:  right;    
     }
 
-    article {  
-      width: 400px;
-      margin-bottom: 50px;
-      font-size: 12px;
-      line-height: 20px;
+    .content {
+      article {  
+        width: 400px;
+        margin-bottom: 50px;
+        padding-bottom: 20px;
+        font-size: 12px;
+        line-height: 20px;
+        background: url("/images/article-back.png") repeat;
+        @include border-radius(15px, 15px);
 
-      header {
-        position: relative;
-        padding-top:6px;
-        padding-left:20px;
-        margin-bottom: 20px;
-        height: 26px;
-        width: 380px;    
-        @include caption-label
+        header {
+          position: relative;
+          padding-top:6px;
+          padding-left:20px;
+          margin-bottom: 20px;
+          height: 26px;
+          width: 380px;    
+          @include caption-label
+        }
       }
-    }
-
-    #clear {
-      @include clearfix;
-      clear: both;
-      width: 900px;
     }
   }
 
@@ -191,12 +190,12 @@ body {
       & > a {
         color: #666;             
         &:visited {          
-          @include darkgray;             
+          color:  $darkgray;             
         }    
       }
       span {
-        font-weight: normal; 
-        @include darkgray; 
+        font-weight: normal;
+        color:  $darkgray;  
       }
     }
   }
@@ -299,7 +298,7 @@ body {
     li {
       list-style-type: circle;
       margin-top: 10px;
-      @include darkgray;
+      color:  $darkgray;  
     }
   }
 }
@@ -323,7 +322,7 @@ body {
         font-size: 26px;
         margin-top: 20px;
         margin-bottom: 15px;
-        @include darkgray;   
+        color:  $darkgray;     
       }
       #date {
         font-size: 12px;
@@ -335,19 +334,19 @@ body {
       font-weight: bold;
       margin-top: 32px;
       margin-bottom: 20px;
-      @include darkgray;   
+      color:  $darkgray;     
     }
 
     h2 {
       font-size: 16px;
       font-weight: bold;
-      @include darkgray;   
+      color:  $darkgray;     
     }
 
     p {
       text-indent: 1em;
       margin: 10px 0; 
-      @include darkgray;   
+      color:  $darkgray;     
     }
 
     blockquote {
@@ -394,7 +393,7 @@ body {
     ul {
       list-style-type: circle;  
       margin: 10px 45px; 
-      @include darkgray;   
+      color:  $darkgray;     
     }
 
     img {

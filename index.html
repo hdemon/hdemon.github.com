@@ -4,11 +4,11 @@ title: Hungry Daemonologue
 ---
 
 <div id="wrapper">
-  <div id="right-content">
+  <div id="right-content" class="content">
     <article id="article">   
         <header>
-      <h1></h1>
-      <div></div>
+          <h1></h1>
+          <div></div>
         </header>
         <ul>
       {% for post in site.posts reverse %}
@@ -20,6 +20,24 @@ title: Hungry Daemonologue
       {% endfor %}
         </ul>
     </article>
+
+    <article id="mc-web">
+      <header>
+        <h1></h1>
+        <div></div>
+      </header>
+      <section id="ynn">
+        <h1>
+          <span class="caption"></span>
+        </h1>
+        <p>
+          ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。 
+          <a href="http://d.hatena.ne.jp/hdemon/">
+            <strong>開発ブログはこちら</strong>
+          </a>
+        </p>
+      </section>
+    </article>    
 
     <article id="aboutme">
       <header>
@@ -34,7 +52,7 @@ title: Hungry Daemonologue
     </article>
   </div>
 
-  <div id="left-content">
+  <div id="left-content" class="content">
     <article id="mc-lib">
       <header>
         <h1></h1>
@@ -42,9 +60,9 @@ title: Hungry Daemonologue
       </header>
       <section id="explorizer">
         <h1>
-          <div class="deco"></div>
+          <span class="deco"></span>
           <a href="https://github.com/hdemon/explorizer.js">
-            <div class="caption"></div>
+            <span class="caption"></span>
           </a>
         </h1>        
         
@@ -58,52 +76,34 @@ title: Hungry Daemonologue
 
       <section id="nicoscraper">
         <h1>
-          <div class="deco"></div>
-          <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
-            <div class="caption"></div>
+          <span class="deco"></span>
+          <a href="http://rubydoc.info/gems/nicoscraper/frames/">
+            <span class="caption"></span>
           </a>
         </h1>
       
-      <div id="ncs-wrapper"></div>
-      
-      <a href="http://rubydoc.info/gems/nicoscraper/0.2.10/frames">
-        <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
-      </a>
-    </section>
+        <div id="ncs-wrapper"></div>
+        
+        <a href="http://rubydoc.info/gems/nicoscraper/frames/">
+          <p>ニコニコ動画から動画情報を取得するRubyライブラリです。動画やマイリスト情報はもちろん、タグ検索結果等から連続して情報を取得し、それらに対してタイトルやシリーズマイリストの抽出などの処理を加えられます。</p>
+        </a>
+      </section>
 
-    <section id="nicomanip">
-      <h1>
-        <div class="deco"></div>
+      <section id="nicomanip">
+        <h1>
+          <span class="deco"></span>
+          <a href="https://github.com/hdemon/nicomanip.js">
+            <span class="caption"></span>            
+          </a>
+        </h1>
+        
         <a href="https://github.com/hdemon/nicomanip.js">
-          <div class="caption"></div>            
+          <p>マイリスト管理ツールに使える、ブラウザアドオン用JavaScriptライブラリ。</p>
+          <p>自分のマイリストからマイリストと動画情報等を抽出し、検索やソート、その結果に基づく移動やコピーを簡単に行えます。</p>
         </a>
-      </h1>
-      
-      <a href="https://github.com/hdemon/nicomanip.js">
-        <p>マイリスト管理ツールに使える、ブラウザアドオン用JavaScriptライブラリ。</p>
-        <p>自分のマイリストからマイリストと動画情報等を抽出し、検索やソート、その結果に基づく移動やコピーを簡単に行えます。</p>
-      </a>
-    </section>
-  </article>
-
-  <article id="mc-web">
-    <header>
-      <h1></h1>
-      <div></div>
-    </header>
-    <section id="ynn">
-      <h1>
-        <div class="caption"></div>
-      </h1>
-      <p>
-        ゆっくり実況プレイ動画のランキングサイトです。鋭意作成中。 
-        <a href="http://d.hatena.ne.jp/hdemon/">
-          <strong>開発ブログはこちら</strong>
-        </a>
-      </p>
-    </section>
-  </article>
-  </div><div id="clear"></div>
+      </section>
+    </article> 
+  </div>
 </div>
 
 <!--  -->

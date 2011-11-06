@@ -333,6 +333,11 @@ Arguments :</p>
 
 <p>記法の勉強をしていないので感覚的な解釈ですが、11.2.3の"CallExpression : MemberExpression Arguments"は、CallExpressionの類型の一つを示しているようですね。ただ、CallExpressionのその他の類型は全てCallExpression自身を含んでいるので、最終的には"MebmerExpression + Arguments"の構文に還元されるのだと思います。例えば、</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="nx">foo</span><span class="p">(</span><span class="mi">10</span><span class="p">).</span><span class="nx">bar</span><span class="p">();</span>
+</code></pre>
+</div>
+
+
 <p>のようなチェーンメソッドがあれば、</p>
 
 <blockquote>
@@ -385,6 +390,12 @@ Arguments :</p>
 
 <p>話をFunction Callsに戻します。以上から、1.におけるMemberExpressionとは実行演算子()を外した関数名の部分だと言う事が分かります。関数名を評価するということは、</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">function</span> <span class="nx">bar</span><span class="p">(){};</span>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">bar</span><span class="p">;</span> 
+</code></pre>
+</div>
+
+
 <p>と処理をすることと（恐らく）同義ですから、refには関数の参照が入ります。
 次に、2.で参照refを内部関数GetValueで処理します。GetValueだけで今回の記事と同じぐらいの説明が要りそうなので、立ち入った説明はしません（し、僕もよくわかってません）が、その名のとおり入れられた参照先の具体的な値を返します（8.7.1参照）。</p>
 
@@ -424,6 +435,25 @@ a. Let thisValue be undefined.</p></blockquote>
 
 <p>refがどのような値を持っているかは、MemberExpressionの形態によって決定されますから、それぞれの場合の仕様書の表記を見てみないといけません。次の項目では、この三類型が、我々がいつも行っている関数呼び出しのどの類型にあたるのかを検討します。
 我々はいつも、どんなやり方で関数を呼び出しているか。</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">obj</span> <span class="o">=</span> <span class="p">{};</span>
+
+<span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">method</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// obj</span>
+    <span class="kd">function</span> <span class="nx">closure</span> <span class="p">(){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// global</span>
+    <span class="p">}</span>
+    <span class="nx">closure</span><span class="p">();</span>
+  <span class="p">};</span>
+  <span class="nx">obj</span><span class="p">.</span><span class="nx">method</span><span class="p">();</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// global</span>
+<span class="p">}());</span>
+
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">);</span> <span class="c1">// global</span>
+</code></pre>
+</div>
+
 
 <p>//全て non-strict modeの場合。
 たぶん、次の３つが主なパターンではないでしょうか。</p>
@@ -689,6 +719,11 @@ MemberExpression .IdentifierNameの類型は、直接仕様に記載されて�
 <h1>即時関数を評価すると何が返ってくるのか。</h1>
 
 <p>即時関数、つまり</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="p">(</span><span class="kd">function</span><span class="p">(){}());</span>
+</code></pre>
+</div>
+
 
 <p>この慣用表現の構文をもう一度掲載すると、</p>
 

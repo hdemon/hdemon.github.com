@@ -201,6 +201,16 @@ The user aborted the request.</p>
 
 <p>例えば、次のようなTwitterのTLから文字列を検索するAPIへアクセスするスクリプトを実行したとします。</p>
 
+<div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">xhr</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">XMLHttpRequest</span><span class="p">();</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">onreadystatechange</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(){</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">readyState</span> <span class="o">===</span> <span class="mi">4</span><span class="p">)</span> <span class="nx">alert</span><span class="p">(</span><span class="nx">xhr</span><span class="p">.</span><span class="nx">responseText</span><span class="p">);</span>
+<span class="p">};</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">open</span><span class="p">(</span><span class="s2">&quot;GET&quot;</span><span class="p">,</span> <span class="s2">&quot;http://search.twitter.com/search.json?q=h_demon&quot;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+<span class="nx">xhr</span><span class="p">.</span><span class="nx">send</span><span class="p">();</span>
+</code></pre>
+</div>
+
+
 <p>本来、この指定したAPIにリクエストすると、'h_demon'の文字列が含まれるつぶやきがJSONの形で返ってきます。このAPIへのリクエストをブラウザ上で試みるのが上のコードですが、これを例えばChrome開発ツールのコンソールで実行すると、</p>
 
 <p><img src="/images/crossdomain-code.png" alt="crossdomain-code" /></p>
@@ -229,6 +239,19 @@ The user aborted the request.</p>
 <p>しかし、一つの疑問が残ります。オンブラウザのスクリプトで別ドメインからデータを取得させるAPIを用意するサーバの場合、Access-Control-Allow-Originヘッダを用意するサーバもあるとは思いますが、まだまだJSONPを利用させる場合が多いと思います。だったら、JSONPを使ったリクエストに対するレスポンスには、Access-Control-Allow-Originヘッダが付いているのか？　付いていないとするならば、<em>JSONPはクロスドメイン通信制約の例外であるか、あるいはCORSに準じない仕様になっていると解釈できないとつじつまが合いません。</em></p>
 
 <p>まずは実験。さっきと同じAPIへ、scriptタグによってリクエストします。コードはこんな感じでしょうか。</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;text/javascript&quot;</span><span class="o">&gt;</span>
+<span class="kd">function</span> <span class="nx">getTl</span><span class="p">(</span><span class="nx">json</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">alert</span><span class="p">(</span><span class="nx">json</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">type</span><span class="o">=</span><span class="s2">&quot;application/javascript&quot;</span> 
+  <span class="nx">src</span><span class="o">=</span><span class="s2">&quot;http://search.twitter.com/search.json?q=h_demon&amp;callback=getTl&quot;</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="err">/script&gt;</span>
+</code></pre>
+</div>
+
 
 <p>これを実行すると、</p>
 
