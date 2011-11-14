@@ -36,8 +36,8 @@
 
 <body>
   <header>
-    <div id="title-band"></div>
-    <hgroup>
+    <div>
+      <div id="title-band"></div>
       <div id="title-logo" class="sprites index-titlelogo"></div>
       <div id="title-icon" class="sprites index-titleicon"></div>
       <ul>
@@ -45,7 +45,7 @@
         <li>mail: hdemon7@gmail.com</li>
         <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
       </ul>
-    </hgroup>
+    </div>
   </header>
 
   <div id="each-article">
@@ -75,7 +75,10 @@
     <em>Updated at {{ page.updated_at }} </em>
   </div>
 
-  <footer></footer>
+  <footer>
+    <p id="back_to_top">back</p>
+    <div id="chopstick"></div>
+  </footer>
 
   <script type="text/javascript">
   var disqus_shortname = 'hd-mon';

@@ -29,8 +29,8 @@
 
 <body>
   <header>
-    <div id="title-band"></div>
-    <hgroup>
+    <div>
+      <div id="title-band"></div>
       <div id="title-logo" class="sprites index-titlelogo"></div>
       <div id="title-icon" class="sprites index-titleicon"></div>
       <ul>
@@ -38,7 +38,7 @@
         <li>mail: hdemon7@gmail.com</li>
         <li>GitHub: <a href="https://github.com/hdemon">https://github.com/hdemon</a></li>
       </ul>
-    </hgroup>
+    </div>
   </header>
 
   <div id="wrapper">
@@ -49,6 +49,12 @@
           <div></div>
         </header>
         <ul>
+      
+      <li>
+          <a href="/mongodb-performance.html">
+        MongoDB+RubyでJOIN的な事をするとどうなるのか <span>05 November 2011</span>
+          </a>
+      </li>
       
       <li>
           <a href="/centos-develop.html">
@@ -299,6 +305,25 @@ init();
 </script>
 
 
-  <footer></footer>
+  <footer>
+    <div id="hashi"></div> 
+  </footer>
+
+    <!-- jquery -->
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>  
+
+  <script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-23566516-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+
+  </script>
 </body>
 </html>

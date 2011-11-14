@@ -35,7 +35,6 @@ $darkgray:  #333;
     margin-left: 20px;
     margin-right: 20px;
     margin-top: 20px;
-    margin-bottom: 30px;
     @include text;
 
     h1 {
@@ -80,7 +79,7 @@ body {
     background: url("/images/title-band.png") repeat-x;
     height: 123px;
 
-    hgroup {
+    & > div {
       margin: 0 auto;
       width: 900px;
       position: relative;
@@ -162,7 +161,21 @@ body {
     width: 900px;      
     margin-top: 100px;
     margin-bottom: 20px;
-    @include hashi;
+
+    #back_to_home {
+      text-align:   center;
+      a {
+        font-weight:  bold;
+        font-size:    24px; 
+        color:        $darkgray;        
+      } 
+    }
+
+    #hashi {
+      margin: 0 auto;
+      margin-top: 10px;
+      @include hashi;
+    }
   }
 }
 
