@@ -11,9 +11,6 @@
 
   <link rel="stylesheet" type="text/css" href="/vendor/highlight/styles/sunburst.css" media="screen" />
 
-  <script>
-    hljs.initHighlightingOnLoad();
-  </script>
 </head>
 
 <body>
@@ -54,7 +51,7 @@
 
 <h1>ヤバイ。レスポンス性能ヤバイ。</h1>
 
-<p> 先日、頑張って<a href="http://ynn.hdemon.net/rank/">こういうサイト</a>の試験的公開にこぎつけたんだけれども、レスポンス性能が0.5req/secを切っていた。
+<p> 先日、頑張って<a href="http://ynn.hdemon.net/rank/">こういうサイト</a>の試験的公開にこぎつけたんだけれども、<strong>レスポンス性能が0.5req/secを切っていた。</strong>
  ヤバイ。</p>
 
 <h1>何がヤバイのか</h1>
@@ -69,14 +66,13 @@
 </ul>
 
 
-<p>という話である。</p>
+<p>という話。</p>
 
 <h1>そもそもMongoDBって、どういうデータベースなんだ。</h1>
 
-<p>MongoDBは流行のNoSQLと呼ばれるものの一つで、データをJSON的なドキュメントとして管理できる。つまり、階層化することもできるし、ドキュメントごとにスキームが違っても構わない。findとかupdateとかinsertとか、直観的で分かりやすいクエリが使える。そういうDB。
-…だと思うけど、僕も2週間ほどしか使ってないのでそれ以上語れません。</p>
+<p>MongoDBは流行のNoSQLと呼ばれるものの一つで、データをJSON的なドキュメントとして管理できる。つまり、階層化することもできるし、ドキュメントごとにスキームが違っても構わない。findとかupdateとかinsertとか、直観的で分かりやすいクエリが使える。そういうDB。…だと思う。</p>
 
-<p>ただしリレーション機能はRDBMS程ではなく、一応ヘルパー的なものは存在するが、基本的には自分でコレクションを組合せるスクリプトを書く必要がある。コレクションとはRDBMSにおけるテーブルと言っていいと思う。</p>
+<p>ただしリレーション機能はRDBMS程ではなく、一応ヘルパー的なものは存在するが、基本的には自分でコレクションを組合せるスクリプトを書く必要がある。コレクションとはRDBMSにおけるテーブルのようなもの。</p>
 
 <p>そして、このコレクションを分割するのか、それとも重複があったとしても全部合体させるべきなのかという問題が今回の焦点である。</p>
 
@@ -109,9 +105,9 @@
 
 <h1>参照が使えないと不便なんだけど…そんなに遅いの？</h1>
 
-<p>多対多のリレーションが必要な場合でも、埋め込み型のスキーマにするのは自由だし、その方がパフォーマンスは上がる。が、当然RDBMSのテーブルを正規化しない場合と同じ弊害が起こるし、ドキュメントやスキーマの変更はRDBMSよりも面倒だと思う。変更のためのイテレータだらけのスクリプトを作らなければならないから。</p>
+<p>多対多のリレーションが必要な場合でも、埋め込み型のスキーマにするのは自由だし、その方が一般的にはパフォーマンスは上がる。が、当然RDBMSのテーブルを正規化しない場合と似た弊害が生まれるし、ドキュメントやスキーマの変更はRDBMSよりも面倒だと思う。変更のためのイテレータだらけのスクリプトを作らなければならないから。</p>
 
-<p>だから適宜参照を使うことになるわけだけど、確かにオフィシャルが言う通り、場合によっては参照はとても問題になるぐらい遅いと思う。それを実験で示してみたい。</p>
+<p>だから適宜参照を使うことになるわけだけど、確かにオフィシャルが言う通り、<strong>場合によっては参照はとても問題になるぐらい遅いと思う。</strong>それを実験で示してみたい。</p>
 
 <p>まず、rootコレクションにこんなドキュメントたちを作ってみる。</p>
 
@@ -156,14 +152,13 @@
 </div>
 
 
-<p>こういう埋め込み式のコレクションも作った。これを「埋め込みDB」と呼ぶことにする。この2つのDBに対して、全てのrootドキュメントについてvalueを取得して配列として返すクエリを発行し、その実行時間を比べてみる。</p>
+<p>こういう埋め込み式のコレクションも作った。これを「埋め込みDB」と呼ぶことにする。この2つのDBに対して、全てのrootドキュメントについて、紐付けられたvalue_a/b/cを取得して配列として返すロジックを実行し、その実行時間を比べてみる。</p>
 
 <h2>参照DB</h2>
 
 <p>参照DBを、こういうスクリプトで実行してみる。なお、今回はMongoDB 2.0.0と、Ruby 1.9.2を使っている。</p>
 
 <div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;mongo&#39;</span>
-
 <span class="n">db</span> <span class="o">=</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Connection</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span> <span class="c1"># 参照DB</span>
 
 <span class="c1"># rootコレクションから全てのドキュメントを取り出し、</span>
@@ -176,7 +171,9 @@
 <span class="k">end</span>
 <span class="c1"># 全ての結果を、arrayに入れる。</span>
 <span class="c1"># すると、こんな結果が帰ってくる。</span>
-<span class="c1"># [{&quot;_id&quot;=&gt;1, &quot;content_id&quot;=&gt;[518, 89, 99], &quot;content&quot;=&gt;[{&quot;_id&quot;=&gt;518, &quot;value_a&quot;=&gt;8052, &quot;value_b&quot;=&gt;5398}, ... </span>
+<span class="c1"># [{&quot;_id&quot;=&gt;1, </span>
+<span class="c1">#   &quot;content_id&quot;=&gt;[518, 89, 99], </span>
+<span class="c1">#   &quot;content&quot;=&gt;[{&quot;_id&quot;=&gt;518, &quot;value_a&quot;=&gt;8052, ... </span>
 </code></pre>
 </div>
 
@@ -197,7 +194,7 @@
   <span class="mf">2.24</span>      <span class="mf">0.11</span>     <span class="mf">0.05</span>      <span class="mi">9008</span>  <span class="nx">BSON</span><span class="o">::</span><span class="nx">ByteBuffer</span><span class="err">#</span><span class="nx">put_binary</span>
   <span class="mf">2.19</span>      <span class="mf">0.28</span>     <span class="mf">0.05</span>     <span class="mi">14002</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">receive_data</span>
   <span class="mf">2.03</span>      <span class="mf">0.51</span>     <span class="mf">0.05</span>     <span class="mi">19052</span>  <span class="nx">Class</span><span class="err">#</span><span class="k">new</span>
-  <span class="mf">1.77</span>      <span class="mf">2.12</span>     <span class="mf">0.04</span>      <span class="mi">1004</span>  <span class="nb">Array</span><span class="err">#</span><span class="nx">map</span> <span class="o">&lt;-</span><span class="err">ここ！</span>
+  <span class="mf">1.77</span>      <span class="mf">2.12</span>     <span class="mf">0.04</span>      <span class="mi">1004</span>  <span class="nb">Array</span><span class="err">#</span><span class="nx">map</span> <span class="o">&lt;====</span> <span class="err">ここ！</span>
   <span class="mf">1.75</span>      <span class="mf">0.27</span>     <span class="mf">0.04</span>      <span class="mi">3003</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">read_documents</span>
   <span class="p">...</span>
 </code></pre>
@@ -243,13 +240,19 @@
 
 <p>順当に約2倍の時間がかかる。つまり、mapメソッドのコストはそもそも大したものじゃなく、個々のクエリ毎に固定したコストが積み上がり、共通処理のようなもの―例えば一旦作ったオブジェクトを共有するとか―が少ないんだろうと想像できる(selfはそれ単体の実行時間)。</p>
 
-<p>なお、<a href="http://www.mongodb.org/display/DOCSJP/database+reference">DEBRefという参照のためのヘルパーが存在し</a>、もしかしたら内部的に最適化がされていたりして、これを使うと参照が速くなるのかもしれない…と思ったが、少なくともRubyドライバの<a href="http://api.mongodb.org/ruby/current/Mongo/DB.html#dereference-instance_method">ソース</a>を読む限りでは、<strong>内部でfind_oneするだけのラッパーのようだった。</strong>オブジェクトを生成する分余計に遅くなるので、今回はDBRefを使ってない。</p>
+<p>なお、<a href="http://www.mongodb.org/display/DOCSJP/database+reference">DBRefという参照のためのヘルパーが存在し</a>、もしかしたら内部的に最適化がされていたりして、これを使うと参照が速くなるのかもしれない…と思ったが、少なくともRubyドライバの<a href="http://api.mongodb.org/ruby/current/Mongo/DB.html#dereference-instance_method">ソース</a>を読む限りでは、<strong>内部でfind_oneするだけのラッパーのようだった。</strong>オブジェクトを生成する分余計に遅くなるので、今回はDBRefを使ってない。</p>
+
+<br>
+
 
 <h2>埋め込みDB</h2>
 
 <p>じゃあ、「埋め込み」方式だったらどうなのか。</p>
 
-<div class="highlight"><pre><code class="ruby"><span class="n">array</span> <span class="o">=</span> <span class="n">db</span><span class="o">[</span><span class="s2">&quot;root&quot;</span><span class="o">].</span><span class="n">find</span><span class="p">()</span>
+<div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;mongo&#39;</span>
+<span class="n">db</span> <span class="o">=</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Connection</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="s2">&quot;embed&quot;</span><span class="p">)</span>
+
+<span class="n">array</span> <span class="o">=</span> <span class="n">db</span><span class="o">[</span><span class="s2">&quot;root&quot;</span><span class="o">].</span><span class="n">find</span><span class="p">()</span>
 </code></pre>
 </div>
 
@@ -303,7 +306,7 @@
 
 <blockquote><p>MongoDBは、RDBMSにおけるJOIN的なこと=「参照」をすると、パフォーマンスが悪くなる。</p></blockquote>
 
-<p>MongoDBのRubyドライバにおいては、オブジェクトの初期化やソケット通信が実行時間の多くを占める。したがって、実行時間がリレーションの数に概ね比例してしまうし、これはインデックスを適切に張ることでも解決しない。でも、<a href="http://fungoing.jp/2011/09/426/">こういうやり方</a>もあるのかもしれない。素晴らしい発想！</p>
+<p>MongoDBのRubyドライバにおいては、オブジェクトの初期化やソケット通信が実行時間の多くを占める。したがって、<strong>実行時間はクエリの質と同時に数にも大きく影響を受け</strong>、それゆえインデックスを適切に張ることでは解決しないことがある。でも、<a href="http://fungoing.jp/2011/09/426/">こういうやり方</a>もあるのかもしれない。素晴らしい発想！</p>
 
 <blockquote><p>ただし、それはRubyドライバ特有の問題かもしれない。</p></blockquote>
 
@@ -315,17 +318,15 @@
 
 <p>参照を使わない=埋め込み方式のスキーマを採用するとき、速度の問題はとりあえずなくなるが（あんまり巨大なコレクションだと、それはそれで問題かもしれない）、保守性・拡張性が悪くなるという問題と、容量の問題が生まれる。</p>
 
-<p>保守性と拡張性が悪くなるというのは、具体的にはスキーマ変更や値の整合性検査に専用のスクリプトを書かなきゃならなくなるということ。一見SQLより楽そうだが、スキーマが自由であるがゆえに、nilなどが予期せず混入していたり、あるはずのキーがなかったりして、イテレータと分岐だらけのスクリプトになる可能性がある。ただ、これはインサート時に適切なマッパーを使ってvalidateするなどで対応できるかもしれない。</p>
+<p>保守性と拡張性が悪くなるというのは、具体的には<strong>スキーマ変更や値の整合性検査に専用のスクリプトを書かなきゃならなくなる</strong>ということ。一見SQLより楽そうだが、スキーマが自由であるがゆえに、nilなどが予期せず混入していたり、あるはずのキーがなかったりして、イテレータと分岐だらけのスクリプトになる可能性がある。ただ、これはインサート時に適切なマッパーを使ってvalidateするなどで対応できるかもしれない。</p>
 
-<p>そしてスキーマ変更スクリプト自体が、リレーションの嵐になりがちで遅い。もっとも、ユニークキー的な事は可能。</p>
-
-<p>容量の問題も結構重要で、実は<a href="http://www.mongodb.org/display/DOCS/Documents">ドキュメント毎の容量が16MBという制限</a>がある様子。僕は毎日のログを埋め込みにして追記していたが、これだといつか上限に引っかかるかもしれない。</p>
+<p>容量の問題も結構重要で、実は<a href="http://www.mongodb.org/display/DOCS/Documents">ドキュメント毎の容量が16MBという制限</a>がある様子。僕は毎日のログを埋め込みにして追記していたが、いつか上限に引っかかるかもしれない。</p>
 
 <blockquote><p>ランキングサイトのように、1ページで数十個超のクエリを投げるような構造の場合、これらの問題が顕在化する。</p></blockquote>
 
-<p>例えばクックパッドのように、ある人のある料理を表示し、自分のお気に入りの情報を表示し、ちょこっとランキングを乗せる程度なら問題にならないと思う。リレーションを含めた全体のクエリの個数も限られるから。でも、「対象を固定しない100個の要素を表示する検索結果ページ」なんてことになるとそうもいかない。僕のサイトで参照方式と埋め込み方式の比較を行ったところ、5~8倍程度の実行時間の差が出てしまった。</p>
+<p>例えばクックパッドのように、ある人のある料理を表示し、自分のお気に入りの情報を表示し、ちょこっとランキングを乗せる程度なら問題にならないと思う。リレーションを含めた全体のクエリの個数も限られるから。でも、「対象を固定しない100個の要素を表示して、任意に並び替えができる検索結果ページ」なんてことになると、キャッシュもできず問題があらわになる。僕のサイトで参照方式と埋め込み方式の比較を行ったところ、5~8倍程度の実行時間の差が出てしまった。</p>
 
-<p>また、集計などのバッチ処理をRubyでしようと思ったら、もうこの問題は避けられない。僕は毎晩4万件超を対象にしたバッチ処理を行なっているが、<strong>数千の処理ごとに数分間沈黙する。</strong>たぶん、GCが超仕事してるんだと思う。
+<p>また、集計などのバッチ処理をRubyでしようと思ったら、もうこの問題は避けられない。僕は毎晩4万件超を対象にしたバッチ処理を行なっているが、<strong>数千の処理ごとに数分間沈黙する。たぶん、GCが超仕事してるんだと思う。</strong>
 ただ、MongoDBにJavaScriptを読み込ませて実行すれば、また結果は違うのかも知れない。</p>
 
 <blockquote><p>でもやっぱりMongoDBかわいいよMongoDB</p></blockquote>
@@ -374,6 +375,9 @@
 
   <!-- highlighter -->
   <script src="/vendor/highlight/highlight.pack.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad();
+  </script>
 
   <script type="text/javascript">
 
