@@ -1,7 +1,7 @@
 ---
 layout: post
 style: text
-title: "MongoDB+RubyでJOIN的な事をするとどうなるのか"
+title: "MongoDB+RubyでJOIN的な事をすると、どんな場合にどんな問題が起きるのか。"
 ---
 
 *お断り*
