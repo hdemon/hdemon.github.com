@@ -139,15 +139,22 @@
 
 <div class="highlight"><pre><code class="javascript"><span class="err">#埋め込み</span><span class="nx">DB</span>
 <span class="p">{</span> 
-  <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span> <span class="o">:</span> <span class="p">{</span>
-    <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">2898</span><span class="p">,</span> 
-    <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">9750</span><span class="p">,</span>
-    <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">7473</span>
-  <span class="p">}</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span> <span class="o">:</span> <span class="p">[</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">2898</span><span class="p">,</span> 
+      <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">9750</span><span class="p">,</span>
+      <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">7473</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+      <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">469</span><span class="p">,</span> 
+      <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">1603</span><span class="p">,</span>
+      <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">619</span>
+    <span class="p">}</span>
+    <span class="p">...</span>
 <span class="p">},</span>
 <span class="p">...</span>
 <span class="p">{</span> 
-  <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span> <span class="o">:</span> <span class="p">{</span> <span class="p">...</span>
+  <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">1000</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span> <span class="o">:</span> <span class="p">[</span> <span class="p">...</span>
 </code></pre>
 </div>
 
@@ -262,7 +269,7 @@
 <div class="highlight"><pre><code class="javascript"><span class="nx">Total</span><span class="o">:</span> <span class="mf">0.246015</span>
 
  <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">calls</span>  <span class="nx">name</span>
- <span class="mf">54.47</span>      <span class="mf">0.16</span>     <span class="mf">0.13</span>        <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span>
+ <span class="mf">54.47</span>      <span class="mf">0.16</span>     <span class="mf">0.13</span>        <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span> <span class="o">&lt;==</span> <span class="nx">gem</span><span class="err">読み込み</span>
   <span class="mf">5.18</span>      <span class="mf">0.25</span>     <span class="mf">0.01</span>         <span class="mi">1</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">load</span>
   <span class="mf">4.52</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>      <span class="mi">1001</span>  <span class="o">&lt;</span><span class="nx">Module</span><span class="o">::</span><span class="nx">CBson</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">deserialize</span>
   <span class="mf">4.11</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>         <span class="mi">1</span>  <span class="nx">OpenSSL</span><span class="o">::</span><span class="nx">X509</span><span class="o">::</span><span class="nx">Store</span><span class="err">#</span><span class="nx">set_default_paths</span>
@@ -278,7 +285,7 @@
 </div>
 
 
-<p>全て埋め込んであるので、イテレータを使う必要もない（もっとも、上で見たようにイテレータのコストは全く大したことはないけれど）。その結果、0.24秒で全ての走査が終わっている。
+<p>全て埋め込んであるのでイテレータを使う必要もなく、大体0.08秒以内に終わっている（全体として0.24秒だが、そのうち0.16秒はrequire）。
 何がこんなに違いを生むのか。プロファイリングをよく読むと、こういうところに違いが出ている。</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="err">参照</span><span class="nx">DB</span> <span class="o">+</span> <span class="mi">2</span><span class="err">つの参照</span>
@@ -293,7 +300,7 @@
 </div>
 
 
-<p>どうも、ソケットとのやりとりと、MongoDBのオブジェクト等の用意に時間がかかるらしい。これだけだと大した累積にならないように思えるが(selfの部分)、上の結果はほんの一部であり、このあと延々と微細なメソッドが続く。参照DBでは同じように6000回実行されるものが沢山あるので、この初期化と通信の周辺処理のようなものなんだろうと思う。</p>
+<p>どうも、ソケットとのやりとりとMongoDBのオブジェクト等の用意に時間がかかるらしい。これだけだと大した累積にならないように思えるが(selfの部分)、上の結果はほんの一部であり、このあと延々と微細なメソッドが続く。参照DBでは同じように6000回実行されるものが沢山あるので、この初期化と通信の周辺処理のようなものなんだろうと思う。</p>
 
 <h1>まとめ―結局どんな場合に問題になるのか。</h1>
 
