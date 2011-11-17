@@ -223,7 +223,7 @@
 
 <div class="highlight"><pre><code class="javascript"><span class="nx">Total</span><span class="o">:</span> <span class="mf">4.780326</span>
 
- <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">wait</span>    <span class="nx">child</span>    <span class="nx">calls</span>  <span class="nx">name</span>
+ <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">calls</span>  <span class="nx">name</span>
  <span class="mf">14.41</span>      <span class="mf">0.69</span>     <span class="mf">0.69</span>     <span class="mi">25996</span>  <span class="nx">IO</span><span class="err">#</span><span class="nx">read</span>
   <span class="mf">6.75</span>      <span class="mf">0.32</span>     <span class="mf">0.32</span>      <span class="mi">6003</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>
   <span class="mf">4.66</span>      <span class="mf">0.34</span>     <span class="mf">0.22</span>      <span class="mi">6002</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Cursor</span><span class="err">#</span><span class="nx">initialize</span>
@@ -264,22 +264,22 @@
 
 <div class="highlight"><pre><code class="javascript"><span class="nx">Total</span><span class="o">:</span> <span class="mf">0.285815</span>
 
- <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">wait</span>    <span class="nx">child</span>    <span class="nx">calls</span>  <span class="nx">name</span>
- <span class="mf">44.86</span>      <span class="mf">0.15</span>     <span class="mf">0.13</span>     <span class="mf">0.00</span>     <span class="mf">0.15</span>       <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span>
- <span class="mf">21.90</span>      <span class="mf">0.06</span>     <span class="mf">0.06</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">2</span>  <span class="nx">TCPSocket</span><span class="err">#</span><span class="nx">initialize</span>
-  <span class="mf">3.27</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">1</span>  <span class="nx">OpenSSL</span><span class="o">::</span><span class="nx">X509</span><span class="o">::</span><span class="nx">Store</span><span class="err">#</span><span class="nx">set_default_paths</span>
-  <span class="mf">2.50</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mi">11499</span>  <span class="nx">Hash</span><span class="err">#</span><span class="k">default</span>
-  <span class="mf">2.32</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">2007</span>  <span class="o">&lt;</span><span class="nx">Class</span><span class="o">::</span><span class="nx">Hash</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">allocate</span>
-  <span class="mf">2.19</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.01</span>     <span class="mi">2008</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">receive_data</span>
-  <span class="mf">2.04</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">1006</span>  <span class="nx">BSON</span><span class="o">::</span><span class="nx">ByteBuffer</span><span class="err">#</span><span class="nx">initialize</span>
-  <span class="mf">1.90</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">2008</span>  <span class="nx">IO</span><span class="err">#</span><span class="nx">read</span>
-  <span class="mf">1.84</span>      <span class="mf">0.06</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.05</span>        <span class="mi">3</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">read_documents</span>
+ <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>    <span class="nx">calls</span>  <span class="nx">name</span>
+ <span class="mf">44.86</span>      <span class="mf">0.15</span>     <span class="mf">0.13</span>       <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span>
+ <span class="mf">21.90</span>      <span class="mf">0.06</span>     <span class="mf">0.06</span>        <span class="mi">2</span>  <span class="nx">TCPSocket</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">3.27</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>        <span class="mi">1</span>  <span class="nx">OpenSSL</span><span class="o">::</span><span class="nx">X509</span><span class="o">::</span><span class="nx">Store</span><span class="err">#</span><span class="nx">set_default_paths</span>
+  <span class="mf">2.50</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>    <span class="mi">11499</span>  <span class="nx">Hash</span><span class="err">#</span><span class="k">default</span>
+  <span class="mf">2.32</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mi">2007</span>  <span class="o">&lt;</span><span class="nx">Class</span><span class="o">::</span><span class="nx">Hash</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">allocate</span>
+  <span class="mf">2.19</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>     <span class="mi">2008</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">receive_data</span>
+  <span class="mf">2.04</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mi">1006</span>  <span class="nx">BSON</span><span class="o">::</span><span class="nx">ByteBuffer</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">1.90</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mi">2008</span>  <span class="nx">IO</span><span class="err">#</span><span class="nx">read</span>
+  <span class="mf">1.84</span>      <span class="mf">0.06</span>     <span class="mf">0.01</span>        <span class="mi">3</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">read_documents</span>
   <span class="p">...</span>
-  <span class="mf">0.65</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.06</span>     <span class="mi">1055</span>  <span class="nx">Class</span><span class="err">#</span><span class="k">new</span>
+  <span class="mf">0.65</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>     <span class="mi">1055</span>  <span class="nx">Class</span><span class="err">#</span><span class="k">new</span>
   <span class="p">...</span>
-  <span class="mf">0.14</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">3</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>
+  <span class="mf">0.14</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">3</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>
   <span class="p">...</span>
-  <span class="mf">0.00</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.07</span>        <span class="mi">1</span>  <span class="nx">Enumerable</span><span class="err">#</span><span class="nx">to_a</span>
+  <span class="mf">0.00</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>        <span class="mi">1</span>  <span class="nx">Enumerable</span><span class="err">#</span><span class="nx">to_a</span>
   <span class="p">...</span>
 </code></pre>
 </div>

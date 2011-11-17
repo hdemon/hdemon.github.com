@@ -172,7 +172,7 @@ end
 {% highlight javascript %}
 Total: 4.780326
 
- %self     total     self     wait    child    calls  name
+ %self     total     self     calls  name
  14.41      0.69     0.69     25996  IO#read
   6.75      0.32     0.32      6003  BasicSocket#send
   4.66      0.34     0.22      6002  Mongo::Cursor#initialize
@@ -206,22 +206,22 @@ array = db["root"].find().to_a
 {% highlight javascript %}
 Total: 0.285815
 
- %self     total     self     wait    child    calls  name
- 44.86      0.15     0.13     0.00     0.15       63  Kernel#gem_original_require
- 21.90      0.06     0.06     0.00     0.00        2  TCPSocket#initialize
-  3.27      0.01     0.01     0.00     0.00        1  OpenSSL::X509::Store#set_default_paths
-  2.50      0.01     0.01     0.00     0.00    11499  Hash#default
-  2.32      0.01     0.01     0.00     0.00     2007  <Class::Hash>#allocate
-  2.19      0.02     0.01     0.00     0.01     2008  Mongo::Connection#receive_data
-  2.04      0.01     0.01     0.00     0.00     1006  BSON::ByteBuffer#initialize
-  1.90      0.01     0.01     0.00     0.00     2008  IO#read
-  1.84      0.06     0.01     0.00     0.05        3  Mongo::Connection#read_documents
+ %self     total     self    calls  name
+ 44.86      0.15     0.13       63  Kernel#gem_original_require
+ 21.90      0.06     0.06        2  TCPSocket#initialize
+  3.27      0.01     0.01        1  OpenSSL::X509::Store#set_default_paths
+  2.50      0.01     0.01    11499  Hash#default
+  2.32      0.01     0.01     2007  <Class::Hash>#allocate
+  2.19      0.02     0.01     2008  Mongo::Connection#receive_data
+  2.04      0.01     0.01     1006  BSON::ByteBuffer#initialize
+  1.90      0.01     0.01     2008  IO#read
+  1.84      0.06     0.01        3  Mongo::Connection#read_documents
   ...
-  0.65      0.07     0.00     0.00     0.06     1055  Class#new
+  0.65      0.07     0.00     1055  Class#new
   ...
-  0.14      0.00     0.00     0.00     0.00        3  BasicSocket#send
+  0.14      0.00     0.00        3  BasicSocket#send
   ...
-  0.00      0.07     0.00     0.00     0.07        1  Enumerable#to_a
+  0.00      0.07     0.00        1  Enumerable#to_a
   ...
 {% endhighlight %}
 
