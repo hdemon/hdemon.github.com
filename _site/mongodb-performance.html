@@ -144,17 +144,9 @@
 <div class="highlight"><pre><code class="javascript"><span class="err">#埋め込み</span><span class="nx">DB</span>
 <span class="p">{</span> 
   <span class="s2">&quot;_id&quot;</span> <span class="o">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;content&quot;</span> <span class="o">:</span> <span class="p">[</span>
-    <span class="p">{</span>
-      <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">2898</span><span class="p">,</span> 
-      <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">9750</span><span class="p">,</span>
-      <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">7473</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-      <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">469</span><span class="p">,</span> 
-      <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">1603</span><span class="p">,</span>
-      <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">619</span>
-    <span class="p">}</span>
-    <span class="p">...</span>
+    <span class="p">{</span> <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">2898</span><span class="p">,</span> <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">9750</span><span class="p">,</span> <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">7473</span> <span class="p">},</span>
+    <span class="p">{</span> <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">469</span><span class="p">,</span>  <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">1603</span><span class="p">,</span> <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">619</span>  <span class="p">},</span>
+    <span class="p">{</span> <span class="s2">&quot;value_a&quot;</span> <span class="o">:</span> <span class="mi">1856</span><span class="p">,</span> <span class="s2">&quot;value_b&quot;</span> <span class="o">:</span> <span class="mi">9244</span><span class="p">,</span> <span class="s2">&quot;value_c&quot;</span> <span class="o">:</span> <span class="mi">2354</span> <span class="p">}</span> <span class="p">]</span>
 <span class="p">},</span>
 <span class="p">...</span>
 <span class="p">{</span> 
@@ -167,7 +159,7 @@
 
 <h2>参照DB</h2>
 
-<p>参照DBを、こういうスクリプトで実行してみる。なお、今回はMongoDB 2.0.0と、Ruby 1.9.2を使っている。</p>
+<p>参照DBを、こういうスクリプトで実行してみる。なお、今回はMongoDB 2.0.1と、Ruby 1.9.2を使っている。</p>
 
 <div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;mongo&#39;</span>
 <span class="n">db</span> <span class="o">=</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Connection</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="s2">&quot;reference&quot;</span><span class="p">)</span> <span class="c1"># 参照DB</span>
@@ -263,33 +255,37 @@
 <div class="highlight"><pre><code class="ruby"><span class="nb">require</span> <span class="s1">&#39;mongo&#39;</span>
 <span class="n">db</span> <span class="o">=</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Connection</span><span class="o">.</span><span class="n">new</span><span class="o">.</span><span class="n">db</span><span class="p">(</span><span class="s2">&quot;embed&quot;</span><span class="p">)</span>
 
-<span class="n">array</span> <span class="o">=</span> <span class="n">db</span><span class="o">[</span><span class="s2">&quot;root&quot;</span><span class="o">].</span><span class="n">find</span><span class="p">()</span>
+<span class="n">array</span> <span class="o">=</span> <span class="n">db</span><span class="o">[</span><span class="s2">&quot;root&quot;</span><span class="o">].</span><span class="n">find</span><span class="p">()</span><span class="o">.</span><span class="n">to_a</span>
 </code></pre>
 </div>
 
 
 
 
-<div class="highlight"><pre><code class="javascript"><span class="nx">Total</span><span class="o">:</span> <span class="mf">0.246015</span>
+<div class="highlight"><pre><code class="javascript"><span class="nx">Total</span><span class="o">:</span> <span class="mf">0.285815</span>
 
- <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">calls</span>  <span class="nx">name</span>
- <span class="mf">54.47</span>      <span class="mf">0.16</span>     <span class="mf">0.13</span>        <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span> <span class="o">&lt;==</span> <span class="nx">gem</span><span class="err">読み込み</span>
-  <span class="mf">5.18</span>      <span class="mf">0.25</span>     <span class="mf">0.01</span>         <span class="mi">1</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">load</span>
-  <span class="mf">4.52</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>      <span class="mi">1001</span>  <span class="o">&lt;</span><span class="nx">Module</span><span class="o">::</span><span class="nx">CBson</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">deserialize</span>
-  <span class="mf">4.11</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>         <span class="mi">1</span>  <span class="nx">OpenSSL</span><span class="o">::</span><span class="nx">X509</span><span class="o">::</span><span class="nx">Store</span><span class="err">#</span><span class="nx">set_default_paths</span>
-  <span class="mf">3.34</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mi">11503</span>  <span class="nx">Hash</span><span class="err">#</span><span class="k">default</span>
-  <span class="mf">2.76</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>      <span class="mi">2008</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">receive_data</span>
-  <span class="mf">2.64</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>      <span class="mi">1006</span>  <span class="nx">BSON</span><span class="o">::</span><span class="nx">ByteBuffer</span><span class="err">#</span><span class="nx">initialize</span>
-  <span class="mf">2.36</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>      <span class="mi">2008</span>  <span class="nx">IO</span><span class="err">#</span><span class="nx">read</span>
+ <span class="o">%</span><span class="nx">self</span>     <span class="nx">total</span>     <span class="nx">self</span>     <span class="nx">wait</span>    <span class="nx">child</span>    <span class="nx">calls</span>  <span class="nx">name</span>
+ <span class="mf">44.86</span>      <span class="mf">0.15</span>     <span class="mf">0.13</span>     <span class="mf">0.00</span>     <span class="mf">0.15</span>       <span class="mi">63</span>  <span class="nx">Kernel</span><span class="err">#</span><span class="nx">gem_original_require</span>
+ <span class="mf">21.90</span>      <span class="mf">0.06</span>     <span class="mf">0.06</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">2</span>  <span class="nx">TCPSocket</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">3.27</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">1</span>  <span class="nx">OpenSSL</span><span class="o">::</span><span class="nx">X509</span><span class="o">::</span><span class="nx">Store</span><span class="err">#</span><span class="nx">set_default_paths</span>
+  <span class="mf">2.50</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>    <span class="mi">11499</span>  <span class="nx">Hash</span><span class="err">#</span><span class="k">default</span>
+  <span class="mf">2.32</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">2007</span>  <span class="o">&lt;</span><span class="nx">Class</span><span class="o">::</span><span class="nx">Hash</span><span class="o">&gt;</span><span class="err">#</span><span class="nx">allocate</span>
+  <span class="mf">2.19</span>      <span class="mf">0.02</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.01</span>     <span class="mi">2008</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">receive_data</span>
+  <span class="mf">2.04</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">1006</span>  <span class="nx">BSON</span><span class="o">::</span><span class="nx">ByteBuffer</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">1.90</span>      <span class="mf">0.01</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mi">2008</span>  <span class="nx">IO</span><span class="err">#</span><span class="nx">read</span>
+  <span class="mf">1.84</span>      <span class="mf">0.06</span>     <span class="mf">0.01</span>     <span class="mf">0.00</span>     <span class="mf">0.05</span>        <span class="mi">3</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Connection</span><span class="err">#</span><span class="nx">read_documents</span>
   <span class="p">...</span>
-  <span class="mf">0.79</span>      <span class="mf">0.02</span>     <span class="mf">0.00</span>      <span class="mi">1055</span>  <span class="nx">Class</span><span class="err">#</span><span class="k">new</span>
+  <span class="mf">0.65</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.06</span>     <span class="mi">1055</span>  <span class="nx">Class</span><span class="err">#</span><span class="k">new</span>
   <span class="p">...</span>
-  <span class="mf">0.13</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>         <span class="mi">2</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Cursor</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">0.14</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>        <span class="mi">3</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>
+  <span class="p">...</span>
+  <span class="mf">0.00</span>      <span class="mf">0.07</span>     <span class="mf">0.00</span>     <span class="mf">0.00</span>     <span class="mf">0.07</span>        <span class="mi">1</span>  <span class="nx">Enumerable</span><span class="err">#</span><span class="nx">to_a</span>
+  <span class="p">...</span>
 </code></pre>
 </div>
 
 
-<p>全て埋め込んであるのでイテレータを使う必要もなく、大体0.08秒以内に終わっている（全体として0.24秒だが、そのうち0.16秒はrequire）。
+<p>全て埋め込んであるので、valueを含んだハッシュオブジェクトの配列が欲しければ、Enumerableオブジェクトとして帰ってきた結果をto_aすればいい。その結果、全体として0.28秒だが内0.15秒はrequire(1位のtotal)だから、大体0.13秒以内に終わっていることになる。
 何がこんなに違いを生むのか。プロファイリングをよく読むと、こういうところに違いが出ている。</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="err">参照</span><span class="nx">DB</span> <span class="o">+</span> <span class="mi">2</span><span class="err">つの参照</span>
@@ -298,8 +294,8 @@
   <span class="mf">4.66</span>      <span class="mf">0.34</span>     <span class="mf">0.22</span>      <span class="mi">6002</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Cursor</span><span class="err">#</span><span class="nx">initialize</span>
 
 <span class="err">埋め込み</span><span class="nx">DB</span>
-  <span class="mf">0.06</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>         <span class="mi">3</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>
-  <span class="mf">0.13</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>         <span class="mi">2</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Cursor</span><span class="err">#</span><span class="nx">initialize</span>
+  <span class="mf">0.05</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>         <span class="mi">3</span>  <span class="nx">BasicSocket</span><span class="err">#</span><span class="nx">send</span>  
+  <span class="mf">0.04</span>      <span class="mf">0.00</span>     <span class="mf">0.00</span>         <span class="mi">2</span>  <span class="nx">Mongo</span><span class="o">::</span><span class="nx">Cursor</span><span class="err">#</span><span class="nx">initialize</span>
 </code></pre>
 </div>
 
@@ -314,7 +310,7 @@
 
 <p>でも、僕が今運営しているのはランキングサイトで、一つ一つのランキング対象のマイリストについてリレーションを調べなきゃいけない。1000個/ページはさすがにおかしいにしても、ランキングなので100位までは1ページに表示させている。</p>
 
-<p>そして、ランキングについては事前に計算済みのコレクションを作っておくという事もできるが、検索ページではそうもいかない。検索ページも100個/ページの設計だが、この検索結果表示数を減らすぐらいしか、参照方式を維持したままパフォーマンスを上げる本質的な解決方法はないと思う。</p>
+<p>そして、ランキングについては事前に計算済みのコレクションを作っておくという事もできるし、Railsにキャッシュさせることもできるが、検索ページではそうもいかない。検索ページも100個/ページの設計だが、この検索結果表示数を減らすぐらいしか、参照方式を維持したままパフォーマンスを上げる本質的な解決方法はないと思う(RailsのFragmentキャッシュを使えばいいのかもしれないけど、試してないので何とも言えない)。</p>
 
 <br>
 
@@ -327,9 +323,9 @@
 
 <blockquote><p>ただし、それはRubyドライバ特有の問題かもしれない。</p></blockquote>
 
-<p>参照を使うと遅くなるのはMongoDBのせいと言うより、MongoDBが参照を内部的に処理するロジックを持っていないので、言語側がそれを代替せざるを得ず、言語の重さがそのまま反映されてしまうせいだと思う。</p>
+<p>MongoDBのカーソル等のオブジェクトの初期化に時間がかかるのが、RubyのせいなのかMongoDB自体の重さゆえなのかは僕には分からない。ただ、MongoDBは参照を内部的に処理するロジックを持っていないので、言語側がそれを代替せざるを得ず、言語の重さが反映されやすいのは確かだと思う。</p>
 
-<p>そして、Rubyの重さがそれを現実的に問題になるレベルに引き上げているのかもしれない。他の言語のドライバなら、オブジェクト初期化やソケットとのやりとりが軽い場合もあるのかもしれない。僕はRubyとJavaScriptしか知らないので、そのへんは分からない。</p>
+<p>そして、Rubyがそれを現実的に問題になるレベルに引き上げているのかもしれない。他の言語のドライバなら、オブジェクト初期化やソケットとのやりとりが軽い場合もあるのかもしれない。僕はRubyとJavaScriptしか知らないので、そのへんは分からない。</p>
 
 <blockquote><p>参照を使わないと、保守性と拡張性が悪くなる。</p></blockquote>
 
