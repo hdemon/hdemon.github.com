@@ -55,7 +55,7 @@
 </div>
 
 
-<p>こういうやり方をすれば、プロトタイプベースのJavaScriptにおいてもクラス／インスタンス的な機能を実現できると本には書いてある。しかし、prototypeもnewを付ける対象となるコンストラクタ関数も、内部的に特別な機能を与えられたものではない。確かに特別な働きをすることには違いないが、それは全てnewの働きである。コンストラクタとしてのfunctionは普通の関数宣言／式であり、</p>
+<p>こういうやり方をすれば、プロトタイプベースのJavaScriptにおいてもクラス／インスタンス的な機能を実現できると本には書いてある。しかし、prototypeもnewを付ける対象となるコンストラクタ関数も、内部的に特別な機能を与えられたものではない。確かに特別な働きをすることには違いないが、それは全てnewの働きがあってこそである。コンストラクタとしてのfunctionは普通の関数宣言／式であり、</p>
 
 <div class="highlight"><pre><code class="javascript"><span class="kd">var</span> <span class="nx">inst</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Obj</span><span class="p">;</span>
 <span class="nx">alert</span><span class="p">(</span> <span class="nx">inst</span><span class="p">.</span><span class="nx">prototype</span> <span class="p">);</span>
@@ -64,7 +64,7 @@
 </div>
 
 
-<p>またprototypeはプロトタイプオブジェクトではない。</p>
+<p>また".prototype"はプロトタイプオブジェクトを指示しない。</p>
 
 <h1>prototypeはオブジェクトの原型ではなく、プロトタイプオブジェクトの原型のようなもの。</h1>
 

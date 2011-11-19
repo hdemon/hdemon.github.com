@@ -1,0 +1,5 @@
+
+window.hdemon = window.hdemon || {};
+window.hdemon.explorizer = exp.core;
+})(window);
+﻿
